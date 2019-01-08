@@ -98,7 +98,7 @@
                         @csrf
                         <div class="form-row">
                             <div class="col-md-12">
-                                <input type="text" name="position_name" class="form-control" placeholder="Position {{$position->position_number+1}}" required>
+                                <input type="text" name="position_name" class="form-control" placeholder="Position" required>
                                 <div class="invalid-feedback">
                                     Name required
                                 </div>

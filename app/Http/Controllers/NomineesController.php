@@ -209,7 +209,6 @@ class NomineesController extends Controller
      */
     public function destroy($id)
     {
-
         $nominees = Nominee::find($id);
         if ($nominees->delete()) {
             File::delete(public_path('nominee_img/'.$nominees->image));

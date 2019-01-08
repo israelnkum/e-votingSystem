@@ -3,10 +3,10 @@
 
     <div class="row page-titles">
         <div class="col-md-5 col-8 align-self-center">
-            <h3 class="text-themecolor m-b-0 m-t-0">Position</h3>
+            <h3 class="text-themecolor m-b-0 m-t-0">Voter</h3>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                <li class="breadcrumb-item active">New Position</li>
+                <li class="breadcrumb-item active">New Voter</li>
             </ol>
         </div>
         <div class="col-md-7 col-4 align-self-center">
@@ -40,7 +40,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Add New Position</h4>
+                    <h4 class="card-title">Add New Voter</h4>
                     <form class="m-t-40 needs-validation form-material" method="post" action="{{route('voters.store')}}" novalidate>
                         @csrf
                         <div class="form-row">
@@ -72,7 +72,7 @@
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-12 mb-3">
-                                    <input type="text" class="form-control" name="index_number" id="validationCustom01" placeholder="Voting Name" required>
+                                    <input type="text" class="form-control" name="index_number" id="validationCustom01" placeholder="Index Number" required>
                                     <div class="invalid-feedback">
                                         Index Number required
                                     </div>

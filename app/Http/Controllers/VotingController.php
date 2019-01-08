@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Department;
 use App\Nominee;
 use App\User;
+use App\Voter;
 use App\Voting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Carbon;
 
@@ -36,7 +38,7 @@ class VotingController extends Controller
         $current_time = Carbon::now()->toDateTimeString();
 
         //return $current_date;
-       // $check = '';
+        // $check = '';
         $voting = Voting::with('department')->get();
 
 
@@ -174,11 +176,24 @@ class VotingController extends Controller
     {
         $voting = Voting::find($id);
 
-        $nominees = Nominee::where('department_id',$id);
-        $voters = User::where('department_id',$id);
+
         if ($voting->delete()) {
-            $nominees->delete();
-            $voters->delete();
+            //delete all nominees images from folder
+
+            $nominees = Nominee::where('voting_id',$id)->get();
+            foreach ($nominees as $nominee){
+                File::delete(public_path('nominee_img/'.$nominee->image));
+            }
+
+            //delete all nominees that belongs to the particular voting deleted
+
+            Nominee::where('voting_id',$id)->get()->each->delete();
+
+            //delete all voters that belongs to the particular voting selected
+            User::where('voting_id',$id)
+                ->where('role','Voter')->get()->each->delete();
+
+
             return redirect('/voting')
                 ->with('success', 'Voting Deleted Successfully');
         }

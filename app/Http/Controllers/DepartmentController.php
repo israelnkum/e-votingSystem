@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Department;
 use App\Nominee;
 use App\User;
+use App\Voter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class DepartmentController extends Controller
 {
@@ -133,12 +135,23 @@ class DepartmentController extends Controller
     {
         $department = Department::find($id);
 
-        $nominees = Nominee::where('department_id',$id);
-        $voters = User::where('department_id',$id)->where('role','Voter');
-
         if ($department->delete()) {
-            $nominees->delete();
-            $voters->delete();
+
+            //delete all nominees images from folder
+
+            $nominees = Nominee::where('department_id',$id)->get();
+            foreach ($nominees as $nominee){
+                File::delete(public_path('nominee_img/'.$nominee->image));
+            }
+
+            //delete all nominees that belongs to the particular voting deleted
+            Nominee::where('department_id',$id)->get()->each->delete();
+
+            //delete all voters that belongs to the particular voting selected
+            Voter::where('department_id',$id)
+                ->where('role','Voter')->get()->each->delete();
+
+
             return redirect('/departments')
                 ->with('success', 'Department Deleted Successfully');
         }

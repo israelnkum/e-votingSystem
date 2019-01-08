@@ -43,6 +43,11 @@ Route::resource('levels','LevelsController');
 Route::resource('departments','DepartmentController');
 
 
+//*Nominee Tokens Route
+
+Route::resource('nominee_token','NomineeTokenController');
+
+
 //* Users Route
 
 Route::resource('users','UsersController');

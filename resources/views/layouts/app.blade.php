@@ -304,6 +304,9 @@
                                     <a href="{{route('nominees.index')}}">All Nominee(s)</a>
                                 </li>
                                 <li>
+                                    <a href="{{route('nominee_token.index')}}">Generate Token</a>
+                                </li>
+                                <li>
                                     <a href="{{route('nominees.create')}}">New Nominee</a>
                                 </li>
                             </ul>

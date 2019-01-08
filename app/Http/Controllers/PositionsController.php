@@ -6,6 +6,7 @@ use App\Nominee;
 use App\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class PositionsController extends Controller
 {
@@ -142,10 +143,15 @@ class PositionsController extends Controller
 
         $positions = Position::find($id);
 
-
-        $nominees = Nominee::where('department_id',$id);
         if ($positions->delete()) {
-            $nominees->delete();
+
+            $nominees = Nominee::where('position_id',$id)->get();
+            foreach ($nominees as $nominee){
+                File::delete(public_path('nominee_img/'.$nominee->image));
+            }
+
+            Nominee::where('position_id',$id)->get()->each->delete();
+
             return redirect('/positions')
                 ->with('success', 'Position Deleted Successfully');
         }

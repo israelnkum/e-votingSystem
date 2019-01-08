@@ -6,6 +6,7 @@ use App\Level;
 use App\Nominee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class LevelsController extends Controller
 {
@@ -132,10 +133,18 @@ class LevelsController extends Controller
     {
         $level = Level::find($id);
 
-        $nominees = Nominee::where('level',$id);
 
         if ($level->delete()) {
-            $nominees->delete();
+
+            $nominees = Nominee::where('level_id',$id)->get();
+            foreach ($nominees as $nominee){
+                File::delete(public_path('nominee_img/'.$nominee->image));
+            }
+
+            //delete all nominees that belongs to the particular voting deleted
+            Nominee::where('level_id',$id)->get()->each->delete();
+
+
             return redirect('/levels')
                 ->with('success', 'Level Deleted Successfully');
         }
