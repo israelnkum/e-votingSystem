@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 
     <div class="row page-titles">
@@ -27,14 +26,13 @@
                     <div class="spark-chart">
                         <div id="lastmonthchart"></div>
                     </div>
+                    <!-- ============================================================== -->
+                    <!-- End Bread crumb and right sidebar toggle -->
+                    <!-- ============================================================== -->
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- ============================================================== -->
-    <!-- End Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
     <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
@@ -75,7 +73,7 @@
                                                                                         </label>
 
                                                                                         <label class="inline custom-control custom-checkbox block">
-                                                                                            <input type="checkbox" value="" required name="voteCasted[]" id="{{$candidate->position->id}}" class="custom-control-input cbox{{$candidate->position->id}}">
+                                                                                            <input type="checkbox" value="{{0}}" required name="voteCasted[]" id="{{$candidate->position->id}}" class="custom-control-input cbox{{$candidate->position->id}}">
                                                                                             <span class="custom-control-label ml-0">No</span>
                                                                                         </label>
 
@@ -121,62 +119,4 @@
     <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
-    {{--<div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card">
-                <div class="card-body text-dark">
-                    <h4 class="card-title"></h4>
-                    <div class="table-responsive">
-                        <table  class="table  " style="width: 100%">
-                            <tbody>
-
-                            @foreach ($positions as $position => $candidates)
-                                @php
-                                    $kojoCount = 0;
-                                @endphp
-                                <tr>
-                                    @foreach ($candidates as $candidate)
-                                        <td>
-                                            <div class="card">
-                                                <div class="card-body text-center">
-                                                    <img src="{{asset('nominee_img/'.$candidate->image)}}" class="img-circle" width="150" height="150" />
-                                                    <h4 class="card-title m-t-10">{{$candidate['last_name']." ".$candidate['other_name']." ".$candidate['first_name']}}</h4>
-                                                    <h6 class="card-subtitle text-danger font-16">{{$candidate->position->name}}</h6>
-                                                    <div class="row text-center justify-content-md-center">
-                                                        <div class="col-12">
-                                                            <form method="POST" action="{{route('cast-voting.store')}}">
-                                                                @csrf
-                                                                <input type="hidden" name="voting_id" value="{{$id}}">
-                                                                <button name="position_number" type="submit" class="btn btn-success" value="{{$position_number}}">
-                                                                    <i class="mdi mdi-thumb-up"></i>
-                                                                    Vote
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        @php
-                                            $kojoCount++;
-                                        @endphp
-                                        @if ($kojoCount >1)
-
-                                            @php
-                                                $kojoCount = 0;
-                                            @endphp
-                                </tr>
-                                <tr>
-                                    @endif
-                                    @endforeach
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>--}}
-
 @endsection

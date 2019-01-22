@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Nominee;
 use App\Position;
+use App\Result;
 use App\User;
 use App\Voting;
 use Illuminate\Http\Request;
@@ -28,12 +29,25 @@ class CastVotingController extends Controller
      */
     public function index()
     {
+
+        $positions = Nominee::with('position','level','department','result')
+            ->where('department_id',Auth::User()->department_id)
+            ->where('voting_id',Auth::User()->voting_id)
+            ->where('candidate',1)
+            ->orderBy('position_number')
+            ->get()
+            ->groupBy('position_id');
+
+      //  return $positions;
         /*
          *checking if user has already voted
          * if yes the redirect to the dashboard
          */
+
+        //return $positions;
         if(Auth::User()->role == 'Voter' && Auth::User()->voted == 1){
-            return view('pages.cast-voting.voter-dashboard');
+            return view('pages.cast-voting.voter-dashboard')
+                ->with('positions',$positions)               ;
         }else{
             /*
             *checking if user has not voted yet
@@ -109,7 +123,38 @@ class CastVotingController extends Controller
     public function store(Request $request)
     {
 
-        return $request->input('voteCasted');
+        $voteCasted =$request->input('voteCasted');
+
+        foreach ($voteCasted as $item) {
+            if ($item == 0){
+                unset($item);
+            }else{
+                $totalVoteCounts= Result::where('nominee_id',$item)->first();
+
+                $currentCount = $totalVoteCounts ->vote_count;
+                $totalVoteCounts ->vote_count =  $currentCount+1;
+                $totalVoteCounts->save();
+            }
+
+        }
+
+        $setVoted = User::find(Auth::User()->id);
+
+        $setVoted ->voted =1;
+        $setVoted->save();
+
+
+        $positions = Nominee::with('position','level','department')
+            ->where('department_id',Auth::User()->department_id)
+            ->where('voting_id',Auth::User()->voting_id)
+            ->where('candidate',1)
+            ->orderBy('position_number')
+            ->get()
+            ->groupBy('position_id');
+
+        return view('pages.cast-voting.voter-dashboard')
+            ->with('success','Voting Successful')
+            ->with('positions',$positions);
     }
 
     /**

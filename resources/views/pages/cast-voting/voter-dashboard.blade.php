@@ -1,70 +1,66 @@
 @extends('layouts.app')
 @section('content')
-
-    <div class="block-header">
-        <div class="row">
-            <div class="col-xl-6 col-lg-5 col-md-4 col-sm-12">
-                <ul class="breadcrumb breadcrumb-style">
-                    <li class="breadcrumb-item 	bcrumb-1">
-                        <i class="material-icons text-dark">home</i>
-                        <a href="{{route('home')}}">
-                            <span>Home</span>
-                        </a>
-                    </li>
-                    <li  class="breadcrumb-item 	bcrumb-1">
-                        <a href="javascript:void(0)">Voting</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12 text-right">
-                <div class="breadcrumb-chart m-l-50">
-                    <div class="float-right">
-                        <div class="icon m-b-10">
-                            <div class="chart header-bar">
-                                <canvas width="49" height="40"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="float-right m-r-10">
-                        <div class="chart-info m-t-5">
-                            <i class="fas fa-dollar-sign m-r-5"></i>
-                            <span>$8,968</span>
-                            <p>Total Income</p>
-                        </div>
+    <div class="row page-titles">
+        <div class="col-md-5 col-8 align-self-center">
+            <h3 class="text-themecolor m-b-0 m-t-0">Cast Voting</h3>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </div>
+        <div class="col-md-7 col-4 align-self-center">
+            <div class="d-flex m-t-10 justify-content-end">
+                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
+                    <div class="chart-text m-r-10">
+                        <h6 class="m-b-0"><small>THIS MONTH</small></h6>
+                        <h4 class="m-t-0 text-info">$58,356</h4></div>
+                    <div class="spark-chart">
+                        <div id="monthchart"></div>
                     </div>
                 </div>
-                <div class="breadcrumb-chart m-l-50">
-                    <div class="float-right">
-                        <div class="icon m-b-10">
-                            <div class="chart header-bar2">
-                                <canvas width="49" height="40"></canvas>
-                            </div>
-                        </div>
+                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
+                    <div class="chart-text m-r-10">
+                        <h6 class="m-b-0"><small>LAST MONTH</small></h6>
+                        <h4 class="m-t-0 text-primary">$48,356</h4></div>
+                    <div class="spark-chart">
+                        <div id="lastmonthchart"></div>
                     </div>
-                    <div class="float-right m-r-10">
-                        <div class="chart-info m-t-5">
-                            <i class="fas fa-user-tie m-r-5"></i>
-                            <span>2,568</span>
-                            <p>New Users</p>
-                        </div>
-                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End Bread crumb and right sidebar toggle -->
+                    <!-- ============================================================== -->
                 </div>
             </div>
         </div>
     </div>
-    <div class="row clearfix">
-        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 offset-md-2">
-            <div class="card">
-                <div class="header">
-                    <h2>
-                        <strong>New</strong> Voting</h2>
-                </div>
-                <div class="body">
+    <div class="row">
 
+    @foreach ($positions as $position => $candidates)
+        @php
+            $kojoCount = 0;
+        @endphp
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="text-danger">{{$candidates[0]->position->name}}</h3>
+                        @foreach ($candidates as $candidate)
+                            <table class="nowrap table" cellspacing="0" width="100%">
+                                <tbody>
+                                <tr>
+                                    <td>{{$candidate['last_name']." ".$candidate['other_name']." ".$candidate['first_name']}}</td>
+                                    {{--<td>{{$candidate->position->name}}</td>--}}
+                                    <td class="text-right">
+                                        <label class="badge badge-success">
+                                            {{$candidate->result[0]->vote_count}}
+                                        </label>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        @endforeach
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- #END# Task Info -->
+    @endforeach
     </div>
 
 @endsection

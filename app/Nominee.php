@@ -20,6 +20,10 @@ class Nominee extends Model
     }
 
 
+    public function result(){
+        return $this->hasMany('App\Result');
+    }
+
 
     public function voting(){
         return $this->belongsTo('App\Voting');

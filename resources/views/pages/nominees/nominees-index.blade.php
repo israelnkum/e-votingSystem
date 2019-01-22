@@ -65,7 +65,13 @@
                                     <td>{{$nominee->cgpa}}</td>
                                     <td>{{$nominee->position->name}}</td>
                                     <td>{{$nominee->telephone}}</td>
-                                    <td>{{$nominee->email}}</td>
+                                    <td>
+                                        @if($nominee->candidate == 1)
+                                            <label class="badge badge-success">Candiate</label>
+                                            @else
+                                            <label class="badge badge-warning">Nominee</label>
+                                            @endif
+                                    </td>
                                     <td>{{$nominee->department->name}}</td>
                                     <td>
                                         <div class="dropdown">

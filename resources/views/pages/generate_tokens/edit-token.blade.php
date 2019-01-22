@@ -36,69 +36,21 @@
     <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body text-dark">
-                    <h4 class="card-title">All Tokens</h4>
-                    <div class="table-responsive m-t-40">
-                        <table id="example23" class="nowrap table  table-striped " cellspacing="0" width="100%">
-                            <thead>
-                            <tr>
-                                <th>Token No.</th>
-                                <th>Index No.</th>
-                                <th>Department</th>
-                                <th>Voting</th>
-                                <th>Manage</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($allTokens as $token)
-                                <tr>
-                                    <td>{{$token->token_number}}</td>
-                                    <td>{{$token->name}}</td>
-                                    <td>{{$token->department->name}}</td>
-                                    <td>{{$token->voting->name}}</td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="manage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Action
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="manage">
-                                                <a href="{{route('nominee_token.edit',$token->id)}}" class="dropdown-item ml-1 text-dark">
-                                                    <i class="mdi mdi-account-edit"> </i> Edit
-                                                </a>
-                                                <a class="dropdown-item" href="#">
-                                                    <form method="post" action="{{route('nominee_token.destroy',$token->id)}}" onsubmit="return confirm('Do you really want to delete this Voting')">
-                                                        @csrf
-                                                        {!! method_field('DELETE') !!}
-                                                        <button type="submit" style="background: transparent; border: 0;">
-                                                            <i class="mdi mdi-delete"> </i> Delete
-                                                        </button>
-                                                    </form>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-md-4">
+    @foreach($ctokens as $token)
+        @endforeach
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">New Token</h4>
-                    <form class="m-t-40 needs-validation form-material" method="post" action="{{route('nominee_token.store')}}" novalidate>
+                    <form class="m-t-40 needs-validation form-material" method="post" action="{{route('nominee_token.update',$token->id)}}" novalidate>
                         @csrf
+                        {!! method_field('PUT') !!}
                         <div class="form-row">
                             <div class="col-md-12 mb-3 form-group">
                                 <select name="voting_id" class="select2 form-control" required>
-                                    <option value="">Select Voting</option>
+                                    <option value="{{$token->voting->id}}">{{$token->voting->name}}</option>
                                     @foreach($voting as $vote)
                                         <option value="{{$vote->id}}">{{$vote->name}}</option>
                                     @endforeach
@@ -110,7 +62,7 @@
 
                             <div class="col-md-12 mb-3 form-group">
                                 <select name="department_id" class="select2 form-control"required>
-                                    <option value="">Select Department</option>
+                                    {{--<option value="{{$token->department->id}}">{{$token->department->name}}</option>--}}
                                     @foreach($departments as $department)
                                         <option value="{{$department->id}}">{{$department->name}}</option>
                                     @endforeach
@@ -124,7 +76,7 @@
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-12 mb-3">
-                                    <input type="text" class="form-control" name="index_number" id="validationCustom01" placeholder="Index Number" required>
+                                    <input type="text" class="form-control" name="index_number" value="{{$token->name}}" id="validationCustom01" placeholder="Index Number" required>
                                     <div class="invalid-feedback">
                                         Index Number required
                                     </div>
@@ -159,7 +111,7 @@
                             </div>--}}
                         </div>
                         <div class="text-xs-right">
-                            <button type="submit" class="btn btn-info btn-block">New Token</button>
+                            <button type="submit" class="btn btn-info btn-block">Update</button>
                         </div>
                     </form>
                 </div>

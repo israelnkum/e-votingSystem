@@ -18,4 +18,8 @@ class Voting extends Model
         return $this->hasMany('App\User');
     }
 
+    public  function token(){
+        return $this->hasMany('App\NomineeToken');
+    }
+
 }

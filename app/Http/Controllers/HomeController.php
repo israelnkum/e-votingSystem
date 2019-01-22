@@ -31,7 +31,9 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::User()->role == 'Admin'){
-            $totalVoters = User::all()->where('role','Voter')->count();
+            $totalVoters = User::all()
+                ->where('role','Voter')
+                ->count();
             $totalNominees = Nominee::all()->count();
             $totalCandidates = Nominee::all()->where('candidate',1)->count();
 
