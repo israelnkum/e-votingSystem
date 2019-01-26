@@ -38,7 +38,7 @@
         @php
             $kojoCount = 0;
         @endphp
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="text-danger">{{$candidates[0]->position->name}}</h3>
@@ -46,9 +46,11 @@
                             <table class="nowrap table" cellspacing="0" width="100%">
                                 <tbody>
                                 <tr>
+                                    <td  class="text-left">
+                                        <img src="{{asset('nominee_img/'.$candidate->image)}}" class="img-circle" width="100" height="100" />
+                                    </td>
                                     <td>{{$candidate['last_name']." ".$candidate['other_name']." ".$candidate['first_name']}}</td>
-                                    {{--<td>{{$candidate->position->name}}</td>--}}
-                                    <td class="text-right">
+                                    <td class="text-center font-20">
                                         <label class="badge badge-success">
                                             {{$candidate->result[0]->vote_count}}
                                         </label>
@@ -62,5 +64,4 @@
             </div>
     @endforeach
     </div>
-
 @endsection

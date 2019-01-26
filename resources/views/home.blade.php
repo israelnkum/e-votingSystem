@@ -39,6 +39,7 @@
     <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
+    @if(Auth::User()->role == 'Admin')
     <div class="row">
         <!-- Column -->
         <div class="col-lg-3 col-md-6">
@@ -61,7 +62,8 @@
                 <div class="card-body">
                     <div class="d-flex flex-row">
                         <div class="round round-lg align-self-center round-warning">
-                            <i class="mdi mdi-bullseye"></i></div>
+                            <i class="mdi mdi-bullseye"> </i>
+                        </div>
                         <div class="m-l-10 align-self-center">
                             <h3 class="m-b-0 font-lgiht">{{$totalPositions}}</h3>
                             <h5 class="text-muted m-b-0">Total Positions</h5></div>
@@ -90,7 +92,7 @@
                 <div class="card-body">
                     <div class="d-flex flex-row">
                         <div class="round round-lg align-self-center round-danger">
-                            <i class="mdi mdi-bullseye"></i>
+                            <i class="mdi mdi-bullseye"> </i>
                         </div>
                         <div class="m-l-10 align-self-center">
                             <h3 class="m-b-0 font-lgiht">{{$totalDepartment}}</h3>
@@ -101,6 +103,8 @@
         </div>
         <!-- Column -->
     </div>
+
+    @endif
 
     <!-- Row -->
     <div class="row">
@@ -172,6 +176,7 @@
     </div>
     <!-- Row -->
     <!-- Row -->
+    @if(Auth::User()->role == 'Admin')
     <div class="row">
         <!-- Column -->
         <div class="col-lg-4 col-md-12">
@@ -230,5 +235,42 @@
             </div>
         </div>
     </div>
+
+
+        @else
+
+        <div class="row">
+
+            @foreach ($positions as $position => $candidates)
+                @php
+                    $kojoCount = 0;
+                @endphp
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="text-danger text-center">{{$candidates[0]->position->name}}</h2>
+                            @foreach ($candidates as $candidate)
+                                <table class="nowrap table" cellspacing="0" width="100%">
+                                    <tbody>
+                                    <tr>
+                                        <td  class="text-left">
+                                            <img src="{{asset('nominee_img/'.$candidate->image)}}" class="img-circle" width="100" height="100" />
+                                        </td>
+                                        <td class="text-dark">{{$candidate['last_name']." ".$candidate['other_name']." ".$candidate['first_name']}}</td>
+                                        <td class="text-center font-20" style="font-size: 30px;">
+                                            <label class="badge badge-success">
+                                                {{$candidate->result[0]->vote_count}}
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
     <!-- Row -->
 @endsection

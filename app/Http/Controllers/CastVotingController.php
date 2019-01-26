@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Department;
+use App\Level;
 use App\Nominee;
 use App\Position;
 use App\Result;
 use App\User;
 use App\Voting;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class CastVotingController extends Controller
@@ -34,11 +35,11 @@ class CastVotingController extends Controller
             ->where('department_id',Auth::User()->department_id)
             ->where('voting_id',Auth::User()->voting_id)
             ->where('candidate',1)
-            ->orderBy('position_number')
+            //->sort(result.vote_count)
             ->get()
             ->groupBy('position_id');
 
-      //  return $positions;
+        //return $positions;
         /*
          *checking if user has already voted
          * if yes the redirect to the dashboard
@@ -46,8 +47,32 @@ class CastVotingController extends Controller
 
         //return $positions;
         if(Auth::User()->role == 'Voter' && Auth::User()->voted == 1){
-            return view('pages.cast-voting.voter-dashboard')
-                ->with('positions',$positions)               ;
+
+            $totalVoters = User::all()
+                ->where('role','Voter')
+                ->count();
+            $totalNominees = Nominee::all()->count();
+            $totalCandidates = Nominee::all()->where('candidate',1)->count();
+
+
+            $totalVoteCasted = User::all()->where('voted','1')->count();
+
+            $totalLevel = Level::all()->count();
+            $totalDepartment = Department::all()->count();
+            $totalPositions = Position::all()->count();
+            $totalVotings = Voting::all()->count();
+
+            return view('home')
+           // return view('pages.cast-voting.voter-dashboard')
+                ->with('positions',$positions)
+                ->with('totalVoters',$totalVoters)
+                ->with('totalNominees',$totalNominees)
+                ->with('totalCandidates',$totalCandidates)
+                ->with('totalLevel',$totalLevel)
+                ->with('totalDepartment',$totalDepartment)
+                ->with('totalPositions',$totalPositions)
+                ->with('totalVotings',$totalVotings)
+                ->with('totalVoteCasted',$totalVoteCasted);
         }else{
             /*
             *checking if user has not voted yet

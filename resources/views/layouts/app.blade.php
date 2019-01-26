@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="https://wrappixel.com/demos/admin-templates/material-pro/assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('itsu.jpeg')}}">
     <title>ITSU | Voting System</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
@@ -87,16 +87,16 @@
                     <!-- Logo icon --><b>
                         <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                         <!-- Dark Logo icon -->
-                        <img src="https://wrappixel.com/demos/admin-templates/material-pro/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                        <img src="{{asset('logo-light-text.png')}}" alt="homepage" class="dark-logo" />
                         <!-- Light Logo icon -->
-                        <img src="https://wrappixel.com/demos/admin-templates/material-pro/assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                        <img src="{{asset('logo-light.png')}}" alt="homepage" class="light-logo" />
                     </b>
                     <!--End Logo icon -->
                     <!-- Logo text --><span>
                          <!-- dark Logo text -->
-                         <img src="https://wrappixel.com/demos/admin-templates/material-pro/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                         <img src="{{asset('logo-light-text.png')}}" alt="homepage" class="dark-logo" />
                         <!-- Light Logo text -->
-                         <img src="https://wrappixel.com/demos/admin-templates/material-pro/assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
+                         <img src="{{asset('logo-light-text.png')}}" class="light-logo" alt="homepage" /></span> </a>
             </div>
             <!-- ============================================================== -->
             <!-- End Logo -->
