@@ -263,6 +263,7 @@
                                             </label>
                                         </td>
                                     </tr>
+
                                     </tbody>
                                 </table>
                             @endforeach
