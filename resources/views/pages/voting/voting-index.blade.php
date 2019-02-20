@@ -66,6 +66,7 @@
                                     <td>{{$vote->ending_time}}</td>
                                     <td>Detail</td>
                                     <td>
+                                        {{--{{substr($vote->voting_date_start_time,0,10)."<br>". \Carbon\Carbon::yesterday()->format('Y-m-d')}}--}}
                                         @if(substr($vote->voting_date_start_time,0,10) <= \Carbon\Carbon::yesterday()->format('Y-m-d'))
                                             <label class="badge badge-danger">Ended</label>
                                         @elseif(substr($vote->voting_date_start_time,0,10) == \Carbon\Carbon::tomorrow()->format('Y-m-d'))

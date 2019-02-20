@@ -57,7 +57,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group m-b-40">
-                                    <input type="text" id="mdate" value="{{ $voting->voting_date }}" name="voting_date" class="form-control" required>
+                                    <input type="text" id="mdate" value="{{ substr($voting->voting_date_start_time,0,10) }}" name="voting_date" class="form-control" required>
                                     <span class="bar"></span>
                                     <label for="mdate">Voting Date</label>
                                     <div class="invalid-feedback">
@@ -70,7 +70,7 @@
                         <div class="form-row">
                             <div class="col-md-4">
                                 <div class="form-group m-b-40">
-                                    <input type="text" class="form-control" id="timepicker"  value="{{ $voting->starting_time }}" name="starting_time" required>
+                                    <input type="text" class="form-control" id="timepicker"  value="{{ substr($voting->voting_date_start_time,10) }}" name="starting_time" required>
                                     <span class="bar"></span>
                                     <label for="timepicker">Starting Time</label>
                                     <div class="invalid-feedback">

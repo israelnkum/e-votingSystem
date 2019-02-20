@@ -131,7 +131,10 @@ class VotingController extends Controller
     public function edit($id)
     {
         $voting = Voting::find($id);
-        return view('pages.voting.voting-edit')->with('voting',$voting);
+
+        //return $voting;
+        return view('pages.voting.voting-edit')
+            ->with('voting',$voting);
     }
 
     /**
@@ -146,15 +149,14 @@ class VotingController extends Controller
         $voting = Voting::find($id);
 
         $voting->name=$request->input('voting_name');
-        $voting->voting_date=$request->input('voting_date');
-        $voting->starting_time=$request->input('starting_time');
+        $voting->voting_date_start_time=$request->input('voting_date')." ".$request->input('starting_time');
         $voting->ending_time=$request->input('ending_time');
 
         $checkPosition = Voting::all()
             ->where('name',$request->input('voting_name'))
             ->count();
 
-        if ($checkPosition>0){
+        if ($checkPosition>1){
             return redirect('/voting')
                 ->with('error','Voting Name already exist')
                 ->withInput(Input::all());

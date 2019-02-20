@@ -35,7 +35,6 @@ class CastVotingController extends Controller
             ->where('department_id',Auth::User()->department_id)
             ->where('voting_id',Auth::User()->voting_id)
             ->where('candidate',1)
-            //->sort(result.vote_count)
             ->get()
             ->groupBy('position_id');
 
@@ -45,25 +44,20 @@ class CastVotingController extends Controller
          * if yes the redirect to the dashboard
          */
 
-        //return $positions;
         if(Auth::User()->role == 'Voter' && Auth::User()->voted == 1){
 
             $totalVoters = User::all()
-                ->where('role','Voter')
-                ->count();
+                ->where('role','Voter')->count();
             $totalNominees = Nominee::all()->count();
             $totalCandidates = Nominee::all()->where('candidate',1)->count();
-
-
             $totalVoteCasted = User::all()->where('voted','1')->count();
-
             $totalLevel = Level::all()->count();
             $totalDepartment = Department::all()->count();
             $totalPositions = Position::all()->count();
             $totalVotings = Voting::all()->count();
 
             return view('home')
-           // return view('pages.cast-voting.voter-dashboard')
+                // return view('pages.cast-voting.voter-dashboard')
                 ->with('positions',$positions)
                 ->with('totalVoters',$totalVoters)
                 ->with('totalNominees',$totalNominees)
@@ -99,6 +93,7 @@ class CastVotingController extends Controller
                     $singleArray[] = $value;
                 }
             }
+
 
             //  return $singleArray;
 
