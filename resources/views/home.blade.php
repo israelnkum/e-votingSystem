@@ -245,44 +245,69 @@
                 @php
                     $kojoCount = 0;
                 @endphp
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
                             <h2 class="text-danger text-center">{{$candidates[0]->position->name}}</h2>
                             @foreach ($candidates as $candidate)
-                                <div class="message-box contact-box">
+                                <div class="row">
+                                    <div class="col-md-3 text-center">
+                                        <img height="90" width="90" src="{{asset('nominee_img/'.$candidate->image)}}" alt="user" class="img-circle">
+                                    </div>
+
+                                    <div class="col-md-6 text-center mt-4">
+                                        <h5>{{$candidate['first_name']." ".$candidate['other_name']." ".$candidate['last_name']}}</h5>
+                                    </div>
+
+                                    <div class="col-md-3 text-center mt-2">
+                                        @if(count($candidates)== 1)
+                                            <button type="button" class="btn btn-success btn-circle ">
+                                                Yes<br>
+                                                {{$candidate->result[0]->vote_count}}
+                                            </button>
+
+                                            <button type="button" class="btn btn-danger btn-circle ">
+                                                No<br>
+                                                {{$totalVoters- $candidate->result[0]->vote_count}}
+                                            </button>
+                                        @else
+                                            <button type="button" class="btn btn-success btn-circle ">
+                                                {{$candidate->result[0]->vote_count}}
+                                            </button>
+                                        @endif
+                                    </div>
+                                </div>
+                            <hr>
+                                {{--<div class="message-box contact-box text-center">
                                     <div class="message-widget contact-widget">
                                         <!-- Message -->
                                         <a href="javascript:void(0)">
                                             <div class="user-img">
-                                                <img src="http://localhost:803/api/image/{{$candidate->image}}" alt="user" class="img-circle">
+                                                --}}{{--<img src="http://localhost:803/api/image/{{$candidate->image}}" alt="user" class="img-circle">--}}{{--
+                                                <img src="{{asset('nominee_img/'.$candidate->image)}}" alt="user" class="img-circle">
                                             </div>
                                             <div class="mail-contnet">
                                                 <h5>{{$candidate['last_name']." ".$candidate['other_name']." ".$candidate['first_name']}}</h5>
-                                                {{--<span class="mail-desc">info@wrappixel.com</span>--}}
+                                                --}}{{--<span class="mail-desc">info@wrappixel.com</span>--}}{{--
                                             </div>
 
-                                            <button type="button" class="btn btn-success btn-circle ">
+
+                                            @if(count($candidates)== 1)
+                                                <button type="button" class="btn btn-success btn-circle ">
+                                                    {{$totalVoters- $candidate->result[0]->vote_count}}
+                                                </button>
+
+                                                <button type="button" class="btn btn-success btn-circle ">
+                                                    {{$candidate->result[0]->vote_count}}
+                                                </button>
+
+                                            @else
+
                                                 {{$candidate->result[0]->vote_count}}
-                                            </button>
+                                            @endif
                                         </a>
                                     </div>
-                                </div>
-                                {{--<table class="nowrap table" cellspacing="0" width="100%">
-                                    <tbody>
-                                    <tr>
-                                        <td  class="text-left">
-                                            <img src="{{asset('nominee_img/'.$candidate->image)}}" class="img-circle" width="100" height="100" />
-                                        </td>
-                                        <td class="text-dark">{{$candidate['last_name']." ".$candidate['other_name']." ".$candidate['first_name']}}</td>
-                                        <td class="text-center font-20" style="font-size: 30px;">
-                                            <label class="badge badge-success">
-                                                {{$candidate->result[0]->vote_count}}
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>--}}
+                                </div>--}}
                             @endforeach
                         </div>
                     </div>

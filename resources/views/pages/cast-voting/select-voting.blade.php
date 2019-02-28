@@ -60,15 +60,15 @@
 
                                     <td>
                                         @if(strtotime(\Carbon\Carbon::yesterday()) > strtotime(substr($singleArr->voting_date_start_time,0,10)))
-                                            <a class="badge badge-success" href="{{route('select-candidates',$singleArr->id)}}">See result</a>
+                                            <a class="badge badge-success font-18" href="{{route('cast-voting.show',$singleArr->id)}}">
+                                               <i class="ti ti-notepad"> </i> View result
+                                            </a>
                                         @elseif(strtotime(\Carbon\Carbon::now()->format('Y-m-d h:i A')) >= strtotime($singleArr->voting_date_start_time) && strtotime(\Carbon\Carbon::now()->format('h:i A')) < strtotime($singleArr->ending_time))
-                                            <a class="badge badge-success" href="{{route('select-candidates',$singleArr->id)}}">Click to vote</a>
-                                            @elseif(strtotime(\Carbon\Carbon::now()) >= strtotime($singleArr->voting_date_start_time) && strtotime(\Carbon\Carbon::now()->format('h:i A')) >= strtotime($singleArr->ending_time))
-                                                <a class="badge badge-success" href="{{route('select-candidates',$singleArr->id)}}">See result</a>
-                                            {{--@elseif(strtotime(\Carbon\Carbon::now()->format('Y-m-d h:i A')) >= strtotime($singleArr->voting_date_start_time) && strtotime(\Carbon\Carbon::now()->format('h:i A')) >= strtotime($singleArr->ending_time))
-                                                <label class="badge badge-danger">Ended</label>
-                                            @elseif(strtotime(\Carbon\Carbon::now()->format('Y-m-d h:i A')) >= strtotime($singleArr->voting_date_start_time) && strtotime(\Carbon\Carbon::now()->format('h:i A')) < strtotime($singleArr->ending_time))
-                                                <a class="badge badge-success" href="{{route('select-candidates',$singleArr->id)}}">Click to vote</a>--}}
+                                            <a class="badge badge-success font-18" href="{{route('select-candidates',$singleArr->id)}}">Click to vote</a>
+                                        @elseif(strtotime(\Carbon\Carbon::now()) >= strtotime($singleArr->voting_date_start_time) && strtotime(\Carbon\Carbon::now()->format('h:i A')) >= strtotime($singleArr->ending_time))
+                                            <a class="badge badge-success font-18" href="{{route('cast-voting.show',$singleArr->id)}}">
+                                                <i class="ti ti-notepad"> </i> View result
+                                            </a>
                                         @endif
                                     </td>
 

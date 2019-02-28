@@ -83,16 +83,13 @@
             <!-- Logo -->
             <!-- ============================================================== -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="{{route('home')}}">
+                <a class="navbar-brand" href="javascript:void(0)">
                     <!-- Logo icon --><b>
-                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                        <!-- Dark Logo icon -->
                         <img src="{{asset('logo-light-text.png')}}" alt="homepage" class="dark-logo" />
                         <!-- Light Logo icon -->
                         <img src="{{asset('logo-light.png')}}" alt="homepage" class="light-logo" />
                     </b>
-                    <!--End Logo icon -->
-                    <!-- Logo text --><span>
+                    <span>
                          <!-- dark Logo text -->
                          <img src="{{asset('logo-light-text.png')}}" alt="homepage" class="dark-logo" />
                         <!-- Light Logo text -->
@@ -111,10 +108,13 @@
                     <!-- ============================================================== -->
                     <!-- Search -->
                     <!-- ============================================================== -->
-                    <li class="nav-item hidden-sm-down search-box"> <a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                        <form class="app-search">
-                            <input type="text" class="form-control" placeholder="Search & enter"> <a class="srh-btn"><i class="ti-close"></i></a> </form>
-                    </li>
+                    @if(Auth::User()->role == 'Voter' && Auth::User()->voted==1)
+                        <li class="nav-item hidden-sm-down">
+                            <a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)">
+                                <i class="ti-thumb-up"> </i>Voted
+                            </a>
+                        </li>
+                        @endif
                     <!-- ============================================================== -->
                     <!-- Messages -->
                     <!-- ============================================================== -->
@@ -241,12 +241,26 @@
                     <!-- ============================================================== -->
                     <!-- Language -->
                     <!-- ============================================================== -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flag-icon flag-icon-us"></i></a>
-                        <div class="dropdown-menu dropdown-menu-right scale-up"> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-in"></i> India</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-fr"></i> French</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-cn"></i> China</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"></i> Dutch</a> </div>
+                    <li class="nav-item">
+                        {{--<a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flag-icon flag-icon-us"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right scale-up">
+                            <a id="languageSwitcher" class="dropdown-item" href="#">
+                                <i class="flag-icon flag-icon-in"> </i> India</a>
+                            <a id="languageSwitcher" class="dropdown-item" href="#">
+                                <i class="flag-icon flag-icon-fr"> </i> French</a>
+                            <a id="languageSwitcher" class="dropdown-item" href="#"> <i class="flag-icon flag-icon-cn"> </i> China</a>
+                            <a id="languageSwitcher" class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"> </i> Dutch</a>
+                        </div>--}}
+
+                        <select id="languageSwitcher">
+                            <option value="en" >English</option>
+                            <option value="de" >German</option>
+                        </select>
+
                     </li>
                 </ul>
             </div>
+            <input type="hidden" name="_token" id="csrf_toKen" value="{{csrf_token()}}">
         </nav>
     </header>
     <!-- ============================================================== -->
@@ -414,7 +428,10 @@
         <!-- ============================================================== -->
         <!-- footer -->
         <!-- ============================================================== -->
-        <footer class="footer"> © {{date('Y')}} Information Technology Student Union | Voting System </footer>
+        <footer class="footer text-dark">
+            © {{date('Y')}} Computer Science Student Union | Voting System |
+            <span>By <b style="font-weight: 900">ANA</b> Technologies</span>
+        </footer>
         <!-- ============================================================== -->
         <!-- End footer -->
         <!-- ============================================================== -->
@@ -768,6 +785,35 @@
          'csv', 'excel', 'pdf'
         ]
     });
+</script>
+
+<script>
+$(document).ready(function () {
+
+    $('#languageSwitcher').change(function () {
+        var locale = $(this).val();
+        var _token = $("input[name=_token]").val();
+
+        $.ajax({
+            url: "/language",
+            type: 'POST',
+            data:{locale : locale, _token: _token},
+            datatype: 'json',
+            success: function (data) {
+
+            },
+            error: function (data) {
+
+            },
+            beforeSend: function () {
+
+            },
+            complete: function () {
+                window.location.reload(true);
+            }
+        })
+    })
+})
 </script>
 </body>
 </html>

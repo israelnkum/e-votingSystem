@@ -60,7 +60,7 @@
                                                             <div class="card">
                                                                 <div class="card-body text-center">
                                                                     <img src="{{asset('nominee_img/'.$candidate->image)}}" class="img-circle" width="150" height="150" />
-                                                                    <h4 class="card-title m-t-10">{{$candidate['last_name']." ".$candidate['other_name']." ".$candidate['first_name']}}</h4>
+                                                                    <h4 class="card-title m-t-10">{{$candidate['first_name']." ".$candidate['other_name']." ".$candidate['last_name']}}</h4>
                                                                     <h6 class="card-subtitle text-danger font-16">{{$candidate->position->name}}</h6>
                                                                     <div class="form-group row text-center">
                                                                         <div class="col-md-12 col-sm-12">

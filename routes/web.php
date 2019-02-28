@@ -87,4 +87,11 @@ Route::post('makeCandidate/{id}','NomineesController@makeCandidate')->name('make
 
 
 
+Route::post('language-chooser','LanguageController@changeLanguage');
+
+Route::post('/language/',array(
+    'before' => 'csrf',
+    'as' => 'language-chooser',
+    'uses' => 'LanguageController@changeLanguage'
+));
 
