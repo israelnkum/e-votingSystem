@@ -9,26 +9,6 @@
                 <li class="breadcrumb-item active">Edit Voting</li>
             </ol>
         </div>
-        <div class="col-md-7 col-4 align-self-center">
-            <div class="d-flex m-t-10 justify-content-end">
-                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                    <div class="chart-text m-r-10">
-                        <h6 class="m-b-0"><small>THIS MONTH</small></h6>
-                        <h4 class="m-t-0 text-info">$58,356</h4></div>
-                    <div class="spark-chart">
-                        <div id="monthchart"></div>
-                    </div>
-                </div>
-                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                    <div class="chart-text m-r-10">
-                        <h6 class="m-b-0"><small>LAST MONTH</small></h6>
-                        <h4 class="m-t-0 text-primary">$48,356</h4></div>
-                    <div class="spark-chart">
-                        <div id="lastmonthchart"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <!-- ============================================================== -->
     <!-- End Bread crumb and right sidebar toggle -->
@@ -47,7 +27,7 @@
                             <div class="col-md-4">
                                 <div class="form-group m-b-40">
                                     <input type="text" class="form-control" name="voting_name"  value="{{$voting->name }}" id="voting_name" required>
-                                    <span class="bar"></span>
+                                    <span class="bar"> </span>
                                     <label for="voting_name">Voting Name</label>
                                     <div class="invalid-feedback">
                                         Voting Name required
@@ -58,7 +38,7 @@
                             <div class="col-md-4">
                                 <div class="form-group m-b-40">
                                     <input type="text" id="mdate" value="{{ substr($voting->voting_date_start_time,0,10) }}" name="voting_date" class="form-control" required>
-                                    <span class="bar"></span>
+                                    <span class="bar"> </span>
                                     <label for="mdate">Voting Date</label>
                                     <div class="invalid-feedback">
                                         Voting Date required
@@ -91,8 +71,8 @@
                             </div>
                         </div>
                         {!! method_field('PUT') !!}
-                        <div class="text-xs-right m-t-5">
-                            <button type="submit" class="btn btn-info btn-block">Update</button>
+                        <div class="text-xs-right m-t-5 text-right">
+                            <button type="submit" class="btn btn-outline-info">Update</button>
                         </div>
                     </form>
                 </div>

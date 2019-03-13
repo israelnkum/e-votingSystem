@@ -33,7 +33,10 @@ class NomineesController extends Controller
     public function index()
     {
 
-         $nominees = Nominee::with('position','level','department')->get();
+         $nominees = Nominee::with('position','level','department')
+             ->where('department_id',Auth::User()->department_id)
+             ->where('voting_id',Auth::User()->voting_id)
+             ->get();
        //return $nominees;
         return view('pages.nominees.nominees-index')
             ->with('nominees',$nominees);
@@ -47,7 +50,13 @@ class NomineesController extends Controller
     public function create()
     {
 
-        $voting = Voting::all();
+        $voting = [];
+        if (Auth::User()->role == "Admin"){
+            $voting = Voting::all()
+                ->where('department_id', Auth::User()->department_id);
+        }elseif (Auth::User()->role == "Super Admin"){
+            $voting = Voting::all();
+        }
         $positions = Position::all();
         $levels = Level::all();
         $departments= Department::all();

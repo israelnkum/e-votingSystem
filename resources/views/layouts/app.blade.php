@@ -219,13 +219,13 @@
                     <!-- Profile -->
                     <!-- ============================================================== -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link  dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                            {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right scale-up">
                             <ul class="dropdown-user">
-                                <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
-                                <li role="separator" class="divider"></li>
+                                {{--<li><a href="#"><i class="ti-user"> </i> My Profile</a></li>--}}
+                                <li role="separator" class="divider"> </li>
                                 <li>
                                     <a href="{{ route('logout')}}"
                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> Logout</a>
@@ -252,10 +252,10 @@
                             <a id="languageSwitcher" class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"> </i> Dutch</a>
                         </div>--}}
 
-                        <select id="languageSwitcher">
+                       {{-- <select id="languageSwitcher">
                             <option value="en" >English</option>
                             <option value="de" >German</option>
-                        </select>
+                        </select>--}}
 
                     </li>
                 </ul>
@@ -277,14 +277,14 @@
                 <ul id="sidebarnav">
                     <li>
                         <a href="{{route('home')}}" aria-expanded="false">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-gauge"> </i>
                             <span class="hide-menu">Home </span>
                         </a>
                     </li>
-                    @if(Auth::User()->role == 'Admin')
+                    @if(Auth::User()->role == 'Admin' || Auth::User()->role == 'Super Admin')
                         <li>
                             <a class="has-arrow " href="#" aria-expanded="false">
-                                <i class="mdi mdi-thumb-up"></i>
+                                <i class="mdi mdi-thumb-up"> </i>
                                 <span class="hide-menu">Voting</span>
                             </a>
                             <ul aria-expanded="false" class="collapse">
@@ -330,7 +330,7 @@
                                 <i class="mdi mdi-file"></i><span class="hide-menu">File</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li>
-                                    <a href="../email/inbox.html">View Results</a>
+                                    <a href="{{route('cast-voting.index')}}">View Results</a>
                                 </li>
                                 <li>
                                     <a href="../email/inbox.html">All Generated Report(s)</a>
@@ -345,7 +345,7 @@
                         </li>
                         <li>
                             <a class="has-arrow " href="#" aria-expanded="false">
-                                <i class="mdi mdi-account"></i>
+                                <i class="mdi mdi-account"> </i>
                                 <span class="hide-menu">Voters(s)</span>
                             </a>
                             <ul aria-expanded="false" class="collapse">
@@ -362,7 +362,7 @@
 
                         <li>
                             <a class="has-arrow " href="#" aria-expanded="false">
-                                <i class="mdi mdi-label"></i>
+                                <i class="mdi mdi-label"> </i>
                                 <span class="hide-menu">Level(s)</span>
                             </a>
                             <ul aria-expanded="false" class="collapse">
@@ -371,11 +371,13 @@
                                 </li>
                             </ul>
                         </li>
+                        @endif
 
+                    @if(Auth::User()->role == "Super Admin")
                         <li>
                             <a class="has-arrow " href="#" aria-expanded="false">
-                                <i class="mdi mdi-home"></i>
-                                <span class="hide-menu">Department(s)</span>
+                                <i class="mdi mdi-home"> </i>
+                                <span class="hide-menu">Department/School</span>
                             </a>
                             <ul aria-expanded="false" class="collapse">
                                 <li>
@@ -386,7 +388,7 @@
 
                         <li>
                             <a class="has-arrow " href="#" aria-expanded="false">
-                                <i class="mdi mdi-account"></i>
+                                <i class="mdi mdi-account"> </i>
                                 <span class="hide-menu">Admin(s)</span>
                             </a>
                             <ul aria-expanded="false" class="collapse">
@@ -778,17 +780,17 @@
 <script src="{{asset('js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('js/buttons.print.min.js')}}"></script>
 <!-- end - This is for export functionality only -->
-<script>
-    $('#example23').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-         'csv', 'excel', 'pdf'
-        ]
-    });
-</script>
 
 <script>
 $(document).ready(function () {
+
+    $('#example23').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'excel', 'pdf'
+        ]
+    });
+
 
     $('#languageSwitcher').change(function () {
         var locale = $(this).val();

@@ -6,6 +6,7 @@ use App\Department;
 use App\User;
 use App\Voting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -29,9 +30,13 @@ class VotersController extends Controller
     public function index()
     {
         $voters = User::with('department','voting')
-            ->where('role','Voter')->get();
+            ->where('role','Voter')
+            ->where('department_id',Auth::User()->department_id)
+            ->where('voting_id',Auth::User()->voting_id)
+            ->get();
 
-       //return $voters;
+
+        //return $voters;
         return view('pages.voters.voters-index')
             ->with('voters',$voters);
     }
@@ -46,7 +51,13 @@ class VotersController extends Controller
         $voters = User::with('department','voting')->get();
         // return $users;
         $departments = Department::all();
-        $voting = Voting::all();
+        $voting = [];
+        if (Auth::User()->role == "Admin"){
+            $voting = Voting::all()
+                ->where('department_id', Auth::User()->department_id);
+        }elseif (Auth::User()->role == "Super Admin"){
+            $voting = Voting::all();
+        }
         return view('pages.voters.voters-create')
             ->with('voters',$voters)
             ->with('departments',$departments)

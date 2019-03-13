@@ -73,7 +73,7 @@ class UsersController extends Controller
         $users->name= $request->input('name');
         $users->email= $request->input('email');
         $users->password= Hash::make(11111111);
-        $users->role= 'Admin';
+        $users->role= $request->input('role');;
 
         $checkUser = User::all()
             ->where('email',$request->input('email'))

@@ -16,18 +16,14 @@
             <div class="d-flex m-t-10 justify-content-end">
                 <div class="d-flex m-r-20 m-l-10 hidden-md-down">
                     <div class="chart-text m-r-10">
-                        <h6 class="m-b-0"><small>THIS MONTH</small></h6>
-                        <h4 class="m-t-0 text-info">$58,356</h4></div>
-                    <div class="spark-chart">
-                        <div id="monthchart"></div>
+                        <h6 class="m-b-0"><small>Department</small></h6>
+                        <h4 class="m-t-0 text-info">{{$currentUser[0]->department->name}}</h4>
                     </div>
                 </div>
                 <div class="d-flex m-r-20 m-l-10 hidden-md-down">
                     <div class="chart-text m-r-10">
-                        <h6 class="m-b-0"><small>LAST MONTH</small></h6>
-                        <h4 class="m-t-0 text-primary">$48,356</h4></div>
-                    <div class="spark-chart">
-                        <div id="lastmonthchart"></div>
+                        <h6 class="m-b-0"><small>Voting</small></h6>
+                        <h4 class="m-t-0 text-primary">{{$currentUser[0]->voting->name}}</h4>
                     </div>
                 </div>
             </div>
@@ -39,7 +35,7 @@
     <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
-    @if(Auth::User()->role == 'Admin')
+    @if(Auth::User()->role == 'Admin' || Auth::User()->role == 'Super Admin')
         <div class="row">
             <!-- Column -->
             <div class="col-lg-3 col-md-6">
@@ -47,7 +43,7 @@
                     <div class="card-body">
                         <div class="d-flex flex-row">
                             <div class="round round-lg align-self-center round-info">
-                                <i class="ti-thumb-up"></i></div>
+                                <i class="ti-thumb-up"> </i></div>
                             <div class="m-l-10 align-self-center">
                                 <h3 class="m-b-0 font-light">{{$totalVotings}}</h3>
                                 <h5 class="text-muted m-b-0">Total Voting(s)</h5></div>
@@ -176,7 +172,7 @@
     </div>
     <!-- Row -->
     <!-- Row -->
-    @if(Auth::User()->role == 'Admin')
+    @if(Auth::User()->role == 'Admin' || Auth::User()->role == 'Super Admin')
         <div class="row">
             <!-- Column -->
             <div class="col-lg-4 col-md-12">
@@ -235,12 +231,8 @@
                 </div>
             </div>
         </div>
-
-
     @else
-
         <div class="row">
-
             @foreach ($positions as $position => $candidates)
                 @php
                     $kojoCount = 0;
@@ -277,7 +269,7 @@
                                         @endif
                                     </div>
                                 </div>
-                            <hr>
+                                <hr>
                                 {{--<div class="message-box contact-box text-center">
                                     <div class="message-widget contact-widget">
                                         <!-- Message -->

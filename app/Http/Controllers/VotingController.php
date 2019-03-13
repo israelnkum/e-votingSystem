@@ -7,6 +7,7 @@ use App\Nominee;
 use App\User;
 use App\Voter;
 use App\Voting;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -34,18 +35,27 @@ class VotingController extends Controller
      */
     public function index()
     {
+
         $current_date = Carbon::yesterday()->format('Y-m-d');
         $current_time = Carbon::now()->toDateTimeString();
 
-        //return $current_date;
-        // $check = '';
-        $voting = Voting::with('department')->get();
+        $voting = [];
+
+        if(Auth::User()->role == "Admin"){
+            $voting = Voting::with('department')
+                ->where('department_id',Auth::User()->department_id)
+                ->get();
+
+        }elseif (Auth::User()->role == "Super Admin"){
+            $voting = Voting::with('department')->get();
+        }
 
 
         return view('pages.voting.voting-index')
             ->with('voting',$voting)
             ->with('current_date',$current_date)
-            ->with('current_time',$current_time);
+            ->with('current_time',$current_time)
+            ;
     }
 
     /**
@@ -103,18 +113,24 @@ class VotingController extends Controller
         //
     }
 
-    public function startOrEndVoting($id){
+    public function startOrEndVoting(Request $request, $id){
 
         $voting = Voting::find($id);
 
-        if ($voting->status == 0){
-            $voting->status=1;
+
+        $status=  $request->input('voting_status');
+        $date = date('Y-m-d h:i A');
+        $time =date('h:i A');
+
+        //return $status;
+        if ($status == 0){
+            $voting->voting_date_start_time = $date;
             if ($voting->save()){
                 return redirect('/voting')
                     ->with('success','Voting Started');
             }
-        }else{
-            $voting->status=0;
+        }elseif($status == 1){
+            $voting->ending_time = $time;
             if ($voting->save()){
                 return redirect('/voting')
                     ->with('success','Voting Ended');

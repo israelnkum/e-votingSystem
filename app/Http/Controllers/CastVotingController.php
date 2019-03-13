@@ -73,27 +73,6 @@ class CastVotingController extends Controller
             return view('pages.cast-voting.select-voting')
                 ->with('singleArray',$singleArray);
 
-           /* $totalVoters = User::all()
-                ->where('role','Voter')->count();
-            $totalNominees = Nominee::all()->count();
-            $totalCandidates = Nominee::all()->where('candidate',1)->count();
-            $totalVoteCasted = User::all()->where('voted','1')->count();
-            $totalLevel = Level::all()->count();
-            $totalDepartment = Department::all()->count();
-            $totalPositions = Position::all()->count();
-            $totalVotings = Voting::all()->count();
-
-            return view('home')
-                // return view('pages.cast-voting.voter-dashboard')
-                ->with('positions',$positions)
-                ->with('totalVoters',$totalVoters)
-                ->with('totalNominees',$totalNominees)
-                ->with('totalCandidates',$totalCandidates)
-                ->with('totalLevel',$totalLevel)
-                ->with('totalDepartment',$totalDepartment)
-                ->with('totalPositions',$totalPositions)
-                ->with('totalVotings',$totalVotings)
-                ->with('totalVoteCasted',$totalVoteCasted);*/
         }else{
             /*
             *checking if user has not voted yet
@@ -144,11 +123,35 @@ class CastVotingController extends Controller
             ->get()
             ->groupBy('position_id');
 
-        // return $howOldAmI = Carbon::createFromDate(1996, 1, 1)->age;
+        if (Auth::User()->voted == 1){
+            $totalVoters = User::all()
+                ->where('role','Voter')->count();
+            $totalNominees = Nominee::all()->count();
+            $totalCandidates = Nominee::all()->where('candidate',1)->count();
+            $totalVoteCasted = User::all()->where('voted','1')->count();
+            $totalLevel = Level::all()->count();
+            $totalDepartment = Department::all()->count();
+            $totalPositions = Position::all()->count();
+            $totalVotings = Voting::all()->count();
 
-        return view('pages.cast-voting.cast-voting-index')
-            ->with('voting_id',$id)
-            ->with('positions',$positions);
+            return view('home')
+                // return view('pages.cast-voting.voter-dashboard')
+                ->with('positions',$positions)
+                ->with('totalVoters',$totalVoters)
+                ->with('totalNominees',$totalNominees)
+                ->with('totalCandidates',$totalCandidates)
+                ->with('totalLevel',$totalLevel)
+                ->with('totalDepartment',$totalDepartment)
+                ->with('totalPositions',$totalPositions)
+                ->with('totalVotings',$totalVotings)
+                ->with('totalVoteCasted',$totalVoteCasted);
+        }else{
+            return view('pages.cast-voting.cast-voting-index')
+                ->with('voting_id',$id)
+                ->with('positions',$positions);
+        }
+
+
     }
 
     /**
@@ -212,6 +215,9 @@ class CastVotingController extends Controller
      */
     public function show($id)
     {
+        $currentUser = User::with('department','voting')
+            ->where('id',Auth::User()->id)->get();
+
 
         $positions = Nominee::with('position','level','department','result')
             ->where('department_id',Auth::User()->department_id)
@@ -221,10 +227,26 @@ class CastVotingController extends Controller
             ->groupBy('position_id');
 
         $totalVoters = User::all()
-            ->where('role','Voter')->count();
-        $totalNominees = Nominee::all()->count();
-        $totalCandidates = Nominee::all()->where('candidate',1)->count();
-        $totalVoteCasted = User::all()->where('voted','1')->count();
+            ->where('role','Voter')
+            ->where('department_id',Auth::User()->department_id)
+            ->where('voting_id',Auth::User()->voting_id)
+            ->count();
+        $totalNominees = Nominee::all()
+            ->where('department_id',Auth::User()->department_id)
+            ->where('voting_id',Auth::User()->voting_id)
+            ->count();
+        $totalCandidates = Nominee::all()
+            ->where('candidate',1)
+            ->where('department_id',Auth::User()->department_id)
+            ->where('voting_id',Auth::User()->voting_id)
+            ->count();
+        $totalVoteCasted = User::all()
+            ->where('voted','1')
+            ->where('department_id',Auth::User()->department_id)
+            ->where('voting_id',Auth::User()->voting_id)
+            ->count();
+
+
         $totalLevel = Level::all()->count();
         $totalDepartment = Department::all()->count();
         $totalPositions = Position::all()->count();
@@ -240,7 +262,8 @@ class CastVotingController extends Controller
             ->with('totalDepartment',$totalDepartment)
             ->with('totalPositions',$totalPositions)
             ->with('totalVotings',$totalVotings)
-            ->with('totalVoteCasted',$totalVoteCasted);
+            ->with('totalVoteCasted',$totalVoteCasted)
+            ->with('currentUser',$currentUser);
     }
 
     /**

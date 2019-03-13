@@ -29,8 +29,23 @@ class NomineeTokenController extends Controller
     public function index()
     {
         $departments = Department::all();
-        $voting = Voting::all();
-        $allTokens = NomineeToken::all();
+
+        $voting = [];
+        $allTokens = [];
+        if (Auth::User()->role == "Admin"){
+            $voting = Voting::all()
+                ->where('department_id', Auth::User()->department_id);
+
+            $allTokens = NomineeToken::all()
+                ->where('department_id',Auth::User()->department_id)
+                ->where('voting_id',Auth::User()->voting_id);
+        }elseif (Auth::User()->role == "Super Admin"){
+            $voting = Voting::all();
+            $allTokens = NomineeToken::all();
+        }
+
+
+
 
         //return $allTokens;
         return view('pages.generate_tokens.generate-token-index')

@@ -9,26 +9,6 @@
                 <li class="breadcrumb-item active">New Voting</li>
             </ol>
         </div>
-        <div class="col-md-7 col-4 align-self-center">
-            <div class="d-flex m-t-10 justify-content-end">
-                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                    <div class="chart-text m-r-10">
-                        <h6 class="m-b-0"><small>THIS MONTH</small></h6>
-                        <h4 class="m-t-0 text-info">$58,356</h4></div>
-                    <div class="spark-chart">
-                        <div id="monthchart"></div>
-                    </div>
-                </div>
-                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                    <div class="chart-text m-r-10">
-                        <h6 class="m-b-0"><small>LAST MONTH</small></h6>
-                        <h4 class="m-t-0 text-primary">$48,356</h4></div>
-                    <div class="spark-chart">
-                        <div id="lastmonthchart"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <!-- ============================================================== -->
     <!-- End Bread crumb and right sidebar toggle -->
@@ -109,15 +89,23 @@
                             </div>
 
                             <div class="col-md-12 mb-3 form-group">
-                                <select name="department_id" class="select2 form-control"required>
-                                    <option value="">Select Department</option>
-                                    @foreach($departments as $department)
-                                        <option value="{{$department->id}}">{{$department->name}}</option>
-                                    @endforeach
-                                </select>
-                                <div class="invalid-feedback">
-                                    Department required!
-                                </div>
+                                @if(Auth::User()->role == "Super Admin")
+                                    <select name="department_id" class="select2 form-control" required>
+                                        <option value="">Select Department</option>
+                                        @foreach($departments as $department)
+                                            <option value="{{$department->id}}">{{$department->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Department required!
+                                    </div>
+
+                                @else
+                                    <input type="hidden" class="form-control" value="{{ Auth::User()->department_id}}" name="department_id" id="validationCustom01" placeholder="" required>
+                                    <div class="invalid-feedback">
+                                        Index Number required
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
