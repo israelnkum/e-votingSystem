@@ -108,7 +108,7 @@
                     <!-- ============================================================== -->
                     <!-- Search -->
                     <!-- ============================================================== -->
-                    @if(Auth::User()->role == 'Voter' && Auth::User()->voted==1)
+                    @if(Auth::user()->role == 'Voter' && Auth::user()->voted==1)
                         <li class="nav-item hidden-sm-down">
                             <a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)">
                                 <i class="ti-thumb-up"> </i>Voted

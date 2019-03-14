@@ -29,6 +29,33 @@
             </div>
         </div>
     </div>
+
+
+    {{--<div class="row page-titles">
+        <div class="col-md-5 col-8 align-self-center">
+            <h3 class="text-themecolor">Dashboard</h3>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">{{$currentUser[0]->voting->name}}</li>
+            </ol>
+        </div>
+        <div class="col-md-7 col-4 align-self-center">
+            <div class="d-flex m-t-10 justify-content-end">
+                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
+                    <div class="chart-text m-r-10">
+                        <h6 class="m-b-0"><small>Voting Date</small></h6>
+                        <h4 class="m-t-0 text-info">{{substr($voting->voting_date_start_time,0,10)}}</h4></div>
+
+                </div>
+                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
+                    <div class="chart-text m-r-10">
+                        <h6 class="m-b-0"><small>Start and End Time</small></h6>
+                        <h4 class="m-t-0 text-primary">{{substr($voting->voting_date_start_time,10)." -".$voting->ending_time}}</h4></div>
+
+                </div>
+            </div>
+        </div>
+    </div>--}}
     <!-- ============================================================== -->
     <!-- End Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
@@ -115,7 +142,8 @@
                         <h6 class="text-muted">Total Voters</h6></div>
                     <!-- Column -->
                     <div class="col text-right align-self-center">
-                        <div data-label="50" class="css-bar m-b-0 css-bar-info css-bar-20"></div>
+                        <h2 class="font-light m-b-0">{{$totalVoteCasted}}</h2>
+                        <h6 class="text-muted">Total Vote Casted</h6>
                     </div>
                 </div>
             </div>
@@ -131,7 +159,8 @@
                         <h6 class="text-muted">Total Nominees</h6></div>
                     <!-- Column -->
                     <div class="col text-right align-self-center">
-                        <div data-label="30%" class="css-bar m-b-0 css-bar-success css-bar-20"></div>
+                        <h2 class="font-light m-b-0">{{$totalCandidates}}</h2>
+                        <h6 class="text-muted">Total Candidates</h6>
                     </div>
                 </div>
             </div>

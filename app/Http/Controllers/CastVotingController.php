@@ -215,9 +215,10 @@ class CastVotingController extends Controller
      */
     public function show($id)
     {
+        $voting = Voting::find($id);
+
         $currentUser = User::with('department','voting')
             ->where('id',Auth::User()->id)->get();
-
 
         $positions = Nominee::with('position','level','department','result')
             ->where('department_id',Auth::User()->department_id)
@@ -252,18 +253,33 @@ class CastVotingController extends Controller
         $totalPositions = Position::all()->count();
         $totalVotings = Voting::all()->count();
 
-        return view('home')
-            // return view('pages.cast-voting.voter-dashboard')
-            ->with('positions',$positions)
-            ->with('totalVoters',$totalVoters)
-            ->with('totalNominees',$totalNominees)
-            ->with('totalCandidates',$totalCandidates)
-            ->with('totalLevel',$totalLevel)
-            ->with('totalDepartment',$totalDepartment)
-            ->with('totalPositions',$totalPositions)
-            ->with('totalVotings',$totalVotings)
-            ->with('totalVoteCasted',$totalVoteCasted)
-            ->with('currentUser',$currentUser);
+        if (Auth::user()->role == 'Super Admin' || Auth::user()->role == 'Admin'){
+            return view('pages.results.result-index')
+                ->with('positions',$positions)
+                ->with('totalVoters',$totalVoters)
+                ->with('totalNominees',$totalNominees)
+                ->with('totalCandidates',$totalCandidates)
+                ->with('totalLevel',$totalLevel)
+                ->with('totalDepartment',$totalDepartment)
+                ->with('totalPositions',$totalPositions)
+                ->with('totalVotings',$totalVotings)
+                ->with('totalVoteCasted',$totalVoteCasted)
+                ->with('currentUser',$currentUser)
+                ->with('voting',$voting);
+        }else{
+            return view('home')
+                ->with('positions',$positions)
+                ->with('totalVoters',$totalVoters)
+                ->with('totalNominees',$totalNominees)
+                ->with('totalCandidates',$totalCandidates)
+                ->with('totalLevel',$totalLevel)
+                ->with('totalDepartment',$totalDepartment)
+                ->with('totalPositions',$totalPositions)
+                ->with('totalVotings',$totalVotings)
+                ->with('totalVoteCasted',$totalVoteCasted)
+                ->with('currentUser',$currentUser)
+                ->with('voting',$voting);
+        }
     }
 
     /**
