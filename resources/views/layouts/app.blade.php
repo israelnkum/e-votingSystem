@@ -114,103 +114,7 @@
                                 <i class="ti-thumb-up"> </i>Voted
                             </a>
                         </li>
-                        @endif
-                    <!-- ============================================================== -->
-                    <!-- Messages -->
-                    <!-- ============================================================== -->
-                    {{--<li class="nav-item dropdown mega-dropdown"> <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-view-grid"></i></a>
-                        <div class="dropdown-menu scale-up-left">
-                            <ul class="mega-dropdown-menu row">
-                                <li class="col-lg-3 col-xlg-2 m-b-30">
-                                    <h4 class="m-b-20">CAROUSEL</h4>
-                                    <!-- CAROUSEL -->
-                                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                                        <div class="carousel-inner" role="listbox">
-                                            <div class="carousel-item active">
-                                                <div class="container"> <img class="d-block img-fluid" src="https://wrappixel.com/demos/admin-templates/material-pro/assets/images/big/img1.jpg" alt="First slide"></div>
-                                            </div>
-                                            <div class="carousel-item">
-                                                <div class="container"><img class="d-block img-fluid" src="https://wrappixel.com/demos/admin-templates/material-pro/assets/images/big/img2.jpg" alt="Second slide"></div>
-                                            </div>
-                                            <div class="carousel-item">
-                                                <div class="container"><img class="d-block img-fluid" src="https://wrappixel.com/demos/admin-templates/material-pro/assets/images/big/img3.jpg" alt="Third slide"></div>
-                                            </div>
-                                        </div>
-                                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a>
-                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
-                                    </div>
-                                    <!-- End CAROUSEL -->
-                                </li>
-                                <li class="col-lg-3 m-b-30">
-                                    <h4 class="m-b-20">ACCORDION</h4>
-                                    <!-- Accordian -->
-                                    <div id="accordion" class="nav-accordion" role="tablist" aria-multiselectable="true">
-                                        <div class="card">
-                                            <div class="card-header" role="tab" id="headingOne">
-                                                <h5 class="mb-0">
-                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        Collapsible Group Item #1
-                                                    </a>
-                                                </h5> </div>
-                                            <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                                                <div class="card-body"> Anim pariatur cliche reprehenderit, enim eiusmod high. </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" role="tab" id="headingTwo">
-                                                <h5 class="mb-0">
-                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                        Collapsible Group Item #2
-                                                    </a>
-                                                </h5> </div>
-                                            <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                <div class="card-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" role="tab" id="headingThree">
-                                                <h5 class="mb-0">
-                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                        Collapsible Group Item #3
-                                                    </a>
-                                                </h5> </div>
-                                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                <div class="card-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="col-lg-3  m-b-30">
-                                    <h4 class="m-b-20">CONTACT US</h4>
-                                    <!-- Contact -->
-                                    <form>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="exampleInputname1" placeholder="Enter Name"> </div>
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Enter email"> </div>
-                                        <div class="form-group">
-                                            <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Message"></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-info">Submit</button>
-                                    </form>
-                                </li>
-                                <li class="col-lg-3 col-xlg-4 m-b-30">
-                                    <h4 class="m-b-20">List style</h4>
-                                    <!-- List style -->
-                                    <ul class="list-style-none">
-                                        <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> You can give link</a></li>
-                                        <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Give link</a></li>
-                                        <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Another Give link</a></li>
-                                        <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Forth link</a></li>
-                                        <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Another fifth link</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>--}}
-                    <!-- ============================================================== -->
-                    <!-- End Messages -->
-                    <!-- ============================================================== -->
+                    @endif
                 </ul>
                 <!-- ============================================================== -->
                 <!-- User profile and search -->
@@ -220,7 +124,7 @@
                     <!-- ============================================================== -->
                     <li class="nav-item dropdown">
                         <a class="nav-link  dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                           {{ Auth::user()->name }}
+                            {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right scale-up">
                             <ul class="dropdown-user">
@@ -252,10 +156,10 @@
                             <a id="languageSwitcher" class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"> </i> Dutch</a>
                         </div>--}}
 
-                       {{-- <select id="languageSwitcher">
-                            <option value="en" >English</option>
-                            <option value="de" >German</option>
-                        </select>--}}
+                        {{-- <select id="languageSwitcher">
+                             <option value="en" >English</option>
+                             <option value="de" >German</option>
+                         </select>--}}
 
                     </li>
                 </ul>
@@ -269,144 +173,148 @@
     <!-- ============================================================== -->
     <!-- Left Sidebar - style you can find in sidebar.scss  -->
     <!-- ============================================================== -->
-    <aside class="left-sidebar">
-        <!-- Sidebar scroll-->
-        <div class="scroll-sidebar">
-            <!-- Sidebar navigation-->
-            <nav class="sidebar-nav">
-                <ul id="sidebarnav">
-                    <li>
-                        <a href="{{route('home')}}" aria-expanded="false">
-                            <i class="mdi mdi-gauge"> </i>
-                            <span class="hide-menu">Home </span>
-                        </a>
-                    </li>
-                    @if(Auth::User()->role == 'Admin' || Auth::User()->role == 'Super Admin')
+    @if(Auth::user()->role == "Super Admin" && Auth::user()->updated == 0 || Auth::user()->role == "Admin" && Auth::user()->updated == 0)
+
+        @else
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
                         <li>
-                            <a class="has-arrow " href="#" aria-expanded="false">
-                                <i class="mdi mdi-thumb-up"> </i>
-                                <span class="hide-menu">Voting</span>
+                            <a href="{{route('home')}}" aria-expanded="false">
+                                <i class="mdi mdi-gauge"> </i>
+                                <span class="hide-menu">Home </span>
                             </a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li>
-                                    <a href={{route('voting.index')}}>All Voting</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('voting.create')}}">New Voting</a>
-                                </li>
-                            </ul>
                         </li>
-                        <li>
-                            <a class="has-arrow " href="#" aria-expanded="false">
-                                <i class="mdi mdi-account-location"></i>
-                                <span class="hide-menu">Position</span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li>
-                                    <a href="{{route('positions.index')}}">All /New Position(s)</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-devider"></li>
-                        <li>
-                            <a class="has-arrow " href="#" aria-expanded="false">
-                                <i class="mdi mdi-account"></i>
-                                <span class="hide-menu">Nominee</span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li>
-                                    <a href="{{route('nominees.index')}}">All Nominee(s)</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('nominee_token.index')}}">Generate Token</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('nominees.create')}}">New Nominee</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="two-column">
-                            <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
-                                <i class="mdi mdi-file"></i><span class="hide-menu">File</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li>
-                                    <a href="{{route('cast-voting.index')}}">View Results</a>
-                                </li>
-                                <li>
-                                    <a href="../email/inbox.html">All Generated Report(s)</a>
-                                </li>
-                                <li>
-                                    <a href="../email/compose.html">Generate Report</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)">All Candidates(s)</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="has-arrow " href="#" aria-expanded="false">
-                                <i class="mdi mdi-account"> </i>
-                                <span class="hide-menu">Voters(s)</span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li>
-                                    <a href="{{route('voters.index')}}">All Voters(s)</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('voters.create')}}">New/Upload Voter(s)</a>
-                                </li>
-                            </ul>
-                        </li>
+                        @if(Auth::User()->role == 'Admin' || Auth::User()->role == 'Super Admin')
+                            <li>
+                                <a class="has-arrow " href="#" aria-expanded="false">
+                                    <i class="mdi mdi-thumb-up"> </i>
+                                    <span class="hide-menu">Voting</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li>
+                                        <a href={{route('voting.index')}}>All Voting</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('voting.create')}}">New Voting</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow " href="#" aria-expanded="false">
+                                    <i class="mdi mdi-account-location"></i>
+                                    <span class="hide-menu">Position</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li>
+                                        <a href="{{route('positions.index')}}">All /New Position(s)</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-devider"></li>
+                            <li>
+                                <a class="has-arrow " href="#" aria-expanded="false">
+                                    <i class="mdi mdi-account"></i>
+                                    <span class="hide-menu">Nominee</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li>
+                                        <a href="{{route('nominees.index')}}">All Nominee(s)</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('nominee_token.index')}}">Generate Token</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('nominees.create')}}">New Nominee</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="two-column">
+                                <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                                    <i class="mdi mdi-file"></i><span class="hide-menu">File</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li>
+                                        <a href="{{route('cast-voting.index')}}">View Results</a>
+                                    </li>
+                                    <li>
+                                        <a href="../email/inbox.html">All Generated Report(s)</a>
+                                    </li>
+                                    <li>
+                                        <a href="../email/compose.html">Generate Report</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">All Candidates(s)</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow " href="#" aria-expanded="false">
+                                    <i class="mdi mdi-account"> </i>
+                                    <span class="hide-menu">Voters(s)</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li>
+                                        <a href="{{route('voters.index')}}">All Voters(s)</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('voters.create')}}">New/Upload Voter(s)</a>
+                                    </li>
+                                </ul>
+                            </li>
 
 
 
-                        <li>
-                            <a class="has-arrow " href="#" aria-expanded="false">
-                                <i class="mdi mdi-label"> </i>
-                                <span class="hide-menu">Level(s)</span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li>
-                                    <a href="{{route('levels.index')}}">New/All Level(s)</a>
-                                </li>
-                            </ul>
-                        </li>
+                            <li>
+                                <a class="has-arrow " href="#" aria-expanded="false">
+                                    <i class="mdi mdi-label"> </i>
+                                    <span class="hide-menu">Level(s)</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li>
+                                        <a href="{{route('levels.index')}}">New/All Level(s)</a>
+                                    </li>
+                                </ul>
+                            </li>
                         @endif
 
-                    @if(Auth::User()->role == "Super Admin")
-                        <li>
-                            <a class="has-arrow " href="#" aria-expanded="false">
-                                <i class="mdi mdi-home"> </i>
-                                <span class="hide-menu">Department/School</span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li>
-                                    <a href="{{route('departments.index')}}">New/All Department(s)</a>
-                                </li>
-                            </ul>
-                        </li>
+                        @if(Auth::User()->role == "Super Admin")
+                            <li>
+                                <a class="has-arrow " href="#" aria-expanded="false">
+                                    <i class="mdi mdi-home"> </i>
+                                    <span class="hide-menu">Department/School</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li>
+                                        <a href="{{route('departments.index')}}">New/All Department(s)</a>
+                                    </li>
+                                </ul>
+                            </li>
 
-                        <li>
-                            <a class="has-arrow " href="#" aria-expanded="false">
-                                <i class="mdi mdi-account"> </i>
-                                <span class="hide-menu">Admin(s)</span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li>
-                                    <a href="{{route('users.index')}}">All Admin(s)</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('users.create')}}">New Admin</a>
-                                </li>
-                            </ul>
-                        </li>
+                            <li>
+                                <a class="has-arrow " href="#" aria-expanded="false">
+                                    <i class="mdi mdi-account"> </i>
+                                    <span class="hide-menu">Admin(s)</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li>
+                                        <a href="{{route('users.index')}}">All Admin(s)</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('users.create')}}">New Admin</a>
+                                    </li>
+                                </ul>
+                            </li>
                         @endif
-                </ul>
-            </nav>
-            <!-- End Sidebar navigation -->
-        </div>
-        <!-- End Sidebar scroll-->
-    </aside>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+    @endif
     <!-- ============================================================== -->
     <!-- End Left Sidebar - style you can find in sidebar.scss  -->
     <!-- ============================================================== -->
@@ -782,40 +690,40 @@
 <!-- end - This is for export functionality only -->
 
 <script>
-$(document).ready(function () {
+    $(document).ready(function () {
 
-    $('#example23').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            'csv', 'excel', 'pdf'
-        ]
-    });
+        $('#example23').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'csv', 'excel', 'pdf'
+            ]
+        });
 
 
-    $('#languageSwitcher').change(function () {
-        var locale = $(this).val();
-        var _token = $("input[name=_token]").val();
+        $('#languageSwitcher').change(function () {
+            var locale = $(this).val();
+            var _token = $("input[name=_token]").val();
 
-        $.ajax({
-            url: "/language",
-            type: 'POST',
-            data:{locale : locale, _token: _token},
-            datatype: 'json',
-            success: function (data) {
+            $.ajax({
+                url: "/language",
+                type: 'POST',
+                data:{locale : locale, _token: _token},
+                datatype: 'json',
+                success: function (data) {
 
-            },
-            error: function (data) {
+                },
+                error: function (data) {
 
-            },
-            beforeSend: function () {
+                },
+                beforeSend: function () {
 
-            },
-            complete: function () {
-                window.location.reload(true);
-            }
+                },
+                complete: function () {
+                    window.location.reload(true);
+                }
+            })
         })
     })
-})
 </script>
 </body>
 </html>

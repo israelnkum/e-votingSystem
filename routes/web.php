@@ -69,6 +69,9 @@ Route::post('/upload-voters','VotersController@uploadVoters')->name('upload-vote
 
 Route::resource('cast-voting','CastVotingController');
 
+Route::resource('change-password','ChangePasswordController');
+
+
 /**
  * select voting type
  */

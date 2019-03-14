@@ -31,44 +31,47 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::User()->role == 'Admin' || Auth::User()->role == 'Super Admin'){
+            if (Auth::User()->updated == 1 ){
+                $currentUser = User::with('department','voting')
+                    ->where('id',Auth::User()->id)->get();
 
-            $currentUser = User::with('department','voting')
-                ->where('id',Auth::User()->id)->get();
-
-           // return $currentUser;
-            $totalVoters = User::all()
-                ->where('role','Voter')
-                ->where('department_id',Auth::User()->department_id)
-                ->where('voting_id',Auth::User()->voting_id)
-                ->count();
-            $totalNominees = Nominee::all()
-                ->where('department_id',Auth::User()->department_id)
-                ->where('voting_id',Auth::User()->voting_id)
-                ->count();
-            $totalCandidates = Nominee::all()->where('candidate',1)
-                ->where('department_id',Auth::User()->department_id)
-                ->where('voting_id',Auth::User()->voting_id)
-                ->count();
-            $totalVoteCasted = User::all()
-                ->where('department_id',Auth::User()->department_id)
-                ->where('voting_id',Auth::User()->voting_id)
-                ->where('voted','1')
-                ->count();
-            $totalLevel = Level::all()->count();
-            $totalDepartment = Department::all()->count();
-            $totalPositions = Position::all()->count();
-            $totalVotings = Voting::all()->where('department_id', Auth::User()->department_id)
-                ->count();
-            return view('home')
-                ->with('totalVoters',$totalVoters)
-                ->with('totalNominees',$totalNominees)
-                ->with('totalCandidates',$totalCandidates)
-                ->with('totalLevel',$totalLevel)
-                ->with('totalDepartment',$totalDepartment)
-                ->with('totalPositions',$totalPositions)
-                ->with('totalVotings',$totalVotings)
-                ->with('totalVoteCasted',$totalVoteCasted)
-                ->with('currentUser',$currentUser);
+                // return $currentUser;
+                $totalVoters = User::all()
+                    ->where('role','Voter')
+                    ->where('department_id',Auth::User()->department_id)
+                    ->where('voting_id',Auth::User()->voting_id)
+                    ->count();
+                $totalNominees = Nominee::all()
+                    ->where('department_id',Auth::User()->department_id)
+                    ->where('voting_id',Auth::User()->voting_id)
+                    ->count();
+                $totalCandidates = Nominee::all()->where('candidate',1)
+                    ->where('department_id',Auth::User()->department_id)
+                    ->where('voting_id',Auth::User()->voting_id)
+                    ->count();
+                $totalVoteCasted = User::all()
+                    ->where('department_id',Auth::User()->department_id)
+                    ->where('voting_id',Auth::User()->voting_id)
+                    ->where('voted','1')
+                    ->count();
+                $totalLevel = Level::all()->count();
+                $totalDepartment = Department::all()->count();
+                $totalPositions = Position::all()->count();
+                $totalVotings = Voting::all()->where('department_id', Auth::User()->department_id)
+                    ->count();
+                return view('home')
+                    ->with('totalVoters',$totalVoters)
+                    ->with('totalNominees',$totalNominees)
+                    ->with('totalCandidates',$totalCandidates)
+                    ->with('totalLevel',$totalLevel)
+                    ->with('totalDepartment',$totalDepartment)
+                    ->with('totalPositions',$totalPositions)
+                    ->with('totalVotings',$totalVotings)
+                    ->with('totalVoteCasted',$totalVoteCasted)
+                    ->with('currentUser',$currentUser);
+            }else{
+                return view('pages.first_login.update-password');
+            }
         }elseif(Auth::User()->role == 'Voter' && Auth::User()->voted == 1){
             return redirect('/cast-voting');
         }else{
