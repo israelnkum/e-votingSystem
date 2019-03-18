@@ -17,6 +17,8 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->integer('department_id');
             $table->string('voting_id');
+            $table->integer('level_id')->nullable();
+            $table->string('gender');
             $table->string('name')->nullable();
             $table->string('username')->nullable();
             $table->string('email')->unique()->nullable();

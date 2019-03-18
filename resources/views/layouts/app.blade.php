@@ -690,13 +690,12 @@
 <!-- end - This is for export functionality only -->
 
 <script>
+
     $(document).ready(function () {
 
         $('#example23').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'csv', 'excel', 'pdf'
-            ]
+            dom: 'lBfrtip',
+            buttons: ['csv', 'excel', 'pdf'],
         });
 
 
@@ -725,5 +724,134 @@
         })
     })
 </script>
+@if(Request::is('home')  ? 'active' : '')
+<script>
+
+    let newLevelNames = [];
+    let newTotalLevelCount = [];
+    let newTotalFemales = [];
+    let newTotalMales =[];
+    let newTotalEachLevelVoters =[];
+
+
+
+
+    let newMaxValue = '<?php echo $max_lvl_count;?>';
+
+
+
+    <?php
+    foreach($levelNames as $key=> $val){?>
+    newLevelNames.push('<?php echo $val; ?>');
+    <?php    }?>
+
+    <?php
+    foreach($totalLevelCount as $key=> $val){?>
+    newTotalLevelCount.push('<?php echo $val; ?>');
+        <?php    }?>
+        <?php foreach($totalFemales as $key=> $val){?>
+        newTotalFemales.push('<?php echo $val; ?>');
+        <?php    }?>
+
+        <?php foreach($totalMales as $key=> $val){?>
+        newTotalMales.push('<?php echo $val; ?>');
+        <?php    }?>
+
+        <?php foreach($totalEachLevelVoters as $key=> $val){?>
+        newTotalEachLevelVoters.push('<?php echo $val; ?>');
+        <?php    }?>
+
+    var chart2 = new Chartist.Bar('.amp-pxl', {
+            labels:newLevelNames ,
+            series: [
+
+                newTotalFemales,
+                newTotalMales,
+                newTotalLevelCount,
+                newTotalEachLevelVoters,
+
+
+
+            ]
+        }, {
+            axisX: {
+                // On the x-axis start means top and end means bottom
+                position: 'end',
+                showGrid: false
+            },
+            axisY: {
+                // On the y-axis start means left and end means right
+                position: 'start'
+            },
+            high:newMaxValue,
+            low: '0',
+            plugins: [
+                Chartist.plugins.tooltip()
+            ]
+        });
+
+
+
+    let newVotingNames = [];
+
+    let newTotalVoterInEachVoting = [];
+
+    let newTotalNomineesInEachVoting = [];
+
+    let newTotalCandidatesInEachVoting =[];
+    let newTotalVotesCastedInEachVoting = [];
+
+    <?php foreach($allVotingNames as $key=> $val){?>
+    newVotingNames.push('<?php echo $val; ?>');
+        <?php    }?>
+
+        <?php foreach($totalVoterInEachVoting as $key=> $val){?>
+        newTotalVoterInEachVoting.push('<?php echo $val; ?>');
+    <?php    }?>
+
+    <?php foreach($totalNomineesInEachVoting as $key=> $val){?>
+    newTotalNomineesInEachVoting.push('<?php echo $val; ?>');
+        <?php    }?>
+
+        <?php foreach($totalCandidatesInEachVoting as $key=> $val){?>
+        newTotalCandidatesInEachVoting.push('<?php echo $val; ?>');
+    <?php    }?>
+
+    <?php foreach($totalVotesCastedInEachVoting as $key=> $val){?>
+    newTotalVotesCastedInEachVoting.push('<?php echo $val; ?>');
+    <?php    }?>
+
+
+
+
+
+    let newMaxVotersCount = '<?php echo $max_voters_count; ?>';
+
+    var chart3 = new Chartist.Bar('.amp', {
+        labels:newVotingNames ,
+        series: [
+            newTotalVoterInEachVoting,
+            newTotalNomineesInEachVoting,
+            newTotalCandidatesInEachVoting,
+            newTotalVotesCastedInEachVoting
+        ]
+    }, {
+        axisX: {
+            // On the x-axis start means top and end means bottom
+            position: 'end',
+            showGrid: false
+        },
+        axisY: {
+            // On the y-axis start means left and end means right
+            position: 'start'
+        },
+        high:newMaxVotersCount,
+        low: '0',
+        plugins: [
+            Chartist.plugins.tooltip()
+        ]
+    });
+</script>
+    @endif
 </body>
 </html>

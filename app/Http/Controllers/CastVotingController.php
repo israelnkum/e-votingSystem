@@ -144,10 +144,13 @@ class CastVotingController extends Controller
                 ->with('totalDepartment',$totalDepartment)
                 ->with('totalPositions',$totalPositions)
                 ->with('totalVotings',$totalVotings)
-                ->with('totalVoteCasted',$totalVoteCasted);
+                ->with('totalVoteCasted',$totalVoteCasted)
+                ;
         }else{
+            $voting = Voting::find($id);
             return view('pages.cast-voting.cast-voting-index')
                 ->with('voting_id',$id)
+                ->with('voting',$voting)
                 ->with('positions',$positions);
         }
 
@@ -175,11 +178,14 @@ class CastVotingController extends Controller
 
         $voteCasted =$request->input('voteCasted');
 
+        $voteCastedFor = [];
         foreach ($voteCasted as $item) {
             if ($item == 0){
                 unset($item);
             }else{
                 $totalVoteCounts= Result::where('nominee_id',$item)->first();
+
+                array_push($voteCastedFor,Nominee::where('id',$item)->first());
 
                 $currentCount = $totalVoteCounts ->vote_count;
                 $totalVoteCounts ->vote_count =  $currentCount+1;
@@ -187,6 +193,8 @@ class CastVotingController extends Controller
             }
 
         }
+
+
 
         $setVoted = User::find(Auth::User()->id);
 
@@ -202,9 +210,8 @@ class CastVotingController extends Controller
             ->get()
             ->groupBy('position_id');
 
-        return view('pages.cast-voting.voter-dashboard')
-            ->with('success','Voting Successful')
-            ->with('positions',$positions);
+        return view('pages.cast-voting.print-votes')
+            ->with('voteCastedFor',$voteCastedFor);
     }
 
     /**
@@ -217,8 +224,10 @@ class CastVotingController extends Controller
     {
         $voting = Voting::find($id);
 
-        $currentUser = User::with('department','voting')
+        $currentUser = User::with('department')
             ->where('id',Auth::User()->id)->get();
+
+
 
         $positions = Nominee::with('position','level','department','result')
             ->where('department_id',Auth::User()->department_id)
@@ -305,9 +314,6 @@ class CastVotingController extends Controller
         //
     }
 
-    public function view_result(){
-
-    }
 
     /**
      * Remove the specified resource from storage.

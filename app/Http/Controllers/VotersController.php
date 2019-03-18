@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Department;
+use App\Level;
 use App\User;
 use App\Voting;
 use Illuminate\Http\Request;
@@ -51,6 +52,9 @@ class VotersController extends Controller
         $voters = User::with('department','voting')->get();
         // return $users;
         $departments = Department::all();
+        $levels = Level::orderBy('id','DESC')
+            ->where('department_id',Auth::User()->department_id)
+            ->get();
         $voting = [];
         if (Auth::User()->role == "Admin"){
             $voting = Voting::all()
@@ -61,7 +65,8 @@ class VotersController extends Controller
         return view('pages.voters.voters-create')
             ->with('voters',$voters)
             ->with('departments',$departments)
-            ->with('voting',$voting);
+            ->with('voting',$voting)
+            ->with('levels',$levels);
     }
 
     /**
@@ -82,9 +87,12 @@ class VotersController extends Controller
         $users = new User();
         $users->department_id= $request->input('department_id');
         $users->voting_id= $request->input('voting_id');
+        $users->level_id= $request->input('level_id');
         $users->name= $request->input('index_number');
+        $users->gender= strtoupper($request->input('gender'));
         $users->username= $request->input('index_number');
         $users->password= Hash::make($request->input('password'));
+
         $users->role= 'Voter';
 
         $checkUser = User::all()
@@ -130,6 +138,7 @@ class VotersController extends Controller
                     // $user = \Auth::user()->id;
                     foreach($data as $value=>$row) {
                         $password = $row->password;
+                        $gender = strtoupper($row->gender);
                         if (substr($row->index_number,'0','1') !=0)
                         {
                             $index_number = "0".$row->index_number;
@@ -146,8 +155,10 @@ class VotersController extends Controller
                                 $users = new User();
                                 $users->department_id= $request->input('department_id');
                                 $users->voting_id= $request->input('voting_id');
+                                $users->level_id= $request->input('level_id');
                                 $users->name = $index_number;
                                 $users->username = $index_number;
+                                $users->gender= $gender;
                                 $users->password = Hash::make($password);
                                 $users->role='Voter';
                                 $users->save();
@@ -158,6 +169,7 @@ class VotersController extends Controller
                                 //update student information if student indexNumber already exist
                                 $users = User::where('name', $index_number)->first();
                                 $users->department_id= $request->input('department_id');
+                                $users->level_id= $request->input('level_id');
                                 $users->voting_id= $request->input('voting_id');
                                 $users->name = $index_number;
                                 $users->username = $index_number;

@@ -71,6 +71,7 @@ class UsersController extends Controller
         $users->department_id= $request->input('department_id');
         $users->voting_id= $request->input('voting_id');
         $users->name= $request->input('name');
+        $users->gender= $request->input('gender');
         $users->email= $request->input('email');
         $users->password= Hash::make(11111111);
         $users->role= $request->input('role');;

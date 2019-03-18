@@ -39,14 +39,17 @@ $(".validation-wizard").steps({
 });
 
 for(let i = 1; i < 50; i++) {
+
     let className = ".cbox".concat(i);
+
     $(className).on("click", function() {
-        var numberOfChecked = $('input.cbox'+i+':checkbox:checked').length;
+        let numberOfChecked = $('input.cbox'+i+':checkbox:checked').length;
         if (numberOfChecked > 1) {
             $(this).prop('checked', false);
-        }else if(numberOfChecked <1){
-            alert('please vote');
         }
     });
+
 }
+
+
 

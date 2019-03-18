@@ -32,7 +32,11 @@ class User extends Authenticatable
         return $this->belongsTo('App\Voting');
     }
 
-    public  function department(){
+    public function department(){
         return $this->belongsTo('App\Department');
+    }
+
+    public  function level(){
+        return $this->belongsTo('App\Level');
     }
 }

@@ -23,7 +23,7 @@
                 <div class="d-flex m-r-20 m-l-10 hidden-md-down">
                     <div class="chart-text m-r-10">
                         <h6 class="m-b-0"><small>Voting</small></h6>
-                        <h4 class="m-t-0 text-primary">{{$currentUser[0]->voting->name}}</h4>
+                        {{--<h4 class="m-t-0 text-primary">{{$voting->name}}</h4>--}}
                     </div>
                 </div>
             </div>
@@ -130,7 +130,7 @@
     @endif
 
     <!-- Row -->
-    <div class="row">
+    {{--<div class="row">
         <!-- Column -->
         <div class="col-md-6 col-lg-3">
             <div class="card card-body">
@@ -198,7 +198,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
     <!-- Row -->
     <!-- Row -->
     @if(Auth::User()->role == 'Admin' || Auth::User()->role == 'Super Admin')
@@ -207,15 +207,22 @@
             <div class="col-lg-4 col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Sales Overview</h4>
-                        <h6 class="card-subtitle">Ample Admin Vs Pixel Admin</h6>
-                        <div class="amp-pxl" style="height: 300px;"></div>
+                        <h4 class="card-title">Voter's</h4>
+                        <h6 class="card-subtitle">Total, Male and Female Voter's</h6>
+                        <div class="amp-pxl" style="height: 300px"></div>
+
                         <div class="text-center">
                             <ul class="list-inline">
                                 <li>
-                                    <h6 class="text-muted text-success"><i class="fa fa-circle font-10 m-r-10 "></i>Ample</h6> </li>
+                                    <h6 class="text-muted text-warning"><i class="fa fa-circle font-10 m-r-10 "></i>Total</h6> </li>
                                 <li>
-                                    <h6 class="text-muted  text-info"><i class="fa fa-circle font-10 m-r-10"></i>Pixel</h6> </li>
+                                    <h6 class="text-muted  text-info"><i class="fa fa-circle font-10 m-r-10"></i>Females</h6> </li>
+
+                                <li>
+                                    <h6 class="text-muted  text-success"><i class="fa fa-circle font-10 m-r-10"></i>Males</h6> </li>
+
+                                <li>
+                                    <h6  style="color: saddlebrown;"><i class="fa fa-circle font-10 m-r-10"></i>Voted</h6> </li>
                             </ul>
                         </div>
                     </div>
@@ -225,15 +232,20 @@
             <div class="col-lg-4 col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Newsletter Campaign</h4>
-                        <h6 class="card-subtitle">Overview of Newsletter Campaign</h6>
-                        <div class="campaign2 ct-charts" style="height: 300px;"></div>
+                        {{--<h4 class="card-title">Newsletter Campaign</h4>--}}
+                        <h6 class="card-subtitle">Total Voters, Vote Casted, Nominees and Candidates</h6>
+                        {{--<div class="campaign2 ct-charts" style="height: 300px;"></div>--}}
+                        <div class="amp" style="height: 300px"></div>
                         <div class="text-center">
                             <ul class="list-inline">
                                 <li>
-                                    <h6 class="text-muted text-success"><i class="fa fa-circle font-10 m-r-10 "></i>Open Rate</h6> </li>
+                                    <h6 class="text-muted text-red"><i class="fa fa-circle font-10 m-r-10 "></i>Voters</h6> </li>
                                 <li>
-                                    <h6 class="text-muted  text-info"><i class="fa fa-circle font-10 m-r-10"></i>Recurring</h6> </li>
+                                    <h6 style="color: deeppink;"><i class="fa fa-circle font-10 m-r-10"></i>Nominees</h6> </li>
+                                <li>
+                                    <h6 class="text-muted text-warning"><i class="fa fa-circle font-10 m-r-10 "></i>Candidates</h6> </li>
+                                <li>
+                                    <h6  style="color: saddlebrown;"><i class="fa fa-circle font-10 m-r-10"></i>Voted Casted</h6> </li>
                             </ul>
                         </div>
                     </div>

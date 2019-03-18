@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Department;
 use App\Nominee;
 use App\Position;
 use Illuminate\Http\Request;
@@ -29,12 +30,16 @@ class PositionsController extends Controller
      */
     public function index()
     {
-
-
-        $positions = Position::orderBy('position_number')->get();
-
+        $departments = Department::all();
+        if (Auth::user()->role == 'Super Admin'){
+            $positions = Position::orderBy('position_number')->get();
+        }else{
+            $positions = Position::orderBy('position_number')
+                ->where('department_id',Auth::user()->department_id)->get();
+        }
         return view('pages.positions.position-index')
-            ->with('positions',$positions);
+            ->with('positions',$positions)
+            ->with('departments',$departments);
     }
 
     /**
@@ -62,6 +67,11 @@ class PositionsController extends Controller
         $positions->name=$request->input('position_name');
         $positions->position_number=$countPosition+1;
         $positions->added_by=Auth::user()->name;
+        if (Auth::user()->role == 'Super Admin'){
+            $positions->department_id=$request->input('department_id');
+        }else{
+            $positions->department_id=Auth::user()->department_id;
+        }
 
         $checkPosition = Position::all()
             ->where('name',$request->input('position_name'))

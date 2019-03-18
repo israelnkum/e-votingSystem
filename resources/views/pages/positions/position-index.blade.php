@@ -9,26 +9,6 @@
                 <li class="breadcrumb-item active">New Position</li>
             </ol>
         </div>
-        <div class="col-md-7 col-4 align-self-center">
-            <div class="d-flex m-t-10 justify-content-end">
-                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                    <div class="chart-text m-r-10">
-                        <h6 class="m-b-0"><small>THIS MONTH</small></h6>
-                        <h4 class="m-t-0 text-info">$58,356</h4></div>
-                    <div class="spark-chart">
-                        <div id="monthchart"></div>
-                    </div>
-                </div>
-                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                    <div class="chart-text m-r-10">
-                        <h6 class="m-b-0"><small>LAST MONTH</small></h6>
-                        <h4 class="m-t-0 text-primary">$48,356</h4></div>
-                    <div class="spark-chart">
-                        <div id="lastmonthchart"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <!-- ============================================================== -->
     <!-- End Bread crumb and right sidebar toggle -->
@@ -97,15 +77,29 @@
                     <form class="m-t-10 needs-validation form-material" method="post" action="{{route('positions.store')}}" novalidate>
                         @csrf
                         <div class="form-row">
-                            <div class="col-md-12">
+                            <div class="col-md-12 mb-3">
                                 <input type="text" name="position_name" class="form-control" placeholder="Position" required>
                                 <div class="invalid-feedback">
                                     Name required
                                 </div>
                             </div>
+
+                            <div class="col-md-12 mb-3">
+                                @if(Auth::User()->role == "Super Admin")
+                                    <select name="department_id" class="select2 form-control" required>
+                                        <option value="">Select Department</option>
+                                        @foreach($departments as $department)
+                                            <option value="{{$department->id}}">{{$department->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Department required!
+                                    </div>
+                                @endif
+                            </div>
                         </div>
-                        <div class="text-xs-right m-t-5">
-                            <button type="submit" class="btn btn-info btn-block">Add Voting</button>
+                        <div class="text-xs-right m-t-5 text-right">
+                            <button type="submit" class="btn btn-outline-info">Add Position</button>
                         </div>
                     </form>
                 </div>

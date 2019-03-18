@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <div class="text-xs-right text-right">
-                            <button type="submit" class="btn btn-outline-info">Add Voter</button>
+                            <button type="submit" class="btn btn-outline-info">Change Password</button>
                         </div>
                     </form>
                 </div>

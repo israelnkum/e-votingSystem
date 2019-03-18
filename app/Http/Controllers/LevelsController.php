@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Department;
 use App\Level;
 use App\Nominee;
 use Illuminate\Http\Request;
@@ -26,9 +27,17 @@ class LevelsController extends Controller
      */
     public function index()
     {
-        $levels=Level::all();
+        $departments = Department::all();
+
+        if (Auth::user()->role == 'Super Admin'){
+            $levels=Level::all();
+        }else{
+            $levels=Level::all()->where('department_id',Auth::user()->department_id);
+        }
+
         return view('pages.levels.levels-index')
-            ->with('levels',$levels);
+            ->with('levels',$levels)
+            ->with('departments',$departments);
     }
 
     /**
@@ -53,6 +62,11 @@ class LevelsController extends Controller
 
         $levels->name=strtoupper($request->input('level_name'));
         $levels->added_by=Auth::user()->name;
+        if (Auth::user()->role == 'Super Admin'){
+            $levels->department_id=$request->input('department_id');
+        }else{
+            $levels->department_id=Auth::user()->department_id;
+        }
 
         $checkPosition = Level::all()
             ->where('name',strtoupper($request->input('level_name')))
@@ -112,7 +126,7 @@ class LevelsController extends Controller
             ->where('name',$request->input('level_name'))
             ->count();
 
-        if ($checkPosition>0){
+        if ($checkPosition>1){
             return redirect('/levels')
                 ->with('error','Level Name already exist');
         }else{

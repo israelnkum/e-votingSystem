@@ -24,7 +24,7 @@
                     <form class="m-t-40 needs-validation form-material" method="post" action="{{route('voters.store')}}" novalidate>
                         @csrf
                         <div class="form-row">
-                            <div class="col-md-12 mb-3 form-group">
+                            <div class="col-md-12 mb-3">
                                 <select name="voting_id" class="select2 form-control" required>
                                     <option value="">Select Voting</option>
                                     @foreach($voting as $vote)
@@ -60,12 +60,36 @@
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-12 mb-3">
+                                    <select name="level_id" class="select2 form-control" required>
+                                        <option value="">Select Level</option>
+                                        @foreach($levels as $level)
+                                            <option value="{{$level->id}}">{{$level->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Level required!
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <select name="gender" class="select2 form-control" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="MALE">Male</option>
+                                        <option value="FEMALE">Female</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Gender required!
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12 mb-3">
                                     <input type="text" class="form-control" name="index_number" id="validationCustom01" placeholder="Index Number" required>
                                     <div class="invalid-feedback">
                                         Index Number required
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
                                     <input type="password" placeholder="Password" class="form-control" name="password" required>
@@ -97,7 +121,7 @@
                     <form class="m-t-40 needs-validation form-material" enctype="multipart/form-data" method="post" action="{{route('upload-voters')}}" novalidate>
                         @csrf
                         <div class="form-row">
-                            <div class="col-md-12 mb-3 form-group">
+                            <div class="col-md-12 mb-3">
                                 <select name="voting_id" class="select2 form-control" required>
                                     <option value="">Select Voting</option>
                                     @foreach($voting as $vote)
@@ -128,8 +152,19 @@
                                     </div>
                                 @endif
                             </div>
-                        </div>
 
+                            <div class="col-md-12 mb-3">
+                                <select name="level_id" class="select2 form-control" required>
+                                    <option value="">Select Level</option>
+                                    @foreach($levels as $level)
+                                        <option value="{{$level->id}}">{{$level->name}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback">
+                                    Level required!
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-12 mb-3">
