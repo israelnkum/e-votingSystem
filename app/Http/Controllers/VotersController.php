@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Department;
+use App\Eligible;
 use App\Level;
 use App\User;
 use App\Voting;
@@ -33,7 +34,6 @@ class VotersController extends Controller
         $voters = User::with('department','voting')
             ->where('role','Voter')
             ->where('department_id',Auth::User()->department_id)
-            ->where('voting_id',Auth::User()->voting_id)
             ->get();
 
 
@@ -86,7 +86,7 @@ class VotersController extends Controller
 
         $users = new User();
         $users->department_id= $request->input('department_id');
-        $users->voting_id= $request->input('voting_id');
+        $voting_id =$users->voting_id= $request->input('voting_id');
         $users->level_id= $request->input('level_id');
         $users->name= $request->input('index_number');
         $users->gender= strtoupper($request->input('gender'));
@@ -104,6 +104,13 @@ class VotersController extends Controller
 
         }else{
             if ($users->save()){
+                $eligible = new Eligible();
+
+                $eligible->voting_id =$voting_id;
+                $eligible->user_id = $users->id;
+
+                $eligible->save();
+
                 return redirect('/voters')
                     ->with('success','New Voter Added Successfully');
             }
@@ -154,7 +161,7 @@ class VotersController extends Controller
 
                                 $users = new User();
                                 $users->department_id= $request->input('department_id');
-                                $users->voting_id= $request->input('voting_id');
+                                $voting_id =$users->voting_id= $request->input('voting_id');
                                 $users->level_id= $request->input('level_id');
                                 $users->name = $index_number;
                                 $users->username = $index_number;
@@ -162,6 +169,13 @@ class VotersController extends Controller
                                 $users->password = Hash::make($password);
                                 $users->role='Voter';
                                 $users->save();
+
+                                $eligible = new Eligible();
+
+                                $eligible->voting_id =$voting_id;
+                                $eligible->user_id = $users->id;
+
+                                $eligible->save();
 
                             }
                             else{

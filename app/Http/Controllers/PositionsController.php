@@ -75,6 +75,7 @@ class PositionsController extends Controller
 
         $checkPosition = Position::all()
             ->where('name',$request->input('position_name'))
+            ->where('department_id',Auth::user()->department_id)
             ->count();
 
         if ($checkPosition>0){

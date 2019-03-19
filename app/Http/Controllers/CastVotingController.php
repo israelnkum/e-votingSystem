@@ -8,6 +8,7 @@ use App\Nominee;
 use App\Position;
 use App\Result;
 use App\User;
+use App\Voted;
 use App\Voting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,14 +31,6 @@ class CastVotingController extends Controller
      */
     public function index()
     {
-
-        $positions = Nominee::with('position','level','department','result')
-            ->where('department_id',Auth::User()->department_id)
-            ->where('voting_id',Auth::User()->voting_id)
-            ->where('candidate',1)
-            ->get()
-            ->groupBy('position_id');
-
         //return $positions;
         /*
          *checking if user has already voted
@@ -123,6 +116,8 @@ class CastVotingController extends Controller
             ->get()
             ->groupBy('position_id');
 
+        $voting_id = $positions[1][0]->voting_id;
+
         if (Auth::User()->voted == 1){
             $totalVoters = User::all()
                 ->where('role','Voter')->count();
@@ -145,13 +140,15 @@ class CastVotingController extends Controller
                 ->with('totalPositions',$totalPositions)
                 ->with('totalVotings',$totalVotings)
                 ->with('totalVoteCasted',$totalVoteCasted)
+
                 ;
         }else{
             $voting = Voting::find($id);
             return view('pages.cast-voting.cast-voting-index')
                 ->with('voting_id',$id)
                 ->with('voting',$voting)
-                ->with('positions',$positions);
+                ->with('positions',$positions)
+                ->with('voting_id',$voting_id);
         }
 
 
@@ -194,21 +191,11 @@ class CastVotingController extends Controller
 
         }
 
-
-
         $setVoted = User::find(Auth::User()->id);
 
         $setVoted ->voted =1;
         $setVoted->save();
 
-
-        $positions = Nominee::with('position','level','department')
-            ->where('department_id',Auth::User()->department_id)
-            ->where('voting_id',Auth::User()->voting_id)
-            ->where('candidate',1)
-            ->orderBy('position_number')
-            ->get()
-            ->groupBy('position_id');
 
         return view('pages.cast-voting.print-votes')
             ->with('voteCastedFor',$voteCastedFor);

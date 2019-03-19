@@ -36,7 +36,7 @@
                 <div class="col-md-6 offset-md-3 col-sm-12">
                     <div class="wizard-content">
                         <div class="card-body bg-transparent">
-                            <form action="{{route('cast-voting.store')}}" method="POST" class="validation-wizard wizard-circle">
+                            <form action="{{route('cast-voting.store',$voting_id)}}" method="POST" class="validation-wizard wizard-circle">
                                 @csrf
                                 @foreach ($positions as $position => $candidates)
                                     <h5 class="text-danger">{{$candidates[0]->position->name}}</h5>

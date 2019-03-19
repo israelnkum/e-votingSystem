@@ -40,7 +40,7 @@
                             @foreach($nominees as $nominee)
                                 <tr>
                                     <td>{{$nominee->last_name." ".$nominee->first_name." ".$nominee->other_name}}</td>
-                                    <td><img class="rounded-circle" height="60" width="60" src="http://localhost:803/api/image/{{$nominee->image}}"></td>
+                                    <td><img class="rounded-circle" height="60" width="60" src="http://localhost:800/api/image/{{$nominee->image}}"></td>
                                     <td>{{$nominee->index_number}}</td>
                                     <td>{{$nominee->cgpa}}</td>
                                     <td>{{$nominee->position->name}}</td>

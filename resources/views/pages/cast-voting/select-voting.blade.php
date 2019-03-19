@@ -41,7 +41,7 @@
         <div class="row">
             {{--<h4 class="card-title">Select Voting</h4>--}}
             @foreach( $singleArray as $singleArr)
-                <div class="col-md-4 offset-md-4">
+                <div class="col-md-4">
                     <div class="card">
                         <div class="card-body text-dark">
                             <h3 class="card-title text-center">{{$singleArr->name}}</h3>

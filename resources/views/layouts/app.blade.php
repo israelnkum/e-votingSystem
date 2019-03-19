@@ -192,14 +192,14 @@
                             <li>
                                 <a class="has-arrow " href="#" aria-expanded="false">
                                     <i class="mdi mdi-thumb-up"> </i>
-                                    <span class="hide-menu">Voting</span>
+                                    <span class="hide-menu">Election</span>
                                 </a>
                                 <ul aria-expanded="false" class="collapse">
                                     <li>
-                                        <a href={{route('voting.index')}}>All Voting</a>
+                                        <a href={{route('voting.index')}}>All Elections</a>
                                     </li>
                                     <li>
-                                        <a href="{{route('voting.create')}}">New Voting</a>
+                                        <a href="{{route('voting.create')}}">New Election</a>
                                     </li>
                                 </ul>
                             </li>
@@ -240,10 +240,10 @@
                                         <a href="{{route('cast-voting.index')}}">View Results</a>
                                     </li>
                                     <li>
-                                        <a href="../email/inbox.html">All Generated Report(s)</a>
+                                        <a href="javascript:void(0)">All Generated Report(s)</a>
                                     </li>
                                     <li>
-                                        <a href="../email/compose.html">Generate Report</a>
+                                        <a href="javascript:void(0)">Generate Report</a>
                                     </li>
                                     <li>
                                         <a href="javascript:void(0)">All Candidates(s)</a>

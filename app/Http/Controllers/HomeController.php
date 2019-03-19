@@ -36,7 +36,12 @@ class HomeController extends Controller
         $totalMales = [];
         $totalFemales = [];
         $totalEachLevelVoters = [];
-        $level_ids = Level::all()->where('department_id',Auth::User()->department_id);
+        if (Auth::User()->role == 'Super Admin'){
+            $level_ids = Level::all();
+        }else{
+            $level_ids = Level::all()->where('department_id',Auth::User()->department_id);
+
+        }
 
 
         $allVotingNames = [];

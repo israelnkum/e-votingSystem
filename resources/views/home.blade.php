@@ -204,12 +204,12 @@
     @if(Auth::User()->role == 'Admin' || Auth::User()->role == 'Super Admin')
         <div class="row">
             <!-- Column -->
-            <div class="col-lg-4 col-md-12">
+            <div class="col-lg-4 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Voter's</h4>
                         <h6 class="card-subtitle">Total, Male and Female Voter's</h6>
-                        <div class="amp-pxl" style="height: 300px"></div>
+                        <div class="amp-pxl mb-auto"></div>
 
                         <div class="text-center">
                             <ul class="list-inline">
@@ -235,7 +235,7 @@
                         {{--<h4 class="card-title">Newsletter Campaign</h4>--}}
                         <h6 class="card-subtitle">Total Voters, Vote Casted, Nominees and Candidates</h6>
                         {{--<div class="campaign2 ct-charts" style="height: 300px;"></div>--}}
-                        <div class="amp" style="height: 300px"></div>
+                        <div class="amp"></div>
                         <div class="text-center">
                             <ul class="list-inline">
                                 <li>
@@ -257,7 +257,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Current Visitors</h4>
                         <h6 class="card-subtitle">Different Devices Used to Visit</h6>
-                        <div id="usa" style="height: 300px"></div>
+                        <div id="usa" ></div>
                         <div class="text-center">
                             <ul class="list-inline">
                                 <li>
