@@ -16,13 +16,15 @@
             <div class="d-flex m-t-10 justify-content-end">
                 <div class="d-flex m-r-20 m-l-10 hidden-md-down">
                     <div class="chart-text m-r-10">
-                        <h6 class="m-b-0"><small>Department</small></h6>
-                        <h4 class="m-t-0 text-info">{{$currentUser[0]->department->name}}</h4>
-                    </div>
-                </div>
-                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                    <div class="chart-text m-r-10">
-                        <h6 class="m-b-0"><small>Voting</small></h6>
+                        @if(Auth::User()->role == "Voter")
+                            <h3 class="m-b-0">
+                                @if($votedOrNot[0]->participated == 1)
+                                    <label class="badge badge-success">Voted</label>
+                                    @else
+                                    <label class="badge badge-warning">Did Not Vote</label>
+                                @endif
+                            </h3>
+                            @endif
                         {{--<h4 class="m-t-0 text-primary">{{$voting->name}}</h4>--}}
                     </div>
                 </div>
@@ -73,7 +75,7 @@
                                 <i class="ti-thumb-up"> </i></div>
                             <div class="m-l-10 align-self-center">
                                 <h3 class="m-b-0 font-light">{{$totalVotings}}</h3>
-                                <h5 class="text-muted m-b-0">Total Voting(s)</h5></div>
+                                <h5 class="text-muted m-b-0">Total Election(s)</h5></div>
                         </div>
                     </div>
                 </div>
@@ -274,6 +276,72 @@
         </div>
     @else
         <div class="row">
+            <!-- Column -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-row">
+                            <div class="round round-lg align-self-center round-info">
+                                <i class="ti-notepad"> </i></div>
+                            <div class="m-l-10 align-self-center">
+                                <h5 class="m-b-0 font-light">{{$voting->name}}</h5>
+                                <h5 class="text-muted m-b-0">Election</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Column -->
+            <!-- Column -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-row">
+                            <div class="round round-lg align-self-center round-warning">
+                                <i class="mdi mdi-account"> </i>
+                            </div>
+                            <div class="m-l-10 align-self-center">
+                                <h3 class="m-b-0 font-lgiht">{{$allEligible}}</h3>
+                                <h5 class="text-muted m-b-0">Total Voters</h5></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Column -->
+            <!-- Column -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-row">
+                            <div class="round round-lg align-self-center round-primary">
+                                <i class="mdi mdi-thumb-up"> </i>
+                            </div>
+                            <div class="m-l-10 align-self-center">
+                                <h3 class="m-b-0 font-lgiht">{{$participant}}</h3>
+                                <h5 class="text-muted m-b-0">Total Vote Count</h5></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Column -->
+            <!-- Column -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-row">
+                            <div class="round round-lg align-self-center round-danger">
+                                <i class="mdi mdi-thumb-down"> </i>
+                            </div>
+                            <div class="m-l-10 align-self-center">
+                                <h3 class="m-b-0 font-lgiht">{{$allEligible - $participant}}</h3>
+                                <h5 class="text-muted m-b-0">Non Voter(s)</h5></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Column -->
+        </div>
+        <div class="row">
             @foreach ($positions as $position => $candidates)
                 @php
                     $kojoCount = 0;
@@ -285,7 +353,7 @@
                             @foreach ($candidates as $candidate)
                                 <div class="row">
                                     <div class="col-md-3 text-center">
-                                        <img height="90" width="90" src="{{asset('nominee_img/'.$candidate->image)}}" alt="user" class="img-circle">
+                                        <img height="90" width="90" src="http://localhost:800/api/image/{{$candidate->image}}" alt="user" class="img-circle">
                                     </div>
 
                                     <div class="col-md-6 text-center mt-4">
@@ -301,7 +369,8 @@
 
                                             <button type="button" class="btn btn-danger btn-circle ">
                                                 No<br>
-                                                {{$totalVoters- $candidate->result[0]->vote_count}}
+                                                {{str_replace('-','',$participant-$candidate->result[0]->vote_count)}}
+
                                             </button>
                                         @else
                                             <button type="button" class="btn btn-success btn-circle ">

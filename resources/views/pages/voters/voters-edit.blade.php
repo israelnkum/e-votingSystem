@@ -9,26 +9,6 @@
                 <li class="breadcrumb-item active">New Level</li>
             </ol>
         </div>
-        <div class="col-md-7 col-4 align-self-center">
-            <div class="d-flex m-t-10 justify-content-end">
-                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                    <div class="chart-text m-r-10">
-                        <h6 class="m-b-0"><small>THIS MONTH</small></h6>
-                        <h4 class="m-t-0 text-info">$58,356</h4></div>
-                    <div class="spark-chart">
-                        <div id="monthchart"></div>
-                    </div>
-                </div>
-                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                    <div class="chart-text m-r-10">
-                        <h6 class="m-b-0"><small>LAST MONTH</small></h6>
-                        <h4 class="m-t-0 text-primary">$48,356</h4></div>
-                    <div class="spark-chart">
-                        <div id="lastmonthchart"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <!-- ============================================================== -->
     <!-- End Bread crumb and right sidebar toggle -->
@@ -43,7 +23,7 @@
         <div class="col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Edit Department</h4>
+                    <h4 class="card-title">Update Voter Info</h4>
                     <form class="m-t-10 needs-validation form-material" method="post" action="{{route('voters.update',$user->id)}}" novalidate>
                         @csrf
                         <div class="form-row">
@@ -61,7 +41,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label>Voting</label>
-                                <select name="voting_id" class="selectpicker" multiple data-style="form-control btn-primary">
+                                <select name="voting_id" class="selectpicker" multiple data-style="form-control">
                                     <option value="{{$user->voting->id}}">{{$user->voting->name}}</option>
                                     @foreach($voting as $vote)
                                         <option value="{{$vote->id}}">{{$vote->name}}</option>

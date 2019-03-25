@@ -16,7 +16,11 @@
     <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
+
     <div class="row">
+        <div class="col-md-12 text-right">
+osikani
+        </div>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body text-dark">
@@ -32,7 +36,7 @@
                                 <th>Position</th>
                                 <th>Telephone</th>
                                 <th>Status</th>
-                                <th>Department</th>
+                                <th>Election</th>
                                 <th>Manage</th>
                             </tr>
                             </thead>
@@ -52,7 +56,7 @@
                                             <label class="badge badge-warning">Nominee</label>
                                             @endif
                                     </td>
-                                    <td>{{$nominee->department->name}}</td>
+                                    <td>{{$nominee->voting->name}}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="manage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

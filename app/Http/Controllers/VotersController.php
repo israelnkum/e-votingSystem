@@ -31,7 +31,7 @@ class VotersController extends Controller
      */
     public function index()
     {
-        $voters = User::with('department','voting')
+        $voters = User::with('department','voting','eligible')
             ->where('role','Voter')
             ->where('department_id',Auth::User()->department_id)
             ->get();
@@ -225,7 +225,7 @@ class VotersController extends Controller
         $users = User::with('department','voting')->where('id',$id)->get();
 
        // return $user;
-        $voting = Voting::all();
+        $voting = Voting::all()->where('department_id',Auth::user()->department_id);
         $departments = Department::all();
         return view('pages.voters.voters-edit')
             ->with('users',$users)

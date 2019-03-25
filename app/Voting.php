@@ -22,4 +22,8 @@ class Voting extends Model
         return $this->hasMany('App\NomineeToken');
     }
 
+    public function eligible(){
+        return $this->hasMany('App\Eligible');
+    }
+
 }

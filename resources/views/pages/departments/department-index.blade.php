@@ -9,7 +9,7 @@
                 <li class="breadcrumb-item active">New Department</li>
             </ol>
         </div>
-        <div class="col-md-7 col-4 align-self-center">
+        {{--<div class="col-md-7 col-4 align-self-center">
             <div class="d-flex m-t-10 justify-content-end">
                 <div class="d-flex m-r-20 m-l-10 hidden-md-down">
                     <div class="chart-text m-r-10">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
     </div>
     <!-- ============================================================== -->
     <!-- End Bread crumb and right sidebar toggle -->
@@ -40,19 +40,19 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Add New Department</h4>
+                    <h4 class="card-title">Add New Department/School</h4>
                     <form class="m-t-10 needs-validation form-material" method="post" action="{{route('departments.store')}}" novalidate>
                         @csrf
                         <div class="form-row">
                             <div class="col-md-12">
-                                <input type="text" name="department_name" class="form-control" placeholder="Department Name" required>
+                                <input type="text" name="department_name" class="form-control" placeholder="Department/School" required>
                                 <div class="invalid-feedback">
                                     Name required
                                 </div>
                             </div>
                         </div>
-                        <div class="text-xs-right m-t-5">
-                            <button type="submit" class="btn btn-info btn-block">Add Department</button>
+                        <div class="text-xs-right m-t-5 text-right">
+                            <button type="submit" class="btn btn-outline-info">Add Department</button>
                         </div>
                     </form>
                 </div>

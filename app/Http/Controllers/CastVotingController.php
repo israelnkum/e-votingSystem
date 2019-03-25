@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Department;
+use App\Eligible;
 use App\Level;
 use App\Nominee;
+use App\Participation;
 use App\Position;
 use App\Result;
 use App\User;
@@ -12,6 +14,7 @@ use App\Voted;
 use App\Voting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CastVotingController extends Controller
 {
@@ -31,74 +34,40 @@ class CastVotingController extends Controller
      */
     public function index()
     {
-        //return $positions;
-        /*
-         *checking if user has already voted
-         * if yes the redirect to the dashboard
-         */
+       if (Auth::user()->role == "Admin"){
+           $singleArray =Voting::where('department_id',Auth::User()->department_id)->get();
+       }elseif (Auth::user()->role == "Super Admin"){
+        $singleArray =Voting::all();
+    }else{
+           $singleArray =Eligible::with('voting')->where('user_id',Auth::User()->id)->get();
 
-        if(Auth::User()->role == 'Voter' && Auth::User()->voted == 1){
-
-            $currentVoter = User::where('id',Auth::User()->id)->get();
-            foreach ( $currentVoter as $voter){
-
-            }
-            $allVotings =explode(',',$voter->voting_id);
-            $belongsToVoting=[];
-
-            $singleArray = [];
-            // return $all;
-            foreach ($allVotings as $allVoting){
-                array_push($belongsToVoting,Voting::all()->where('id',$allVoting));
-            }
-
-            foreach ($belongsToVoting as $childArray)
-            {
-                foreach ($childArray as $value)
-                {
-                    $singleArray[] = $value;
-                }
-            }
+       }
+     //     $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
 
 
-            //  return $singleArray;
 
-            return view('pages.cast-voting.select-voting')
-                ->with('singleArray',$singleArray);
+        /* $belongsToVoting = [];
+        //$eligibles = Eligible::where('user_id',Auth::User()->id)->get();
 
-        }else{
-            /*
-            *checking if user has not voted yet
-            * then select voting type
-            */
+        foreach ($eligibles as $eligible){
+            array_push($belongsToVoting ,Voting::where('id',$eligible->voting_id)->get());
 
-            $currentVoter = User::where('id',Auth::User()->id)->get();
-            foreach ( $currentVoter as $voter){
-
-            }
-            $allVotings =explode(',',$voter->voting_id);
-            $belongsToVoting=[];
-
-            $singleArray = [];
-            // return $all;
-            foreach ($allVotings as $allVoting){
-                array_push($belongsToVoting,Voting::all()->where('id',$allVoting));
-            }
-
-            foreach ($belongsToVoting as $childArray)
-            {
-                foreach ($childArray as $value)
-                {
-                    $singleArray[] = $value;
-                }
-            }
-
-
-            //  return $singleArray;
-
-            return view('pages.cast-voting.select-voting')
-                ->with('singleArray',$singleArray);
         }
+
+
+        foreach ($belongsToVoting as $childArray)
+        {
+            foreach ($childArray as $value)
+            {
+                $singleArray[] = $value;
+            }
+        }
+        return $eligibles;*/
+
+
+        return view('pages.cast-voting.select-voting')
+            ->with('singleArray',$singleArray);
+            //->with('json',$json);
 
     }
     /*
@@ -116,42 +85,13 @@ class CastVotingController extends Controller
             ->get()
             ->groupBy('position_id');
 
-        $voting_id = $positions[1][0]->voting_id;
-
-        if (Auth::User()->voted == 1){
-            $totalVoters = User::all()
-                ->where('role','Voter')->count();
-            $totalNominees = Nominee::all()->count();
-            $totalCandidates = Nominee::all()->where('candidate',1)->count();
-            $totalVoteCasted = User::all()->where('voted','1')->count();
-            $totalLevel = Level::all()->count();
-            $totalDepartment = Department::all()->count();
-            $totalPositions = Position::all()->count();
-            $totalVotings = Voting::all()->count();
-
-            return view('home')
-                // return view('pages.cast-voting.voter-dashboard')
-                ->with('positions',$positions)
-                ->with('totalVoters',$totalVoters)
-                ->with('totalNominees',$totalNominees)
-                ->with('totalCandidates',$totalCandidates)
-                ->with('totalLevel',$totalLevel)
-                ->with('totalDepartment',$totalDepartment)
-                ->with('totalPositions',$totalPositions)
-                ->with('totalVotings',$totalVotings)
-                ->with('totalVoteCasted',$totalVoteCasted)
-
-                ;
-        }else{
-            $voting = Voting::find($id);
-            return view('pages.cast-voting.cast-voting-index')
-                ->with('voting_id',$id)
-                ->with('voting',$voting)
-                ->with('positions',$positions)
-                ->with('voting_id',$voting_id);
-        }
-
-
+        $voting = Voting::find($id);
+        Session::put('current_voting_id',$id);
+        return view('pages.cast-voting.cast-voting-index')
+            ->with('current_voting_id',$id)
+            ->with('voting_id',$id)
+            ->with('voting',$voting)
+            ->with('positions',$positions);
     }
 
     /**
@@ -182,14 +122,28 @@ class CastVotingController extends Controller
             }else{
                 $totalVoteCounts= Result::where('nominee_id',$item)->first();
 
-                array_push($voteCastedFor,Nominee::where('id',$item)->first());
+                array_push($voteCastedFor,Nominee::with('position')->where('id',$item)->first());
 
                 $currentCount = $totalVoteCounts ->vote_count;
-                $totalVoteCounts ->vote_count =  $currentCount+1;
+                $totalVoteCounts ->vote_count =
+     // return $participation;
+ $currentCount+1;
                 $totalVoteCounts->save();
             }
 
         }
+
+       // return $voteCastedFor;
+        $voter =Eligible::where('voting_id',Session::get('current_voting_id'))
+            ->where('user_id',Auth::User()->id)->get();
+
+        $participation = Eligible::find($voter[0]->id);
+
+     // return $participation;
+
+        //set participated to 1
+        $participation->participated=1;
+        $participation->save();
 
         $setVoted = User::find(Auth::User()->id);
 
@@ -214,8 +168,19 @@ class CastVotingController extends Controller
         $currentUser = User::with('department')
             ->where('id',Auth::User()->id)->get();
 
+        //get all eligible to this voting
 
+        $allEligible = Eligible::all()->where('voting_id',$id)->count();
 
+        //get all participant voters in this voting
+        $participant = Eligible::all()->where('voting_id',$id)
+            ->where('participated',1)->count();
+
+        //check if voted
+        $votedOrNot = Eligible::where('user_id',Auth::User()->id)
+            ->where('voting_id',$id)
+            ->get();
+        //return $votedOrNot;
         $positions = Nominee::with('position','level','department','result')
             ->where('department_id',Auth::User()->department_id)
             ->where('voting_id',$id)
@@ -261,7 +226,10 @@ class CastVotingController extends Controller
                 ->with('totalVotings',$totalVotings)
                 ->with('totalVoteCasted',$totalVoteCasted)
                 ->with('currentUser',$currentUser)
-                ->with('voting',$voting);
+                ->with('voting',$voting)
+                ->with('allEligible',$allEligible)
+                ->with('participant',$participant)
+                ->with('votedOrNot',$votedOrNot);
         }else{
             return view('home')
                 ->with('positions',$positions)
@@ -274,7 +242,10 @@ class CastVotingController extends Controller
                 ->with('totalVotings',$totalVotings)
                 ->with('totalVoteCasted',$totalVoteCasted)
                 ->with('currentUser',$currentUser)
-                ->with('voting',$voting);
+                ->with('voting',$voting)
+                ->with('allEligible',$allEligible)
+                ->with('participant',$participant)
+                ->with('votedOrNot',$votedOrNot);
         }
     }
 

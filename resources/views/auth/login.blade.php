@@ -8,8 +8,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="https://wrappixel.com/demos/admin-templates/material-pro/assets/images/favicon.png">
-    <title>ITSU | Voting System</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('e-voting.png')}}">
+    <title>E-Voting System</title>
     <!-- Bootstrap Core CSS -->
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
@@ -38,13 +38,13 @@
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
 <section id="wrapper">
-    <div class="login-register" style="background-image:url({{asset('login-bg.jpg')}});">
+    <div class="login-register" style="background-image:url({{asset('vote.jpg')}});">
         <div class="login-box card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12 text-center mb-3 text-dark">
-                        <h3 class="mb-0">ITSU | Voting System</h3>
-                        <img class="img-rounded img-fluid mt-0" height="auto" width="100" src="{{asset('itsu.jpeg')}}">
+                        {{--<h3 class="mb-0">ITSU | Voting System</h3>--}}
+                        <img class="img-rounded img-fluid mt-0 mb-3" height="auto" width="90" src="{{asset('e-voting.png')}}">
                     </div>
                 </div>
                 <form class="form-horizontal floating-labels" id="loginform" action="{{ route('login') }}" method="post">
@@ -84,7 +84,7 @@
                     </div>
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
-                            <button class="btn btn-info  btn-block text-uppercase waves-effect waves-light" type="submit">Log In</button>
+                            <button class="btn btn-dark  btn-block text-uppercase waves-effect waves-light" type="submit">Log In</button>
                         </div>
                     </div>
                 </form>

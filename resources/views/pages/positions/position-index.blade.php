@@ -17,6 +17,41 @@
     <!-- Start Page Content -->
     <!-- ============================================================== -->
     <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Add New Position</h4>
+                    <form class="m-t-10 needs-validation form-material" method="post" action="{{route('positions.store')}}" novalidate>
+                        @csrf
+                        <div class="form-row">
+                            <div class="col-md-12 mb-3">
+                                <input type="text" name="position_name" class="form-control" placeholder="Position" required>
+                                <div class="invalid-feedback">
+                                    Name required
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                @if(Auth::User()->role == "Super Admin")
+                                    <select name="department_id" class="select2 form-control" required>
+                                        <option value="">Select Department</option>
+                                        @foreach($departments as $department)
+                                            <option value="{{$department->id}}">{{$department->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Department required!
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="text-xs-right m-t-5 text-right">
+                            <button type="submit" class="btn btn-outline-info">Add Position</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body text-dark">
@@ -67,41 +102,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Add New Position</h4>
-                    <form class="m-t-10 needs-validation form-material" method="post" action="{{route('positions.store')}}" novalidate>
-                        @csrf
-                        <div class="form-row">
-                            <div class="col-md-12 mb-3">
-                                <input type="text" name="position_name" class="form-control" placeholder="Position" required>
-                                <div class="invalid-feedback">
-                                    Name required
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                @if(Auth::User()->role == "Super Admin")
-                                    <select name="department_id" class="select2 form-control" required>
-                                        <option value="">Select Department</option>
-                                        @foreach($departments as $department)
-                                            <option value="{{$department->id}}">{{$department->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="invalid-feedback">
-                                        Department required!
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="text-xs-right m-t-5 text-right">
-                            <button type="submit" class="btn btn-outline-info">Add Position</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

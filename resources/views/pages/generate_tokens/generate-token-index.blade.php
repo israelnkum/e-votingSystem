@@ -146,8 +146,8 @@
                                 </div>
                             </div>--}}
                         </div>
-                        <div class="text-xs-right">
-                            <button type="submit" class="btn btn-info btn-block">New Token</button>
+                        <div class="text-xs-right text-right">
+                            <button type="submit" class="btn btn-info">New Token</button>
                         </div>
                     </form>
                 </div>

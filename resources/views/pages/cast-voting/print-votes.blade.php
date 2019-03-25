@@ -26,32 +26,29 @@
 <!-- ============================================================== -->
 
 <div class="container" >
-    <div class="row">
-        <div class="col-md-12 text-center">
+    <div class="row mt-5">
+        <div class="col-md-6 text-right">
+            <img src="{{asset('e-voting.png')}}" height="auto" width="100">
+        </div>
+        <div class="col-md-6 text-left">
             <h3 class="mb-0">ITSU VOTING SYSTEM</h3>
             <p class="mb-0">Date: 2019-12-06</p>
             <p class="mb-0">Time: 08:00 AM - 05:00 PM</p>
         </div>
     </div>
-    <hr>
+    <br>
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Voter</h3>
-                </div>
-                <div class="card-body text-dark">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img src="{{asset('osikani.jpg')}}" height="auto" width="150">
-                        </div>
-                        <div class="col-md-8">
-                            <h1 class="text-dark"><span class="text-info">NAME: </span>APPIAH NKUM AMOS</h1>
-                            <h4 class="text-dark"><span class="text-info">INDEX NUMBER: </span>07162374</h4>
-                            <h4 class="text-dark"><span class="text-info">DEPARTMENT: </span>COMPUTER SCIENCE</h4>
-                            <h4 class="text-dark"><span class="text-info">PROGRAM: </span>HND INFORMATION TECHNOLOGY</h4>
-                            <h4 class="text-dark"><span class="text-info">LEVEL: </span>300</h4>
-                        </div>
+            <h3 class="card-title">Voter</h3>
+            <hr>
+            <div class="card-body text-dark">
+                <div class="row">
+                    <div class="col-md-2 text-right">
+                        <img src="{{asset('osikani.jpg')}}" height="auto" width="100">
+                    </div>
+                    <div class="col-md-8">
+                        <h1 class="text-dark"><span class="text-info">NAME: </span>APPIAH NKUM AMOS</h1>
+                        <h4 class="text-dark"><span class="text-info">INDEX NUMBER: </span>07162374</h4>
                     </div>
                 </div>
             </div>
@@ -59,18 +56,27 @@
     </div>
     <br>
     <div class="row">
+        <div class="col-md-12">
+            <h3>Candidates</h3>
+            <hr>
+        </div>
+    </div>
+    @foreach($voteCastedFor as $voteCast)
+    <div class="row">
         <div class="col-md-3 text-center">
-            <img height="150" width="150" src="{{asset('osikani.jpg')}}" alt="user" class="img-circle">
+            <img height="auto" width="100" src="http://localhost:800/api/image/{{$voteCast->image}}" alt="user" class="img-fluid">
         </div>
 
         <div class="col-md-6 text-center mt-5">
-            <h5>AMOS APPIAH NKUM</h5>
+            <h5>{{$voteCast->first_name." ".$voteCast->other_name." ".$voteCast->last_name}}</h5>
         </div>
 
         <div class="col-md-3 text-center mt-5">
-            <h5>PRESIDENT</h5>
+            <h5>{{$voteCast->position->name}}</h5>
         </div>
     </div>
+    <hr>
+    @endforeach
 </div>
 
 
@@ -82,5 +88,15 @@
 <!-- Bootstrap tether Core JavaScript -->
 <script src="{{asset('js/popper.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
+<script>
+    window.onload = function() {
+        window.print();
+        window.close();
+        //   window.history.back();
+
+        document.location.href="/cast-voting";
+    }
+</script>
+
 </body>
 </html>

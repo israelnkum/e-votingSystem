@@ -10,8 +10,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('itsu.jpeg')}}">
-    <title>ITSU | Voting System</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('e-voting.png')}}">
+    <title>E-Voting System</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/steps.css')}}" rel="stylesheet">
@@ -85,15 +85,17 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="javascript:void(0)">
                     <!-- Logo icon --><b>
-                        <img src="{{asset('logo-light-text.png')}}" alt="homepage" class="dark-logo" />
+                        <img src="{{asset('e-voting.png')}}" alt="homepage" class="dark-logo" />
                         <!-- Light Logo icon -->
-                        <img src="{{asset('logo-light.png')}}" alt="homepage" class="light-logo" />
+                        <img src="{{asset('e-voting.png')}}" alt="homepage" height="auto" width="50" class="light-logo" />
                     </b>
                     <span>
+
                          <!-- dark Logo text -->
-                         <img src="{{asset('logo-light-text.png')}}" alt="homepage" class="dark-logo" />
+                        {{-- <img src="{{asset('logo-light-text.png')}}" alt="homepage" class="dark-logo" />
                         <!-- Light Logo text -->
-                         <img src="{{asset('logo-light-text.png')}}" class="light-logo" alt="homepage" /></span> </a>
+                         <img src="{{asset('logo-light-text.png')}}" class="light-logo" alt="homepage" />--}}
+                    </span> </a>
             </div>
             <!-- ============================================================== -->
             <!-- End Logo -->
@@ -108,13 +110,6 @@
                     <!-- ============================================================== -->
                     <!-- Search -->
                     <!-- ============================================================== -->
-                    @if(Auth::user()->role == 'Voter' && Auth::user()->voted==1)
-                        <li class="nav-item hidden-sm-down">
-                            <a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)">
-                                <i class="ti-thumb-up"> </i>Voted
-                            </a>
-                        </li>
-                    @endif
                 </ul>
                 <!-- ============================================================== -->
                 <!-- User profile and search -->
@@ -227,9 +222,9 @@
                                     <li>
                                         <a href="{{route('nominee_token.index')}}">Generate Token</a>
                                     </li>
-                                    <li>
+                                {{--    <li>
                                         <a href="{{route('nominees.create')}}">New Nominee</a>
-                                    </li>
+                                    </li>--}}
                                 </ul>
                             </li>
                             <li class="two-column">
@@ -339,7 +334,7 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer text-dark">
-            © {{date('Y')}} Computer Science Student Union | Voting System |
+            © {{date('Y')}} E-Voting System |
             <span>By <b style="font-weight: 900">ANA</b> Technologies</span>
         </footer>
         <!-- ============================================================== -->

@@ -49,6 +49,30 @@ class HomeController extends Controller
         $totalNomineesInEachVoting =[];
         $totalCandidatesInEachVoting =[];
         $totalVotesCastedInEachVoting = [];
+
+        if (Auth::User()->role == 'Super Admin'){
+            $totalLevel = Level::all()->count();
+
+
+            $totalDepartment = Department::all()->count();
+            $totalPositions = Position::all()->count();
+            $totalVotings = Voting::all()->count();
+        }else{
+            $totalLevel = Level::all()
+                ->where('department_id', Auth::User()->department_id)
+                ->count();
+
+
+            $totalDepartment = Department::all()
+                ->where('department_id', Auth::User()->department_id)
+                ->count();
+            $totalPositions = Position::all()
+                ->where('department_id', Auth::User()->department_id)
+                ->count();
+            $totalVotings = Voting::all()
+                ->where('department_id', Auth::User()->department_id)
+                ->count();
+        }
         if (Auth::User()->role == 'Admin' || Auth::User()->role == 'Super Admin'){
 
             $voting_ids = Voting::all()->where('department_id', Auth::User()->department_id);
@@ -132,15 +156,6 @@ class HomeController extends Controller
                     ->where('voting_id',Auth::User()->voting_id)
                     ->where('voted','1')
                     ->count();
-                $totalLevel = Level::all()->count();
-
-
-                $totalDepartment = Department::all()->count();
-                $totalPositions = Position::all()->count();
-                $totalVotings = Voting::all()
-                    ->where('department_id', Auth::User()->department_id)
-                    ->count();
-
 
                 return view('home')
                     ->with('totalVoters',$totalVoters)

@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="text-xs-right text-right m-t-5">
-                            <button type="submit" class="btn btn-outline-info">Add Level</button>
+                            <button type="submit" class="btn btn-success">Add Level</button>
                         </div>
                     </form>
                 </div>

@@ -33,9 +33,8 @@ class NomineesController extends Controller
     public function index()
     {
 
-         $nominees = Nominee::with('position','level','department')
+         $nominees = Nominee::with('position','level','department','voting')
              ->where('department_id',Auth::User()->department_id)
-             ->where('voting_id',Auth::User()->voting_id)
              ->get();
        //return $nominees;
         return view('pages.nominees.nominees-index')
@@ -57,9 +56,9 @@ class NomineesController extends Controller
         }elseif (Auth::User()->role == "Super Admin"){
             $voting = Voting::all();
         }
-        $positions = Position::all();
-        $levels = Level::all();
-        $departments= Department::all();
+        $positions = Position::all()->where('department_id',Auth::User()->department_id);
+        $levels = Level::all()->where('department_id',Auth::User()->department_id);
+        $departments= Department::all()->where('department_id',Auth::User()->department_id);
         return view('pages.nominees.nominees-create')
             ->with('levels',$levels)
             ->with('positions',$positions)
@@ -76,6 +75,7 @@ class NomineesController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->Validate($request, [
             'voting_id' => ['required', 'string', 'max:99'],
             'department_id' => ['required', 'string', 'max:99'],
@@ -99,7 +99,10 @@ class NomineesController extends Controller
         $nominee->department_id=$request->input('department_id');
         $nominee->index_number=$request->input('index_number');
         $nominee->cgpa=$request->input('cgpa');
-        $nominee->position_id=$request->input('position');
+//        $nominee->position_id=$request->input('position');
+        $nominee->position_id=substr($request->input('position'),0,strpos($request->input('position'),' '));
+        $nominee->position_number = substr($request->input('position'),strpos($request->input('position'),' '));
+
         $nominee->position_held=$request->input('previous_position');
 
         $image = $request->file('image_file');

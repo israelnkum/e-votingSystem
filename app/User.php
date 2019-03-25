@@ -39,4 +39,8 @@ class User extends Authenticatable
     public  function level(){
         return $this->belongsTo('App\Level');
     }
+
+    public function eligible(){
+        return $this->hasMany('App\Eligible');
+    }
 }

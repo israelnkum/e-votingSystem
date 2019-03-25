@@ -37,8 +37,7 @@ class NomineeTokenController extends Controller
                 ->where('department_id', Auth::User()->department_id);
 
             $allTokens = NomineeToken::all()
-                ->where('department_id',Auth::User()->department_id)
-                ->where('voting_id',Auth::User()->voting_id);
+                ->where('department_id',Auth::User()->department_id);
         }elseif (Auth::User()->role == "Super Admin"){
             $voting = Voting::all();
             $allTokens = NomineeToken::all();
