@@ -21,19 +21,19 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body text-dark">
+                        {{--<div class="row">--}}
+                            {{--<div class="col-md-2">--}}
+                                {{--<img src="{{asset('osikani.jpg')}}" height="auto" width="150">--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-8">--}}
+                                {{--<h1 class="text-dark"><span class="text-info">NAME: </span>ISRAEL APPIAH NKUM</h1>--}}
+                                {{--<h4 class="text-dark"><span class="text-info">INDEX NUMBER: </span>{{$json['data']['INDEXNO']}}</h4>--}}
+                                {{--<h4 class="text-dark"><span class="text-info">DEPARTMENT: </span>{{$json['data']['INDEXNO']}}</h4>--}}
+                                {{--<h4 class="text-dark"><span class="text-info">PROGRAM: </span>{{$json['data']['PROGRAMMECODE']}}</h4>--}}
+                                {{--<h4 class="text-dark"><span class="text-info">LEVEL: </span>{{$json['data']['LEVEL']}}</h4>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                         <div class="row">
-                            <div class="col-md-2">
-                                <img src="{{asset('osikani.jpg')}}" height="auto" width="150">
-                            </div>
-                            <div class="col-md-8">
-                                <h1 class="text-dark"><span class="text-info">NAME: </span>ISRAEL APPIAH NKUM</h1>
-                                {{--<h4 class="text-dark"><span class="text-info">INDEX NUMBER: </span>{{$json['data']['INDEXNO']}}</h4>
-                                <h4 class="text-dark"><span class="text-info">DEPARTMENT: </span>{{$json['data']['INDEXNO']}}</h4>
-                                <h4 class="text-dark"><span class="text-info">PROGRAM: </span>{{$json['data']['PROGRAMMECODE']}}</h4>
-                                <h4 class="text-dark"><span class="text-info">LEVEL: </span>{{$json['data']['LEVEL']}}</h4>--}}
-                            </div>
-                        </div>
-                        {{--<div class="row">
                             <div class="col-md-2">
                                 @if(substr($json['data']['LEVEL'],0,3) == '100')
                                 <img src="http://www.ttuportal.com/admissions/public/albums/thumbnails/{{$json['data']['STNO']}}.jpg" height="auto" width="150">
@@ -43,12 +43,12 @@
                             </div>
                             <div class="col-md-8">
                                 <h1 class="text-dark"><span class="text-info">NAME: </span>{{$json['data']['NAME']}}</h1>
-                                --}}{{--<h4 class="text-dark"><span class="text-info">INDEX NUMBER: </span>{{$json['data']['INDEXNO']}}</h4>
+                                <h4 class="text-dark"><span class="text-info">INDEX NUMBER: </span>{{$json['data']['INDEXNO']}}</h4>
                                 <h4 class="text-dark"><span class="text-info">DEPARTMENT: </span>{{$json['data']['INDEXNO']}}</h4>
                                 <h4 class="text-dark"><span class="text-info">PROGRAM: </span>{{$json['data']['PROGRAMMECODE']}}</h4>
-                                <h4 class="text-dark"><span class="text-info">LEVEL: </span>{{$json['data']['LEVEL']}}</h4>--}}{{--
+                                <h4 class="text-dark"><span class="text-info">LEVEL: </span>{{$json['data']['LEVEL']}}</h4>
                             </div>
-                        </div>--}}
+                        </div>
                     </div>
                 </div>
             </div>
