@@ -13,13 +13,7 @@
             <div class="d-flex m-t-10 justify-content-end">
                 <div class="d-flex m-r-20 m-l-10 hidden-md-down">
                     <div class="chart-text m-r-10">
-                        <h6 class="m-b-0"><small>Department</small></h6>
-                        {{--<h4 class="m-t-0 text-info">{{$currentUser[0]->department->name}}</h4>--}}
-                    </div>
-                </div>
-                <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                    <div class="chart-text m-r-10">
-                        <h6 class="m-b-0"><small>Voting</small></h6>
+                        <h6 class="m-b-0"><small>Election</small></h6>
                         <h4 class="m-t-0 text-primary">{{$voting->name}}</h4>
                     </div>
                 </div>

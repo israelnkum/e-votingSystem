@@ -3,7 +3,7 @@
 
     <div class="row page-titles">
         <div class="col-md-5 col-8 align-self-center">
-            <h3 class="text-themecolor m-b-0 m-t-0">Voting</h3>
+            <h3 class="text-themecolor m-b-0 m-t-0">E-Voting</h3>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
                 <li class="breadcrumb-item active">Select Voting</li>
@@ -18,42 +18,47 @@
     <!-- ============================================================== -->
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-lg-12 col-md-12">
                 <div class="card">
-                    <div class="card-body text-dark">
-                        {{--<div class="row">--}}
-                            {{--<div class="col-md-2">--}}
-                                {{--<img src="{{asset('osikani.jpg')}}" height="auto" width="150">--}}
-                            {{--</div>--}}
-                            {{--<div class="col-md-8">--}}
-                                {{--<h1 class="text-dark"><span class="text-info">NAME: </span>ISRAEL APPIAH NKUM</h1>--}}
-                                {{--<h4 class="text-dark"><span class="text-info">INDEX NUMBER: </span>{{$json['data']['INDEXNO']}}</h4>--}}
-                                {{--<h4 class="text-dark"><span class="text-info">DEPARTMENT: </span>{{$json['data']['INDEXNO']}}</h4>--}}
-                                {{--<h4 class="text-dark"><span class="text-info">PROGRAM: </span>{{$json['data']['PROGRAMMECODE']}}</h4>--}}
-                                {{--<h4 class="text-dark"><span class="text-info">LEVEL: </span>{{$json['data']['LEVEL']}}</h4>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        <div class="row">
-                            <div class="col-md-2">
-                                @if(substr($json['data']['LEVEL'],0,3) == '100')
-                                <img src="http://www.ttuportal.com/admissions/public/albums/thumbnails/{{$json['data']['STNO']}}.jpg" height="auto" width="150">
-                                    @else
-                                    <img src="https://www.ttuportal.com/srms/public/albums/students/{{Auth::user()->username}}.jpg" height="auto" width="150">
-                                @endif
-                            </div>
-                            <div class="col-md-8">
-                                <h1 class="text-dark"><span class="text-info">NAME: </span>{{$json['data']['NAME']}}</h1>
-                                <h4 class="text-dark"><span class="text-info">INDEX NUMBER: </span>{{$json['data']['INDEXNO']}}</h4>
-                                <h4 class="text-dark"><span class="text-info">DEPARTMENT: </span>{{$json['data']['INDEXNO']}}</h4>
-                                <h4 class="text-dark"><span class="text-info">PROGRAM: </span>{{$json['data']['PROGRAMMECODE']}}</h4>
-                                <h4 class="text-dark"><span class="text-info">LEVEL: </span>{{$json['data']['LEVEL']}}</h4>
+                    <div class="card-body bg-info">
+                        <h4 class="text-white card-title">Select Election</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{--<div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-body bg-info">
+                        <h4 class="text-white card-title">Profile</h4>
+                        --}}{{--<h6 class="card-subtitle text-white m-b-0 op-5">Checkout my contacts here</h6>--}}{{--
+                    </div>
+                    <div class="card-body">
+                        <div class="message-box contact-box">
+                            --}}{{--<h2 class="add-ct-btn"><button type="button" class="btn btn-circle btn-lg btn-success waves-effect waves-dark">+</button></h2>--}}{{--
+                            <div class="message-widget contact-widget">
+                                <!-- Message -->
+                                <a href="#">
+                                    <div class="user-img">
+                                        --}}{{--//<img src="{{asset('osikani.jpg')}}" alt="user" class="img-circle">--}}{{--
+                                        @if(substr($json['data']['LEVEL'],0,3) == '100')
+                                            <img class="img-circle" src="http://www.ttuportal.com/admissions/public/albums/thumbnails/{{$json['data']['STNO']}}.jpg" height="auto" width="150">
+                                        @else
+                                            <img  src="https://www.ttuportal.com/srms/public/albums/students/{{Auth::user()->username}}.jpg" height="auto" width="150">
+                                        @endif
+                                        --}}{{--<span class="profile-status online pull-right"> </span>--}}{{--
+                                    </div>
+                                    <div class="mail-contnet">
+                                        <h5>{{$json['data']['NAME']}}</h5>
+                                        <span class="mail-desc">{{$json['data']['INDEXNO']}}</span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-        </div>
+        </div>--}}
         <div class="row">
             {{--<h4 class="card-title">Select Voting</h4>--}}
             @foreach( $singleArray as $singleArr)

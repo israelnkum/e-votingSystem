@@ -6,52 +6,19 @@ use App\Department;
 use App\Eligible;
 use App\Level;
 use App\Nominee;
-use App\Participation;
 use App\Position;
 use App\Result;
 use App\User;
-use App\Voted;
 use App\Voting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Ixudra\Curl\Facades\Curl;
+use function MongoDB\BSON\toJSON;
 
 class CastVotingController extends Controller
 {
-    function callAPI($method, $url, $data){
-        $curl = curl_init();
 
-        switch ($method){
-            case "POST":
-                curl_setopt($curl, CURLOPT_POST, 1);
-                if ($data)
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-                break;
-            case "PUT":
-                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-                if ($data)
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-                break;
-            default:
-                if ($data)
-                    $url = sprintf("%s?%s", $url, http_build_query($data));
-        }
-
-        // OPTIONS:
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-            'APIKEY: 111111111111111111111',
-            'Content-Type: application/json',
-        ));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-
-        // EXECUTE:
-        $result = curl_exec($curl);
-        if(!$result){die("Connection Failure");}
-        curl_close($curl);
-        return $result;
-    }
     /**
      * Create a new controller instance.
      *
@@ -64,7 +31,7 @@ class CastVotingController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function index()
     {
@@ -76,27 +43,7 @@ class CastVotingController extends Controller
            $singleArray =Eligible::with('voting')->where('user_id',Auth::User()->id)->get();
 
        }
-        //  $json = json_decode(curl("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
-
-
-
-        /* $belongsToVoting = [];
-        //$eligibles = Eligible::where('user_id',Auth::User()->id)->get();
-
-        foreach ($eligibles as $eligible){
-            array_push($belongsToVoting ,Voting::where('id',$eligible->voting_id)->get());
-
-        }
-
-
-        foreach ($belongsToVoting as $childArray)
-        {
-            foreach ($childArray as $value)
-            {
-                $singleArray[] = $value;
-            }
-        }
-        return $eligibles;*/
+        $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
 
 
         return view('pages.cast-voting.select-voting')
@@ -121,11 +68,15 @@ class CastVotingController extends Controller
 
         $voting = Voting::find($id);
         Session::put('current_voting_id',$id);
+
+        $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
+
         return view('pages.cast-voting.cast-voting-index')
             ->with('current_voting_id',$id)
             ->with('voting_id',$id)
             ->with('voting',$voting)
-            ->with('positions',$positions);
+            ->with('positions',$positions)
+            ->with('json',$json);
     }
 
     /**
@@ -247,6 +198,7 @@ class CastVotingController extends Controller
         $totalDepartment = Department::all()->count();
         $totalPositions = Position::all()->count();
         $totalVotings = Voting::all()->count();
+        $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
 
         if (Auth::user()->role == 'Super Admin' || Auth::user()->role == 'Admin'){
             return view('pages.results.result-index')
@@ -279,7 +231,8 @@ class CastVotingController extends Controller
                 ->with('voting',$voting)
                 ->with('allEligible',$allEligible)
                 ->with('participant',$participant)
-                ->with('votedOrNot',$votedOrNot);
+                ->with('votedOrNot',$votedOrNot)
+                ->with('json',$json);
         }
     }
 

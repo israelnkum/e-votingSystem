@@ -115,29 +115,6 @@
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
                 <ul class="navbar-nav my-lg-0">
-                    <!-- Profile -->
-                    <!-- ============================================================== -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link  dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ Auth::user()->name }}
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right scale-up">
-                            <ul class="dropdown-user">
-                                {{--<li><a href="#"><i class="ti-user"> </i> My Profile</a></li>--}}
-                                <li role="separator" class="divider"> </li>
-                                <li>
-                                    <a href="{{ route('logout')}}"
-                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> Logout</a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </li>
-                    <!-- ============================================================== -->
                     <!-- Language -->
                     <!-- ============================================================== -->
                     <li class="nav-item">
@@ -157,6 +134,42 @@
                          </select>--}}
 
                     </li>
+                    <li class="nav-item dropdown">
+                        @if(substr($json['data']['LEVEL'],0,3) == '100')
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="http://www.ttuportal.com/admissions/public/albums/thumbnails/{{$json['data']['STNO']}}.jpg" alt="user" class="profile-pic" height="auto" width="200" />
+                            </a>
+                        @else
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="https://www.ttuportal.com/srms/public/albums/students/{{Auth::user()->username}}.jpg" alt="user" class="profile-pic" height="auto" width="200" />
+                            </a>
+                        @endif
+
+                        <div class="dropdown-menu dropdown-menu-right scale-up">
+                            <ul class="dropdown-user">
+                                <li>
+                                    <div class="dw-user-box">
+                                        <div class="u-img">
+                                            @if(substr($json['data']['LEVEL'],0,3) == '100')
+                                                <img src="http://www.ttuportal.com/admissions/public/albums/thumbnails/{{$json['data']['STNO']}}.jpg" alt="user"  height="auto" width="80" />
+                                            @else
+                                                <img src="https://www.ttuportal.com/srms/public/albums/students/{{Auth::user()->username}}.jpg" alt="user" height="auto" width="80" />
+                                            @endif
+                                        </div>
+                                        <div class="u-text">
+                                            <h4>{{ Auth::user()->name }}</h4>
+                                            <p class="text-muted">{{$json['data']['NAME']}}</p>
+                                            <a href="{{ route('logout')}}"
+                                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-rounded btn-danger btn-sm">Logout</a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                @csrf
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <input type="hidden" name="_token" id="csrf_toKen" value="{{csrf_token()}}">
@@ -170,7 +183,7 @@
     <!-- ============================================================== -->
     @if(Auth::user()->role == "Super Admin" && Auth::user()->updated == 0 || Auth::user()->role == "Admin" && Auth::user()->updated == 0)
 
-        @else
+    @else
         <aside class="left-sidebar">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
@@ -200,7 +213,7 @@
                             </li>
                             <li>
                                 <a class="has-arrow " href="#" aria-expanded="false">
-                                    <i class="mdi mdi-account-location"></i>
+                                    <i class="mdi mdi-account-location"> </i>
                                     <span class="hide-menu">Position</span>
                                 </a>
                                 <ul aria-expanded="false" class="collapse">
@@ -222,9 +235,9 @@
                                     <li>
                                         <a href="{{route('nominee_token.index')}}">Generate Token</a>
                                     </li>
-                                {{--    <li>
-                                        <a href="{{route('nominees.create')}}">New Nominee</a>
-                                    </li>--}}
+                                    {{--    <li>
+                                            <a href="{{route('nominees.create')}}">New Nominee</a>
+                                        </li>--}}
                                 </ul>
                             </li>
                             <li class="two-column">
@@ -303,14 +316,15 @@
                                 </ul>
                             </li>
                         @endif
+
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->
         </aside>
-    @endif
-    <!-- ============================================================== -->
+@endif
+<!-- ============================================================== -->
     <!-- End Left Sidebar - style you can find in sidebar.scss  -->
     <!-- ============================================================== -->
     <!-- ============================================================== -->
@@ -720,29 +734,29 @@
     })
 </script>
 @if(Request::is('home')  ? 'active' : '')
-<script>
+    <script>
 
-    let newLevelNames = [];
-    let newTotalLevelCount = [];
-    let newTotalFemales = [];
-    let newTotalMales =[];
-    let newTotalEachLevelVoters =[];
-
-
-
-
-    let newMaxValue = '<?php echo $max_lvl_count;?>';
+        let newLevelNames = [];
+        let newTotalLevelCount = [];
+        let newTotalFemales = [];
+        let newTotalMales =[];
+        let newTotalEachLevelVoters =[];
 
 
 
-    <?php
-    foreach($levelNames as $key=> $val){?>
-    newLevelNames.push('<?php echo $val; ?>');
-    <?php    }?>
 
-    <?php
-    foreach($totalLevelCount as $key=> $val){?>
-    newTotalLevelCount.push('<?php echo $val; ?>');
+        let newMaxValue = '<?php echo $max_lvl_count;?>';
+
+
+
+        <?php
+        foreach($levelNames as $key=> $val){?>
+        newLevelNames.push('<?php echo $val; ?>');
+        <?php    }?>
+
+        <?php
+        foreach($totalLevelCount as $key=> $val){?>
+        newTotalLevelCount.push('<?php echo $val; ?>');
         <?php    }?>
         <?php foreach($totalFemales as $key=> $val){?>
         newTotalFemales.push('<?php echo $val; ?>');
@@ -754,19 +768,81 @@
 
         <?php foreach($totalEachLevelVoters as $key=> $val){?>
         newTotalEachLevelVoters.push('<?php echo $val; ?>');
+            <?php    }?>
+
+        var chart2 = new Chartist.Bar('.amp-pxl', {
+                labels:newLevelNames ,
+                series: [
+
+                    newTotalFemales,
+                    newTotalMales,
+                    newTotalLevelCount,
+                    newTotalEachLevelVoters,
+
+
+
+                ]
+            }, {
+                axisX: {
+                    // On the x-axis start means top and end means bottom
+                    position: 'end',
+                    showGrid: false
+                },
+                axisY: {
+                    // On the y-axis start means left and end means right
+                    position: 'start'
+                },
+                high:newMaxValue,
+                low: '0',
+                plugins: [
+                    Chartist.plugins.tooltip()
+                ]
+            });
+
+
+
+        let newVotingNames = [];
+
+        let newTotalVoterInEachVoting = [];
+
+        let newTotalNomineesInEachVoting = [];
+
+        let newTotalCandidatesInEachVoting =[];
+        let newTotalVotesCastedInEachVoting = [];
+
+        <?php foreach($allVotingNames as $key=> $val){?>
+        newVotingNames.push('<?php echo $val; ?>');
         <?php    }?>
 
-    var chart2 = new Chartist.Bar('.amp-pxl', {
-            labels:newLevelNames ,
+        <?php foreach($totalVoterInEachVoting as $key=> $val){?>
+        newTotalVoterInEachVoting.push('<?php echo $val; ?>');
+        <?php    }?>
+
+        <?php foreach($totalNomineesInEachVoting as $key=> $val){?>
+        newTotalNomineesInEachVoting.push('<?php echo $val; ?>');
+        <?php    }?>
+
+        <?php foreach($totalCandidatesInEachVoting as $key=> $val){?>
+        newTotalCandidatesInEachVoting.push('<?php echo $val; ?>');
+        <?php    }?>
+
+        <?php foreach($totalVotesCastedInEachVoting as $key=> $val){?>
+        newTotalVotesCastedInEachVoting.push('<?php echo $val; ?>');
+            <?php    }?>
+
+
+
+
+
+        let newMaxVotersCount = '<?php echo $max_voters_count; ?>';
+
+        var chart3 = new Chartist.Bar('.amp', {
+            labels:newVotingNames ,
             series: [
-
-                newTotalFemales,
-                newTotalMales,
-                newTotalLevelCount,
-                newTotalEachLevelVoters,
-
-
-
+                newTotalVoterInEachVoting,
+                newTotalNomineesInEachVoting,
+                newTotalCandidatesInEachVoting,
+                newTotalVotesCastedInEachVoting
             ]
         }, {
             axisX: {
@@ -778,75 +854,13 @@
                 // On the y-axis start means left and end means right
                 position: 'start'
             },
-            high:newMaxValue,
+            high:newMaxVotersCount,
             low: '0',
             plugins: [
                 Chartist.plugins.tooltip()
             ]
         });
-
-
-
-    let newVotingNames = [];
-
-    let newTotalVoterInEachVoting = [];
-
-    let newTotalNomineesInEachVoting = [];
-
-    let newTotalCandidatesInEachVoting =[];
-    let newTotalVotesCastedInEachVoting = [];
-
-    <?php foreach($allVotingNames as $key=> $val){?>
-    newVotingNames.push('<?php echo $val; ?>');
-        <?php    }?>
-
-        <?php foreach($totalVoterInEachVoting as $key=> $val){?>
-        newTotalVoterInEachVoting.push('<?php echo $val; ?>');
-    <?php    }?>
-
-    <?php foreach($totalNomineesInEachVoting as $key=> $val){?>
-    newTotalNomineesInEachVoting.push('<?php echo $val; ?>');
-        <?php    }?>
-
-        <?php foreach($totalCandidatesInEachVoting as $key=> $val){?>
-        newTotalCandidatesInEachVoting.push('<?php echo $val; ?>');
-    <?php    }?>
-
-    <?php foreach($totalVotesCastedInEachVoting as $key=> $val){?>
-    newTotalVotesCastedInEachVoting.push('<?php echo $val; ?>');
-    <?php    }?>
-
-
-
-
-
-    let newMaxVotersCount = '<?php echo $max_voters_count; ?>';
-
-    var chart3 = new Chartist.Bar('.amp', {
-        labels:newVotingNames ,
-        series: [
-            newTotalVoterInEachVoting,
-            newTotalNomineesInEachVoting,
-            newTotalCandidatesInEachVoting,
-            newTotalVotesCastedInEachVoting
-        ]
-    }, {
-        axisX: {
-            // On the x-axis start means top and end means bottom
-            position: 'end',
-            showGrid: false
-        },
-        axisY: {
-            // On the y-axis start means left and end means right
-            position: 'start'
-        },
-        high:newMaxVotersCount,
-        low: '0',
-        plugins: [
-            Chartist.plugins.tooltip()
-        ]
-    });
-</script>
-    @endif
+    </script>
+@endif
 </body>
 </html>
