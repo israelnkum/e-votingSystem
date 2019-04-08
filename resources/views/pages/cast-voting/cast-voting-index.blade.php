@@ -47,23 +47,30 @@
                                                     <div class="form-group row text-center">
                                                         <div class="col-md-12 col-sm-12">
                                                             <div class="m-b-10">
-                                                                <div id="checkbox_group">
+                                                                <div id="demo-radio-button">
                                                                     @if(count($candidates) == 1)
                                                                         <label class="inline custom-control custom-checkbox block">
-                                                                            <input type="checkbox" value="{{$candidate->id}}" required name="voteCasted[]" id="{{$candidate->position->id}}" class="custom-control-input cbox{{$candidate->position->id}}">
+                                                                            <input type="checkbox" value="{{$candidate->id}}" required name="voteCasted[]{{$candidate->position->id}}" id="{{$candidate->position->id}}" class="custom-control-input cbox{{$candidate->position->id}}">
                                                                             <span class="custom-control-label ml-0">Yes</span>
                                                                         </label>
 
                                                                         <label class="inline custom-control custom-checkbox block">
-                                                                            <input type="checkbox" value="{{0}}" required name="voteCasted[]" id="{{$candidate->position->id}}" class="custom-control-input cbox{{$candidate->position->id}}">
+                                                                            <input type="checkbox" value="{{0}}" required name="voteCasted[]{{$candidate->position->id}}" id="{{$candidate->position->id}}" class="custom-control-input cbox{{$candidate->position->id}}">
                                                                             <span class="custom-control-label ml-0">No</span>
                                                                         </label>
+                                                                        {{--<input value="{{$candidate->id}}" name="voteCasted[]{{$candidate->position->id}}" required type="radio" class="with-gap" id="{{$candidate->id}}" />
+                                                                        <label for="{{$candidate->id}}">Yes</label>
+
+                                                                        <input value="{{0}}" name="voteCasted[]{{$candidate->position->id}}" type="radio" required class="with-gap" id="{{$candidate->id}}" />
+                                                                        <label for="{{$candidate->id}}">No</label>--}}
 
                                                                     @else
                                                                         <label class="inline custom-control custom-checkbox block">
-                                                                            <input type="checkbox" value="{{$candidate->id}}" required name="voteCasted[]" id="{{$candidate->position->id}}" class="custom-control-input cbox{{$candidate->position->id}}">
+                                                                            <input type="checkbox" value="{{$candidate->id}}" required name="voteCasted[]{{$candidate->position->id}}" id="{{$candidate->position->id}}" class="custom-control-input cbox{{$candidate->position->id}}">
                                                                             <span class="custom-control-label ml-0">Vote</span>
                                                                         </label>
+                                                                        {{--<input value="{{$candidate->id}}" name="voteCasted[]{{$candidate->position->id}}" type="radio" required class="with-gap" id="{{$candidate->id}}" />
+                                                                        <label for="{{$candidate->id}}">Vote</label>--}}
                                                                     @endif
                                                                 </div>
                                                             </div>

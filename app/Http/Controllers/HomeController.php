@@ -40,9 +40,7 @@ class HomeController extends Controller
             $level_ids = Level::all();
         }else{
             $level_ids = Level::all()->where('department_id',Auth::User()->department_id);
-
         }
-
 
         $allVotingNames = [];
         $totalVoterInEachVoting = [];

@@ -42,11 +42,15 @@ for(let i = 1; i < 50; i++) {
 
     let className = ".cbox".concat(i);
 
-    $(className).on("click", function() {
-        let numberOfChecked = $('input.cbox'+i+':checkbox:checked').length;
-        if (numberOfChecked > 1) {
-            $(this).prop('checked', false);
-        }
+    // $(className).on("click", function() {
+    //     let numberOfChecked = $('input.cbox'+i+':checkbox:checked').length;
+    //     if (numberOfChecked > 1) {
+    //       //  $(className).attr('checked',false);
+    //         $(this).prop('checked', false);
+    //     }
+    // });
+    $(className).on("change", function() {
+        $(className).not(this).prop('checked',false);
     });
 
 }

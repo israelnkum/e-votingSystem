@@ -98,6 +98,8 @@ class CastVotingController extends Controller
     public function store(Request $request)
     {
 
+//        return $request;
+
         $voteCasted =$request->input('voteCasted');
 
         $voteCastedFor = [];

@@ -39,7 +39,7 @@
 <!-- ============================================================== -->
 <section id="wrapper">
     <div class="login-register" style="background-image:url({{asset('vote.jpg')}});">
-        <div class="login-box card">
+        <div class="login-box" style="background: whitesmoke;">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12 text-center mb-3 text-dark">
@@ -52,7 +52,7 @@
                     <div class="form-group ">
                         <div class="col-xs-12">
                             <input id="email"  type="text" class="form-control{{$errors->has('username') || $errors->has('email') ? ' is-invalid' : ''  }}" name="login" value="{{old('username') ?: old('email') }}" required autofocus>
-                            <span class="bar"></span>
+                            <span class="bar"> </span>
                             <label for="email">Username/Index Number</label>
                             @if ($errors->has('username') || $errors->has('email'))
                                 <span class="invalid-feedback" role="alert">
@@ -88,10 +88,14 @@
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
+        <div class="text-center text-white">
+            <small>&copy;{{date('Y')}} | E-Voting - Powered by ANA Technologies</small>
+        </div>
     </div>
+
+
 </section>
 <!-- ============================================================== -->
 <!-- End Wrapper -->

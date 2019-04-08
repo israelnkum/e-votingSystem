@@ -62,7 +62,7 @@
 
 </head>
 
-<body class="fix-header fix-sidebar card-no-border logo-center">
+<body class="fix-header fix-sidebar card-no-border logo-center" onload=display_ct()>
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
@@ -89,6 +89,7 @@
                         <!-- Light Logo icon -->
                         <img src="{{asset('e-voting.png')}}" alt="homepage" height="auto" width="50" class="light-logo" />
                     </b>
+
                     <span>
 
                          <!-- dark Logo text -->
@@ -115,6 +116,70 @@
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
                 <ul class="navbar-nav my-lg-0">
+                    <!-- Profile -->
+                    <!-- ============================================================== -->
+                    @if(Auth::user()->role == "Voter")
+
+                        <li class="nav-item dropdown">
+                            @if(substr($json['data']['LEVEL'],0,3) == '100')
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="http://www.ttuportal.com/admissions/public/albums/thumbnails/{{$json['data']['STNO']}}.jpg" alt="{{Auth::user()->username}}" class="profile-pic" height="auto" width="200" />
+                                </a>
+                            @else
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="https://www.ttuportal.com/srms/public/albums/students/{{Auth::user()->username}}.jpg" alt="{{Auth::user()->username}}" class="profile-pic" height="auto" width="200" />
+                                </a>
+                            @endif
+
+                            <div class="dropdown-menu dropdown-menu-right scale-up">
+                                <ul class="dropdown-user">
+                                    <li>
+                                        <div class="dw-user-box">
+                                            <div class="u-img">
+                                                @if(substr($json['data']['LEVEL'],0,3) == '100')
+                                                    <img src="http://www.ttuportal.com/admissions/public/albums/thumbnails/{{$json['data']['STNO']}}.jpg" alt="Image"  height="auto" width="80" />
+                                                @else
+                                                    <img src="https://www.ttuportal.com/srms/public/albums/students/{{Auth::user()->username}}.jpg" alt="Image" height="auto" width="80" />
+                                                @endif
+                                            </div>
+                                            <div class="u-text">
+                                                <h4>{{ Auth::user()->name }}</h4>
+                                                <p class="text-muted">{{$json['data']['NAME']}}</p>
+                                                <a href="{{ route('logout')}}"
+                                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-rounded btn-danger btn-sm">Logout</a>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                    @csrf
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    @else
+                        <li class="nav-item dropdown">
+                            <a class="nav-link  dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ Auth::user()->name }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right scale-up">
+                                <ul class="dropdown-user">
+                                    {{--<li><a href="#"><i class="ti-user"> </i> My Profile</a></li>--}}
+                                    <li role="separator" class="divider"> </li>
+                                    <li>
+                                        <a href="{{ route('logout')}}"
+                                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> Logout</a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                @endif
+
+                <!-- ============================================================== -->
                     <!-- Language -->
                     <!-- ============================================================== -->
                     <li class="nav-item">
@@ -134,42 +199,7 @@
                          </select>--}}
 
                     </li>
-                    <li class="nav-item dropdown">
-                        @if(substr($json['data']['LEVEL'],0,3) == '100')
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="http://www.ttuportal.com/admissions/public/albums/thumbnails/{{$json['data']['STNO']}}.jpg" alt="user" class="profile-pic" height="auto" width="200" />
-                            </a>
-                        @else
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="https://www.ttuportal.com/srms/public/albums/students/{{Auth::user()->username}}.jpg" alt="user" class="profile-pic" height="auto" width="200" />
-                            </a>
-                        @endif
 
-                        <div class="dropdown-menu dropdown-menu-right scale-up">
-                            <ul class="dropdown-user">
-                                <li>
-                                    <div class="dw-user-box">
-                                        <div class="u-img">
-                                            @if(substr($json['data']['LEVEL'],0,3) == '100')
-                                                <img src="http://www.ttuportal.com/admissions/public/albums/thumbnails/{{$json['data']['STNO']}}.jpg" alt="user"  height="auto" width="80" />
-                                            @else
-                                                <img src="https://www.ttuportal.com/srms/public/albums/students/{{Auth::user()->username}}.jpg" alt="user" height="auto" width="80" />
-                                            @endif
-                                        </div>
-                                        <div class="u-text">
-                                            <h4>{{ Auth::user()->name }}</h4>
-                                            <p class="text-muted">{{$json['data']['NAME']}}</p>
-                                            <a href="{{ route('logout')}}"
-                                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-rounded btn-danger btn-sm">Logout</a>
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                @csrf
-                                            </form>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
                 </ul>
             </div>
             <input type="hidden" name="_token" id="csrf_toKen" value="{{csrf_token()}}">
@@ -213,7 +243,7 @@
                             </li>
                             <li>
                                 <a class="has-arrow " href="#" aria-expanded="false">
-                                    <i class="mdi mdi-account-location"> </i>
+                                    <i class="mdi mdi-account-location"></i>
                                     <span class="hide-menu">Position</span>
                                 </a>
                                 <ul aria-expanded="false" class="collapse">
@@ -862,5 +892,7 @@
         });
     </script>
 @endif
+
+
 </body>
 </html>
