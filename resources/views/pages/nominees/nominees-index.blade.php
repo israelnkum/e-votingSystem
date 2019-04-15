@@ -63,9 +63,11 @@ osikani
                                                 Action
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="manage">
-                                                <a href="{{route('nominees.edit',$nominee->id)}}" class="dropdown-item ml-1 text-dark">
-                                                    <i class="mdi mdi-account-edit"> </i> Edit
-                                                </a>
+                                                @if(Auth::user()->role =="Super Admin")
+                                                    <a href="{{route('nominees.edit',$nominee->id)}}" class="dropdown-item ml-1 text-dark">
+                                                        <i class="mdi mdi-account-edit"> </i> Edit
+                                                    </a>
+                                                @endif
                                                 <a class="dropdown-item" href="#">
                                                     <form method="post" action="{{route('makeCandidate',$nominee->id)}}" onsubmit="return confirm('Are you sure you want to continue?')">
                                                         @csrf

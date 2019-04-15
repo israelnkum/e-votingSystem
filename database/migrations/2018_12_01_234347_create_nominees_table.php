@@ -15,12 +15,16 @@ class CreateNomineesTable extends Migration
     {
         Schema::create('nominees', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('other_name')->nullable();
+            $table->string('mode_of_study');
+            $table->string('vision');
             $table->string('date_of_birth');
             $table->string('home_town');
             $table->string('region');
+            $table->string('nationality');
             $table->string('home_address');
             $table->string('telephone');
             $table->string('email')->unique();

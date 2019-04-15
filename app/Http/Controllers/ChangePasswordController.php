@@ -16,7 +16,7 @@ class ChangePasswordController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.first_login.update-password');
     }
 
     /**

@@ -10,14 +10,14 @@
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
-                                    <input type="password" placeholder="New Password" class="form-control" name="password" required>
+                                    <input type="password" placeholder="New Password" minlength="8" class="form-control" name="password" required>
                                     <div class="invalid-feedback">
                                         Password is required
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <input type="password" placeholder="Confirm Password" class="form-control" name="password_confirmation"  required>
+                                    <input type="password" placeholder="Confirm Password" minlength="8" class="form-control" name="password_confirmation"  required>
                                     <div class="invalid-feedback">
                                         Password is Mismatch
                                     </div>

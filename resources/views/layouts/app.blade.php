@@ -163,7 +163,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right scale-up">
                                 <ul class="dropdown-user">
-                                    {{--<li><a href="#"><i class="ti-user"> </i> My Profile</a></li>--}}
+                                    <li><a href="{{route('change-password.index')}}"><i class="ti-lock"> </i>Change Password</a></li>
                                     <li role="separator" class="divider"> </li>
                                     <li>
                                         <a href="{{ route('logout')}}"

@@ -58,14 +58,20 @@
                             </div>
                         </div>
                         <div class="form-group form-float  row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Name" required>
                                 <div class="invalid-feedback">
                                     Name required
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="Username" required>
+                                <div class="invalid-feedback">
+                                    Username required
+                                </div>
+                            </div>
 
-                            <div class="col-md-6 mb-6">
+                            <div class="col-md-4 mb-6">
                                 <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email" required>
                                 <div class="invalid-feedback">
                                     Email is required

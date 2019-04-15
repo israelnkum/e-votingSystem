@@ -206,7 +206,7 @@
     @if(Auth::User()->role == 'Admin' || Auth::User()->role == 'Super Admin')
         <div class="row">
             <!-- Column -->
-            <div class="col-lg-4 col-md-12 col-sm-12">
+            <div class="col-lg-6 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Voter's</h4>
@@ -231,7 +231,7 @@
                 </div>
             </div>
             <!-- Column -->
-            <div class="col-lg-4 col-md-12">
+            <div class="col-lg-6 col-md-12">
                 <div class="card">
                     <div class="card-body">
                         {{--<h4 class="card-title">Newsletter Campaign</h4>--}}
@@ -254,25 +254,6 @@
                 </div>
             </div>
             <!-- Column -->
-            <div class="col-lg-4 col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Current Visitors</h4>
-                        <h6 class="card-subtitle">Different Devices Used to Visit</h6>
-                        <div id="usa" ></div>
-                        <div class="text-center">
-                            <ul class="list-inline">
-                                <li>
-                                    <h6 class="text-success"><i class="fa fa-circle font-10 m-r-10 "></i>Valley</h6> </li>
-                                <li>
-                                    <h6 class="text-info"><i class="fa fa-circle font-10 m-r-10"></i>Newyork</h6> </li>
-                                <li>
-                                    <h6 class="text-danger"><i class="fa fa-circle font-10 m-r-10"></i>Kansas</h6> </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     @else
         <div class="row">

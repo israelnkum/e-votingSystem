@@ -13,8 +13,7 @@ use App\Voting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Ixudra\Curl\Facades\Curl;
-use function MongoDB\BSON\toJSON;
+
 
 class CastVotingController extends Controller
 {
@@ -35,16 +34,17 @@ class CastVotingController extends Controller
      */
     public function index()
     {
-       if (Auth::user()->role == "Admin"){
+        $json =[];
+       if (Auth::user()->role == "Admin" || Auth::user()->role == "Super Admin"){
            $singleArray =Voting::where('department_id',Auth::User()->department_id)->get();
        }elseif (Auth::user()->role == "Super Admin"){
         $singleArray =Voting::all();
     }else{
            $singleArray =Eligible::with('voting')->where('user_id',Auth::User()->id)->get();
+           $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
+
 
        }
-        $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
-
 
         return view('pages.cast-voting.select-voting')
             ->with('singleArray',$singleArray)
@@ -200,7 +200,6 @@ class CastVotingController extends Controller
         $totalDepartment = Department::all()->count();
         $totalPositions = Position::all()->count();
         $totalVotings = Voting::all()->count();
-        $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
 
         if (Auth::user()->role == 'Super Admin' || Auth::user()->role == 'Admin'){
             return view('pages.results.result-index')
@@ -219,6 +218,8 @@ class CastVotingController extends Controller
                 ->with('participant',$participant)
                 ->with('votedOrNot',$votedOrNot);
         }else{
+            $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
+
             return view('home')
                 ->with('positions',$positions)
                 ->with('totalVoters',$totalVoters)
