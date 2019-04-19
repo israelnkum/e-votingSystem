@@ -19,7 +19,7 @@
 
     <div class="row">
         <div class="col-md-12 text-right">
-osikani
+            osikani
         </div>
         <div class="col-md-12">
             <div class="card">
@@ -51,10 +51,10 @@ osikani
                                     <td>{{$nominee->telephone}}</td>
                                     <td>
                                         @if($nominee->candidate == 1)
-                                            <label class="badge badge-success">Candiate</label>
-                                            @else
+                                            <label class="badge badge-success">Candidate</label>
+                                        @else
                                             <label class="badge badge-warning">Nominee</label>
-                                            @endif
+                                        @endif
                                     </td>
                                     <td>{{$nominee->voting->name}}</td>
                                     <td>
@@ -68,6 +68,9 @@ osikani
                                                         <i class="mdi mdi-account-edit"> </i> Edit
                                                     </a>
                                                 @endif
+                                                <a href="http://localhost:800/api/print/{{$nominee->id}}" target="_blank" class="dropdown-item ml-1 text-dark">
+                                                    <i class="mdi mdi-printer"> </i> Print
+                                                </a>
                                                 <a class="dropdown-item" href="#">
                                                     <form method="post" action="{{route('makeCandidate',$nominee->id)}}" onsubmit="return confirm('Are you sure you want to continue?')">
                                                         @csrf
