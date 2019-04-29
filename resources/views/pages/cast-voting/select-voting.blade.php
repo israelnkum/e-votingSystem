@@ -126,11 +126,9 @@
                                 <h5>Ending Time: {{$singleArr->voting->ending_time}}</h5>
 
                                 <div class="text-right">
-                                    <span id='ct'> </span>
-                                    @if(substr($singleArr->voting->voting_date_start_time,0,10) == substr(\Carbon\Carbon::today(),0,10))
+                                    @if(substr($singleArr->voting->voting_date_start_time,0,10) == date('Y-m-d') && strtotime(date('Y-m-d h:i A')) < strtotime($singleArr->voting->voting_date_start_time))
 
                                         @php
-
                                             // Example
 
                                             $strStart = $singleArr->voting->voting_date_start_time;
@@ -141,7 +139,7 @@
 
                                             $dteDiff  = $dteStart->diff($dteEnd);
                                             echo '<label class="badge badge-success p-2">';
-                                            echo "Voting starts in about ".$dteDiff->format("%H:%I:%S");
+                                            echo "Election starts in about ".$dteDiff->format("%H:%I:%S");
                                             echo '</label>';
                                         @endphp
 
@@ -152,7 +150,7 @@
                                         </a>
                                     @elseif(strtotime(\Carbon\Carbon::now()->format('Y-m-d h:i A')) >= strtotime($singleArr->voting->voting_date_start_time) && strtotime(\Carbon\Carbon::now()->format('h:i A')) < strtotime($singleArr->voting->ending_time))
                                         @if($singleArr->participated == 1)
-                                            <a class="badge badge-warning font-18" href="javascript:void(0)">
+                                            <a class="btn btn-sm btn-warning" href="javascript:void(0)" data-toggle="modal" data-target="#voteCasteModal">
                                                 Vote Casted
                                             </a>
                                         @else
@@ -245,6 +243,23 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+
+        <div class="modal fade" id="voteCasteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New Level</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-danger">Vote Casted! Come back and check result when election over</p>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

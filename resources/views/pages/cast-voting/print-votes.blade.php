@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="ITSU - Voting System | Print Out">
+    <meta name="description" content="E-Voting System | Print Out">
     <meta name="author" content="Osikani Israel Appiah Nkum">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('itsu.jpeg')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('e-voting.png')}}">
     <title>ITSU | Voting System - Print Out</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
@@ -27,13 +27,8 @@
 
 <div class="container" >
     <div class="row mt-5">
-        <div class="col-md-6 text-right">
-            <img src="{{asset('e-voting.png')}}" height="auto" width="100">
-        </div>
-        <div class="col-md-6 text-left">
-            <h3 class="mb-0">ITSU VOTING SYSTEM</h3>
-            <p class="mb-0">Date: 2019-12-06</p>
-            <p class="mb-0">Time: 08:00 AM - 05:00 PM</p>
+        <div class="col-md-12">
+            <img class="img-responsive mt-0 img-fluid"  src="{{asset('e-header.jpg')}}" height="auto">
         </div>
     </div>
     <br>
@@ -43,13 +38,32 @@
             <hr>
             <div class="card-body text-dark">
                 <div class="row">
-                    <div class="col-md-2 text-right">
-                        <img src="{{asset('osikani.jpg')}}" height="auto" width="100">
+                    <div class="col-md-12  text-center">
+                        <?php
+                        $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
+                        ?>
+                        @if(substr($json['data']['LEVEL'],0,3) == '100')
+                            <?php
+                            echo "<img src='http://www.ttuportal.com/admissions/public/albums/thumbnails/".$json['data']['STNO'].".jpg' alt='".Auth::user()->username."' class='img-fluid' height='auto' width='100'> ";
+                            echo '<h6 class="text-dark mt-3"><span class="text-info"></span>'.str_replace(',', '',$json['data']['NAME']).'</h6>
+                            <h6 class="text-dark"><span class="text-info"></span>'.Auth::User()->username.'</h6>
+                        ';
+                            ?>
+                        @else
+                            <?php
+                            $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
+                            echo '<img src="https://www.ttuportal.com/srms/public/albums/students/'.Auth::user()->username.'.jpg" alt="'.Auth::user()->username.'" class="img-fluid" height="auto" width="100" />';
+                            ?>
+                        @endif
                     </div>
-                    <div class="col-md-8">
-                        <h1 class="text-dark"><span class="text-info">NAME: </span>APPIAH NKUM AMOS</h1>
-                        <h4 class="text-dark"><span class="text-info">INDEX NUMBER: </span>07162374</h4>
-                    </div>
+                    {{--  @php
+                          echo '
+                          <div class="col-md-4">
+                              <h6 class="text-dark"><span class="text-info"></span>'.str_replace(',', '',$json['data']['NAME']).'</h1>
+                              <h6 class="text-dark"><span class="text-info"></span>'.Auth::User()->username.'</h4>
+                          </div>
+                          ';
+                      @endphp--}}
                 </div>
             </div>
         </div>
@@ -62,21 +76,28 @@
         </div>
     </div>
     @foreach($voteCastedFor as $voteCast)
-    <div class="row">
-        <div class="col-md-3 text-center">
-            <img height="auto" width="100" src="http://localhost:800/api/image/{{$voteCast->image}}" alt="user" class="img-fluid">
-        </div>
+        <div class="row">
+            <div class="col-md-3 text-center">
+                <img height="auto" width="100" src="http://localhost:800/api/image/{{$voteCast->image}}" alt="user" class="img-fluid">
+            </div>
 
-        <div class="col-md-6 text-center mt-5">
-            <h5>{{$voteCast->first_name." ".$voteCast->other_name." ".$voteCast->last_name}}</h5>
-        </div>
+            <div class="col-md-6 text-center mt-5">
+                <h5>{{$voteCast->first_name." ".$voteCast->other_name." ".$voteCast->last_name}}</h5>
+            </div>
 
-        <div class="col-md-3 text-center mt-5">
-            <h5>{{$voteCast->position->name}}</h5>
+            <div class="col-md-3 text-center mt-5">
+                <h5>{{$voteCast->position->name}}</h5>
+            </div>
+        </div>
+        <hr>
+    @endforeach
+
+    <div class="row mt-5">
+        <div class="col-md-12 text-center">
+            <img class="img-responsive mt-0 img-fluid"  src="{{asset('e-footer.png')}}" height="auto">
+            <small class="text-danger">E-Voting System By ANA TECHNOLOGIES</small>
         </div>
     </div>
-    <hr>
-    @endforeach
 </div>
 
 
@@ -89,13 +110,14 @@
 <script src="{{asset('js/popper.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script>
-    window.onload = function() {
-        window.print();
-        window.close();
-        //   window.history.back();
+     window.onload = function() {
+         window.print();
+         window.close();
+         //   window.history.back();
 
-        document.location.href="/cast-voting";
-    }
+
+         document.location.href="/cast-voting";
+     }
 </script>
 
 </body>

@@ -119,9 +119,8 @@
                     <!-- Profile -->
                     <!-- ============================================================== -->
                     @if(Auth::user()->role == "Voter")
-
                         <li class="nav-item dropdown">
-                            @if(substr($json['data']['LEVEL'],0,3) == '100')
+                            {{--@if(substr($json['data']['LEVEL'],0,3) == '100')
                                 <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <img src="http://www.ttuportal.com/admissions/public/albums/thumbnails/{{$json['data']['STNO']}}.jpg" alt="{{Auth::user()->username}}" class="profile-pic" height="auto" width="200" />
                                 </a>
@@ -129,22 +128,25 @@
                                 <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <img src="https://www.ttuportal.com/srms/public/albums/students/{{Auth::user()->username}}.jpg" alt="{{Auth::user()->username}}" class="profile-pic" height="auto" width="200" />
                                 </a>
-                            @endif
+                            @endif--}}
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ Auth::user()->name }}
+                            </a>
 
                             <div class="dropdown-menu dropdown-menu-right scale-up">
                                 <ul class="dropdown-user">
                                     <li>
                                         <div class="dw-user-box">
-                                            <div class="u-img">
+                                            {{--<div class="u-img">
                                                 @if(substr($json['data']['LEVEL'],0,3) == '100')
                                                     <img src="http://www.ttuportal.com/admissions/public/albums/thumbnails/{{$json['data']['STNO']}}.jpg" alt="Image"  height="auto" width="80" />
                                                 @else
                                                     <img src="https://www.ttuportal.com/srms/public/albums/students/{{Auth::user()->username}}.jpg" alt="Image" height="auto" width="80" />
                                                 @endif
-                                            </div>
+                                            </div>--}}
                                             <div class="u-text">
                                                 <h4>{{ Auth::user()->name }}</h4>
-                                                <p class="text-muted">{{$json['data']['NAME']}}</p>
+{{--                                                <p class="text-muted">{{ Auth::user()->name }}</p>--}}
                                                 <a href="{{ route('logout')}}"
                                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-rounded btn-danger btn-sm">Logout</a>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

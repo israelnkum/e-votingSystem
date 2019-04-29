@@ -10,6 +10,7 @@ use App\Position;
 use App\Result;
 use App\User;
 use App\Voting;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -35,20 +36,18 @@ class CastVotingController extends Controller
     public function index()
     {
         $json =[];
-       if (Auth::user()->role == "Admin" || Auth::user()->role == "Super Admin"){
-           $singleArray =Voting::where('department_id',Auth::User()->department_id)->get();
-       }elseif (Auth::user()->role == "Super Admin"){
-        $singleArray =Voting::all();
-    }else{
-           $singleArray =Eligible::with('voting')->where('user_id',Auth::User()->id)->get();
-           $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
-
-
-       }
+        if (Auth::user()->role == "Admin" || Auth::user()->role == "Super Admin"){
+            $singleArray =Voting::where('department_id',Auth::User()->department_id)->get();
+        }elseif (Auth::user()->role == "Super Admin"){
+            $singleArray =Voting::all();
+        }else{
+            $singleArray =Eligible::with('voting')->where('user_id',Auth::User()->id)->get();
+         //   $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
+        }
 
         return view('pages.cast-voting.select-voting')
-            ->with('singleArray',$singleArray)
-            ->with('json',$json);
+            ->with('singleArray',$singleArray);
+            //->with('json',$json);
 
     }
     /*
@@ -57,26 +56,129 @@ class CastVotingController extends Controller
      * belongs to
      */
 
-    public function selectCandidates($id){
-        $positions = Nominee::with('position','level','department')
-            ->where('department_id',Auth::User()->department_id)
-            ->where('voting_id',$id)
-            ->where('candidate',1)
-            ->orderBy('position_number')
-            ->get()
-            ->groupBy('position_id');
+    public function selectCandidates($id)
+    {
+        //check if voting is over
+        $voter = Eligible::where('voting_id', $id)
+            ->where('user_id', Auth::User()->id)->get();
 
-        $voting = Voting::find($id);
-        Session::put('current_voting_id',$id);
+        $voting = Voting::find($voter[0]->voting_id);
 
-        $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
 
-        return view('pages.cast-voting.cast-voting-index')
-            ->with('current_voting_id',$id)
-            ->with('voting_id',$id)
-            ->with('voting',$voting)
-            ->with('positions',$positions)
-            ->with('json',$json);
+        if (strtotime(date('Y-m-d h:i A')) < strtotime(substr($voting->voting_date_start_time, 0, 10) . " " . $voting->ending_time)) {
+
+            //return "voted";
+            return view('auth.login')
+                ->with('success', 'Vote Casted Already');
+        }elseif (strtotime(date('Y-m-d h:i A')) > strtotime(substr($voting->voting_date_start_time, 0, 10) . " " . $voting->ending_time)){
+            $voting = Voting::find($id);
+
+            $currentUser = User::with('department')
+                ->where('id', Auth::User()->id)->get();
+
+            //get all eligible to this voting
+
+            $allEligible = Eligible::all()->where('voting_id', $id)->count();
+
+            //get all participant voters in this voting
+            $participant = Eligible::all()->where('voting_id', $id)
+                ->where('participated', 1)->count();
+
+            //check if voted
+            $votedOrNot = Eligible::where('user_id', Auth::User()->id)
+                ->where('voting_id', $id)
+                ->get();
+            //return $votedOrNot;
+            $positions = Nominee::with('position', 'level', 'department', 'result')
+                ->where('department_id', Auth::User()->department_id)
+                ->where('voting_id', $id)
+                ->where('candidate', 1)
+                ->get()
+                ->groupBy('position_id');
+
+            $totalVoters = User::all()
+                ->where('role', 'Voter')
+                ->where('department_id', Auth::User()->department_id)
+                ->where('voting_id', Auth::User()->voting_id)
+                ->count();
+            $totalNominees = Nominee::all()
+                ->where('department_id', Auth::User()->department_id)
+                ->where('voting_id', Auth::User()->voting_id)
+                ->count();
+            $totalCandidates = Nominee::all()
+                ->where('candidate', 1)
+                ->where('department_id', Auth::User()->department_id)
+                ->where('voting_id', Auth::User()->voting_id)
+                ->count();
+            $totalVoteCasted = User::all()
+                ->where('voted', '1')
+                ->where('department_id', Auth::User()->department_id)
+                ->where('voting_id', Auth::User()->voting_id)
+                ->count();
+
+
+            $totalLevel = Level::all()->count();
+            $totalDepartment = Department::all()->count();
+            $totalPositions = Position::all()->count();
+            $totalVotings = Voting::all()->count();
+
+            if (Auth::user()->role == 'Super Admin' || Auth::user()->role == 'Admin') {
+                return view('pages.results.result-index')
+                    ->with('positions', $positions)
+                    ->with('totalVoters', $totalVoters)
+                    ->with('totalNominees', $totalNominees)
+                    ->with('totalCandidates', $totalCandidates)
+                    ->with('totalLevel', $totalLevel)
+                    ->with('totalDepartment', $totalDepartment)
+                    ->with('totalPositions', $totalPositions)
+                    ->with('totalVotings', $totalVotings)
+                    ->with('totalVoteCasted', $totalVoteCasted)
+                    ->with('currentUser', $currentUser)
+                    ->with('voting', $voting)
+                    ->with('allEligible', $allEligible)
+                    ->with('participant', $participant)
+                    ->with('votedOrNot', $votedOrNot);
+            } else {
+//            $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
+
+                return view('home')
+                    ->with('positions', $positions)
+                    ->with('totalVoters', $totalVoters)
+                    ->with('totalNominees', $totalNominees)
+                    ->with('totalCandidates', $totalCandidates)
+                    ->with('totalLevel', $totalLevel)
+                    ->with('totalDepartment', $totalDepartment)
+                    ->with('totalPositions', $totalPositions)
+                    ->with('totalVotings', $totalVotings)
+                    ->with('totalVoteCasted', $totalVoteCasted)
+                    ->with('currentUser', $currentUser)
+                    ->with('voting', $voting)
+                    ->with('allEligible', $allEligible)
+                    ->with('participant', $participant)
+                    ->with('votedOrNot', $votedOrNot);
+//                ->with('json',$json);
+            }
+        } else {
+            $positions = Nominee::with('position', 'level', 'department')
+                ->where('department_id', Auth::User()->department_id)
+                ->where('voting_id', $id)
+                ->where('candidate', 1)
+                ->orderBy('position_number')
+                ->get()
+                ->groupBy('position_id');
+
+            $voting = Voting::find($id);
+            Session::put('current_voting_id', $id);
+
+//        $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
+
+            return view('pages.cast-voting.cast-voting-index')
+                ->with('current_voting_id', $id)
+                ->with('voting_id', $id)
+                ->with('voting', $voting)
+                ->with('positions', $positions);
+            //  ->with('json',$json);
+        }
     }
 
     /**
@@ -97,49 +199,60 @@ class CastVotingController extends Controller
      */
     public function store(Request $request)
     {
-
-//        return $request;
-
-        $voteCasted =$request->input('voteCasted');
-
-        $voteCastedFor = [];
-        foreach ($voteCasted as $item) {
-            if ($item == 0){
-                unset($item);
-            }else{
-                $totalVoteCounts= Result::where('nominee_id',$item)->first();
-
-                array_push($voteCastedFor,Nominee::with('position')->where('id',$item)->first());
-
-                $currentCount = $totalVoteCounts ->vote_count;
-                $totalVoteCounts ->vote_count =
-     // return $participation;
- $currentCount+1;
-                $totalVoteCounts->save();
-            }
-
-        }
-
-       // return $voteCastedFor;
         $voter =Eligible::where('voting_id',Session::get('current_voting_id'))
             ->where('user_id',Auth::User()->id)->get();
 
         $participation = Eligible::find($voter[0]->id);
 
-     // return $participation;
+        if ($participation->participated == 1){
 
-        //set participated to 1
-        $participation->participated=1;
-        $participation->save();
+            //return "voted";
+            return view('auth.login')
+                ->with('success', 'Vote Casted Already');
+        }else{
+            //        return $request;
 
-        $setVoted = User::find(Auth::User()->id);
+            $voteCasted =$request->input('voteCasted');
 
-        $setVoted ->voted =1;
-        $setVoted->save();
+            $voteCastedFor = [];
+            foreach ($voteCasted as $item) {
+                if ($item == 0){
+                    unset($item);
+                }else{
+                    $totalVoteCounts= Result::where('nominee_id',$item)->first();
+
+                    array_push($voteCastedFor,Nominee::with('position')->where('id',$item)->first());
+
+                    $currentCount = $totalVoteCounts ->vote_count;
+                    $totalVoteCounts ->vote_count =$currentCount+1;
+                    $totalVoteCounts->save();
+                }
+
+            }
+
+            // return $voteCastedFor;
+            $voter =Eligible::where('voting_id',Session::get('current_voting_id'))
+                ->where('user_id',Auth::User()->id)->get();
+
+            $participation = Eligible::find($voter[0]->id);
+
+            // return $participation;
+
+            //set participated to 1
+            $participation->participated=1;
+            $participation->save();
+
+            $setVoted = User::find(Auth::User()->id);
+
+            $setVoted ->voted =1;
+            $setVoted->save();
 
 
-        return view('pages.cast-voting.print-votes')
-            ->with('voteCastedFor',$voteCastedFor);
+            return view('pages.cast-voting.print-votes')
+                ->with('voteCastedFor',$voteCastedFor);
+        }
+
+
     }
 
     /**
@@ -150,92 +263,107 @@ class CastVotingController extends Controller
      */
     public function show($id)
     {
-        $voting = Voting::find($id);
+        $voter =Eligible::where('voting_id',$id)
+            ->where('user_id',Auth::User()->id)->get();
 
-        $currentUser = User::with('department')
-            ->where('id',Auth::User()->id)->get();
-
-        //get all eligible to this voting
-
-        $allEligible = Eligible::all()->where('voting_id',$id)->count();
-
-        //get all participant voters in this voting
-        $participant = Eligible::all()->where('voting_id',$id)
-            ->where('participated',1)->count();
-
-        //check if voted
-        $votedOrNot = Eligible::where('user_id',Auth::User()->id)
-            ->where('voting_id',$id)
-            ->get();
-        //return $votedOrNot;
-        $positions = Nominee::with('position','level','department','result')
-            ->where('department_id',Auth::User()->department_id)
-            ->where('voting_id',$id)
-            ->where('candidate',1)
-            ->get()
-            ->groupBy('position_id');
-
-        $totalVoters = User::all()
-            ->where('role','Voter')
-            ->where('department_id',Auth::User()->department_id)
-            ->where('voting_id',Auth::User()->voting_id)
-            ->count();
-        $totalNominees = Nominee::all()
-            ->where('department_id',Auth::User()->department_id)
-            ->where('voting_id',Auth::User()->voting_id)
-            ->count();
-        $totalCandidates = Nominee::all()
-            ->where('candidate',1)
-            ->where('department_id',Auth::User()->department_id)
-            ->where('voting_id',Auth::User()->voting_id)
-            ->count();
-        $totalVoteCasted = User::all()
-            ->where('voted','1')
-            ->where('department_id',Auth::User()->department_id)
-            ->where('voting_id',Auth::User()->voting_id)
-            ->count();
+        $voting = Voting::find($voter[0]->voting_id);
 
 
-        $totalLevel = Level::all()->count();
-        $totalDepartment = Department::all()->count();
-        $totalPositions = Position::all()->count();
-        $totalVotings = Voting::all()->count();
 
-        if (Auth::user()->role == 'Super Admin' || Auth::user()->role == 'Admin'){
-            return view('pages.results.result-index')
-                ->with('positions',$positions)
-                ->with('totalVoters',$totalVoters)
-                ->with('totalNominees',$totalNominees)
-                ->with('totalCandidates',$totalCandidates)
-                ->with('totalLevel',$totalLevel)
-                ->with('totalDepartment',$totalDepartment)
-                ->with('totalPositions',$totalPositions)
-                ->with('totalVotings',$totalVotings)
-                ->with('totalVoteCasted',$totalVoteCasted)
-                ->with('currentUser',$currentUser)
-                ->with('voting',$voting)
-                ->with('allEligible',$allEligible)
-                ->with('participant',$participant)
-                ->with('votedOrNot',$votedOrNot);
-        }else{
-            $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
 
-            return view('home')
-                ->with('positions',$positions)
-                ->with('totalVoters',$totalVoters)
-                ->with('totalNominees',$totalNominees)
-                ->with('totalCandidates',$totalCandidates)
-                ->with('totalLevel',$totalLevel)
-                ->with('totalDepartment',$totalDepartment)
-                ->with('totalPositions',$totalPositions)
-                ->with('totalVotings',$totalVotings)
-                ->with('totalVoteCasted',$totalVoteCasted)
-                ->with('currentUser',$currentUser)
-                ->with('voting',$voting)
-                ->with('allEligible',$allEligible)
-                ->with('participant',$participant)
-                ->with('votedOrNot',$votedOrNot)
-                ->with('json',$json);
+        if (strtotime(date('Y-m-d h:i A')) <strtotime(substr($voting->voting_date_start_time,0,10)." ".$voting->ending_time)){
+
+            //return "voted";
+            return view('auth.login')
+                ->with('success', 'Vote Casted Already');
+        }else {
+            $voting = Voting::find($id);
+
+            $currentUser = User::with('department')
+                ->where('id', Auth::User()->id)->get();
+
+            //get all eligible to this voting
+
+            $allEligible = Eligible::all()->where('voting_id', $id)->count();
+
+            //get all participant voters in this voting
+            $participant = Eligible::all()->where('voting_id', $id)
+                ->where('participated', 1)->count();
+
+            //check if voted
+            $votedOrNot = Eligible::where('user_id', Auth::User()->id)
+                ->where('voting_id', $id)
+                ->get();
+            //return $votedOrNot;
+            $positions = Nominee::with('position', 'level', 'department', 'result')
+                ->where('department_id', Auth::User()->department_id)
+                ->where('voting_id', $id)
+                ->where('candidate', 1)
+                ->get()
+                ->groupBy('position_id');
+
+            $totalVoters = User::all()
+                ->where('role', 'Voter')
+                ->where('department_id', Auth::User()->department_id)
+                ->where('voting_id', Auth::User()->voting_id)
+                ->count();
+            $totalNominees = Nominee::all()
+                ->where('department_id', Auth::User()->department_id)
+                ->where('voting_id', Auth::User()->voting_id)
+                ->count();
+            $totalCandidates = Nominee::all()
+                ->where('candidate', 1)
+                ->where('department_id', Auth::User()->department_id)
+                ->where('voting_id', Auth::User()->voting_id)
+                ->count();
+            $totalVoteCasted = User::all()
+                ->where('voted', '1')
+                ->where('department_id', Auth::User()->department_id)
+                ->where('voting_id', Auth::User()->voting_id)
+                ->count();
+
+
+            $totalLevel = Level::all()->count();
+            $totalDepartment = Department::all()->count();
+            $totalPositions = Position::all()->count();
+            $totalVotings = Voting::all()->count();
+
+            if (Auth::user()->role == 'Super Admin' || Auth::user()->role == 'Admin') {
+                return view('pages.results.result-index')
+                    ->with('positions', $positions)
+                    ->with('totalVoters', $totalVoters)
+                    ->with('totalNominees', $totalNominees)
+                    ->with('totalCandidates', $totalCandidates)
+                    ->with('totalLevel', $totalLevel)
+                    ->with('totalDepartment', $totalDepartment)
+                    ->with('totalPositions', $totalPositions)
+                    ->with('totalVotings', $totalVotings)
+                    ->with('totalVoteCasted', $totalVoteCasted)
+                    ->with('currentUser', $currentUser)
+                    ->with('voting', $voting)
+                    ->with('allEligible', $allEligible)
+                    ->with('participant', $participant)
+                    ->with('votedOrNot', $votedOrNot);
+            } else {
+//            $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
+
+                return view('home')
+                    ->with('positions', $positions)
+                    ->with('totalVoters', $totalVoters)
+                    ->with('totalNominees', $totalNominees)
+                    ->with('totalCandidates', $totalCandidates)
+                    ->with('totalLevel', $totalLevel)
+                    ->with('totalDepartment', $totalDepartment)
+                    ->with('totalPositions', $totalPositions)
+                    ->with('totalVotings', $totalVotings)
+                    ->with('totalVoteCasted', $totalVoteCasted)
+                    ->with('currentUser', $currentUser)
+                    ->with('voting', $voting)
+                    ->with('allEligible', $allEligible)
+                    ->with('participant', $participant)
+                    ->with('votedOrNot', $votedOrNot);
+//                ->with('json',$json);
+            }
         }
     }
 

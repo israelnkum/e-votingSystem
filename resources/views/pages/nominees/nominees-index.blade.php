@@ -18,9 +18,6 @@
     <!-- ============================================================== -->
 
     <div class="row">
-        <div class="col-md-12 text-right">
-            osikani
-        </div>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body text-dark">
@@ -46,7 +43,9 @@
                                     <td>{{$nominee->last_name." ".$nominee->first_name." ".$nominee->other_name}}</td>
                                     <td><img class="rounded-circle" height="60" width="60" src="http://localhost:800/api/image/{{$nominee->image}}"></td>
                                     <td>{{$nominee->index_number}}</td>
-                                    <td>{{$nominee->cgpa}}</td>
+                                    <td>{{$nominee->cgpa}}
+                                        <input type="checkbox" class="form-check-input">
+                                    </td>
                                     <td>{{$nominee->position->name}}</td>
                                     <td>{{$nominee->telephone}}</td>
                                     <td>
