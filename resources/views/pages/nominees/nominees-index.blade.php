@@ -26,6 +26,11 @@
                         <table id="example23" class="nowrap table  table-striped " cellspacing="0" width="100%">
                             <thead>
                             <tr>
+                                <th>
+                                    <form action="">
+                                       g <input type="checkbox" class="form-check-input">
+                                    </form>
+                                </th>
                                 <th>Name</th>
                                 <th>Image</th>
                                 <th>Index Number</th>
@@ -40,6 +45,7 @@
                             <tbody>
                             @foreach($nominees as $nominee)
                                 <tr>
+                                    <td>o</td>
                                     <td>{{$nominee->last_name." ".$nominee->first_name." ".$nominee->other_name}}</td>
                                     <td><img class="rounded-circle" height="60" width="60" src="http://localhost:800/api/image/{{$nominee->image}}"></td>
                                     <td>{{$nominee->index_number}}</td>

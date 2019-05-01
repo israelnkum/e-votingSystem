@@ -65,7 +65,10 @@ class CastVotingController extends Controller
         $voting = Voting::find($voter[0]->voting_id);
 
 
-        if (strtotime(date('Y-m-d h:i A')) < strtotime(substr($voting->voting_date_start_time, 0, 10) . " " . $voting->ending_time)) {
+        $participation = Eligible::find($voter[0]->id);
+
+
+        if ($participation->participated == 1 && strtotime(date('Y-m-d h:i A')) < strtotime(substr($voting->voting_date_start_time, 0, 10) . " " . $voting->ending_time)) {
 
             //return "voted";
             return view('auth.login')
@@ -88,12 +91,15 @@ class CastVotingController extends Controller
             $votedOrNot = Eligible::where('user_id', Auth::User()->id)
                 ->where('voting_id', $id)
                 ->get();
-            //return $votedOrNot;
+
+
             $positions = Nominee::with('position', 'level', 'department', 'result')
                 ->where('department_id', Auth::User()->department_id)
                 ->where('voting_id', $id)
                 ->where('candidate', 1)
+                ->orderBy('vetting_marks','desc')
                 ->get()
+
                 ->groupBy('position_id');
 
             $totalVoters = User::all()
@@ -122,6 +128,8 @@ class CastVotingController extends Controller
             $totalPositions = Position::all()->count();
             $totalVotings = Voting::all()->count();
 
+
+            //if super admin or admin
             if (Auth::user()->role == 'Super Admin' || Auth::user()->role == 'Admin') {
                 return view('pages.results.result-index')
                     ->with('positions', $positions)
@@ -138,7 +146,9 @@ class CastVotingController extends Controller
                     ->with('allEligible', $allEligible)
                     ->with('participant', $participant)
                     ->with('votedOrNot', $votedOrNot);
-            } else {
+            }
+            //if not super-admin or admin
+            else {
 //            $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
 
                 return view('home')
@@ -164,6 +174,7 @@ class CastVotingController extends Controller
                 ->where('voting_id', $id)
                 ->where('candidate', 1)
                 ->orderBy('position_number')
+                ->orderBy('vetting_marks','desc')
                 ->get()
                 ->groupBy('position_id');
 
@@ -299,6 +310,8 @@ class CastVotingController extends Controller
                 ->where('department_id', Auth::User()->department_id)
                 ->where('voting_id', $id)
                 ->where('candidate', 1)
+                ->orderBy('position_number')
+                ->orderBy('vetting_marks','desc')
                 ->get()
                 ->groupBy('position_id');
 

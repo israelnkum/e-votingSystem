@@ -43,7 +43,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12 text-center mb-3 text-dark">
-                        {{--<h3 class="mb-0">ITSU | Voting System</h3>--}}
+                        <small class="mb-2 text-danger">User Mozilla or Chrome for better performance</small>
                         <img class="img-rounded img-fluid mt-0 mb-3" height="auto" width="90" src="{{asset('e-voting.png')}}">
                     </div>
                 </div>
