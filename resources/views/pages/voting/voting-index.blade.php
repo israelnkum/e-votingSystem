@@ -33,7 +33,6 @@
                                 <th>Starting Time</th>
                                 <th>Ending Time</th>
                                 <th>Status</th>
-                                <th>Result</th>
                                 <th>Manage</th>
                             </tr>
                             </thead>
@@ -74,11 +73,6 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a class="" href="{{route('cast-voting.show',$vote->id)}}">
-                                            <label class="btn btn-sm btn-success">Result</label>
-                                        </a>
-                                    </td>
-                                    <td>
                                         <div class="dropdown">
                                             <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="manage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Action
@@ -96,7 +90,14 @@
                                                         </button>
                                                     </form>
                                                 </a>
-
+                                                <a href="#" class="dropdown-item ml-1 text-dark">
+                                                    <form method="post" action="{{route('getAllVoters',$vote->id)}}" >
+                                                        @csrf
+                                                        <button type="submit" style="background: transparent; border: 0;">
+                                                            <i class="mdi mdi-thumb-up"> </i> All Voters
+                                                        </button>
+                                                    </form>
+                                                </a>
                                                 <a class="dropdown-item" href="#">
                                                     <form method="post" action="{{route('startOrEndVoting',$vote->id)}}" onsubmit="return confirm('Are you sure you want to continue?')">
                                                         @csrf
@@ -120,7 +121,6 @@
                                                                 <i class="mdi mdi-power-plug"> </i>s
                                                             </button>
                                                         @endif
-
                                                     </form>
                                                 </a>
 

@@ -27,7 +27,7 @@
     <div class="row">
         <div class="col-md-12 bg-white">
             <div class="row" id="validation">
-                <div class="col-md-6 offset-md-3 col-sm-12">
+                <div class="col-md-8 offset-md-2 col-sm-12">
                     <div class="wizard-content">
                         <div class="card-body bg-transparent">
                             <form action="{{route('cast-voting.store',$voting_id)}}" method="POST" class="validation-wizard wizard-circle">

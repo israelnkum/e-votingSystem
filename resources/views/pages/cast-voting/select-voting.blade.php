@@ -65,7 +65,7 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body text-dark">
-                            @if(Auth::User()->role =="Admin" || Auth::User()->role =="Super Admin")
+                            @if(Auth::user()->role =="Admin" || Auth::user()->role =="Super Admin")
                                 <h3 class="card-title text-center">{{$singleArr->name}}</h3>
 
                                 <h5>Date: {{substr($singleArr->voting_date_start_time,0,10)}}</h5>
@@ -77,6 +77,7 @@
                                         <a class="btn btn-sm btn-success" href="{{route('cast-voting.show',$singleArr->id)}}">
                                             View result
                                         </a>
+
                                     @elseif(strtotime(\Carbon\Carbon::now()->format('Y-m-d h:i A')) >= strtotime($singleArr->voting_date_start_time) && strtotime(\Carbon\Carbon::now()->format('h:i A')) < strtotime($singleArr->ending_time))
                                         @if($singleArr->participated == 1)
                                             <a class="badge badge-warning font-18" href="javascript:void(0)">
@@ -114,7 +115,7 @@
 
                                     @elseif(strtotime(\Carbon\Carbon::now()) >= strtotime($singleArr->voting_date_start_time) && strtotime(\Carbon\Carbon::now()->format('h:i A')) >= strtotime($singleArr->ending_time))
                                         <a class="btn btn-sm btn-success" href="{{route('cast-voting.show',$singleArr->id)}}">
-                                            View result
+                                            View result1
                                         </a>
                                     @endif
                                 </div>

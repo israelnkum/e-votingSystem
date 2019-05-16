@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Department;
+use App\Eligible;
 use App\Level;
 use App\Nominee;
 use App\Position;
@@ -132,6 +133,12 @@ class HomeController extends Controller
 
         if (Auth::User()->role == 'Admin' || Auth::User()->role == 'Super Admin'){
             if (Auth::User()->updated == 1 ){
+                $participants = Eligible::with('voting')->where('voting_id', Auth::user()->voting_id)
+                    ->where('participated', 1)->get()->count();
+
+                $non_participants= Eligible::with('voting')->where('voting_id', Auth::user()->voting_id)
+                    ->where('participated', 0)->get()->count();
+
                 $currentUser = User::with('department','voting')
                     ->where('id',Auth::User()->id)->get();
 
@@ -176,8 +183,11 @@ class HomeController extends Controller
                     ->with('max_voters_count',$max_voters_count)
                     ->with('totalNomineesInEachVoting',$totalNomineesInEachVoting)
                     ->with('totalCandidatesInEachVoting',$totalCandidatesInEachVoting)
-                    ->with('totalVotesCastedInEachVoting',$totalVotesCastedInEachVoting);
+                    ->with('totalVotesCastedInEachVoting',$totalVotesCastedInEachVoting)
+                    ->with('participants',$participants)
+                    ->with('non_participants',$non_participants);
             }else{
+
 
                 return view('pages.first_login.update-password')
 
@@ -195,8 +205,6 @@ class HomeController extends Controller
                     ->with('totalVotesCastedInEachVoting',$totalVotesCastedInEachVoting);;
 
             }
-        }elseif(Auth::User()->role == 'Voter' && Auth::User()->voted == 1){
-            return redirect('/cast-voting');
         }else{
             return redirect('/cast-voting');
         }

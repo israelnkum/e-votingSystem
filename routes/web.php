@@ -101,3 +101,10 @@ Route::post('/language/',array(
     'uses' => 'LanguageController@changeLanguage'
 ));
 
+
+
+//GEt all voters
+Route::post('getAllVoters/{id}','CastVotingController@getAllVoters')->name('getAllVoters');
+
+
+
