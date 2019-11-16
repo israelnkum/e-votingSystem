@@ -75,7 +75,7 @@
                                 <div class="text-right">
                                     @if(strtotime(\Carbon\Carbon::yesterday()) >= strtotime(substr($singleArr->voting_date_start_time,0,10)))
                                         <a class="btn btn-sm btn-success" href="{{route('cast-voting.show',$singleArr->id)}}">
-                                            View result
+                                            View result {{$singleArr->id}}
                                         </a>
 
                                     @elseif(strtotime(\Carbon\Carbon::now()->format('Y-m-d h:i A')) >= strtotime($singleArr->voting_date_start_time) && strtotime(\Carbon\Carbon::now()->format('h:i A')) < strtotime($singleArr->ending_time))

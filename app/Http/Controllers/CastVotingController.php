@@ -37,11 +37,15 @@ class CastVotingController extends Controller
     {
         $json =[];
 
-        if (Auth::user()->role == "Admin" || Auth::user()->role == "Super Admin"){
+        if (Auth::user()->role == "Admin"){
             $singleArray =Voting::where('department_id',Auth::User()->department_id)->get();
 //
+        }else if (Auth::user()->role == "Super Admin"){
+            $singleArray =Voting::all();
+//
         }else{
-            $singleArray =Eligible::with('voting')->where('user_id',Auth::User()->id)->get();
+            $singleArray =Eligible::with('voting')
+                ->where('user_id',Auth::User()->id)->get();
          //   $json = json_decode(file_get_contents("https://www.ttuportal.com/srms/api/student/".Auth::User()->username.""), true, JSON_PRETTY_PRINT);
         }
 
@@ -282,11 +286,11 @@ class CastVotingController extends Controller
     {
         $voter =Eligible::where('voting_id',$id)
             ->where('user_id',Auth::User()->id)->get();
-
-        $voting = Voting::find($voter[0]->voting_id);
-
-
-
+        if (Auth::user()->role =="Admin" || Auth::user()->role =="Super Admin"){
+            $voting = Voting::find($id);
+        }else{
+            $voting = Voting::find($voter[0]->voting_id);
+        }
 
         if (strtotime(date('Y-m-d h:i A')) <strtotime(substr($voting->voting_date_start_time,0,10)." ".$voting->ending_time)){
 
